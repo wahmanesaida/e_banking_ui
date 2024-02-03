@@ -1,0 +1,27 @@
+/*** Hero Header ***/
+.hero-header {
+  margin-bottom: 6rem;
+  padding: 18rem 0;
+  background:
+       
+          url(../../../assets/img/blob-top-left.png),
+          url(../../../assets/img/blob-top-right.png),
+          url(../../../assets/img/blob-bottom-left.png),
+          url(../../../assets/img/blob-bottom-right.png),
+          url(../../../assets/img/blob-center.png),
+          url(../../../assets/img/bg-bottom.png);
+  background-position:
+          left 0px top 0px,
+          right 0px top 0px,
+          left 0px bottom 0px,
+          right 0px bottom 0px,
+          center center,
+          center bottom;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 991.98px) {
+  .hero-header {
+      padding: 6rem 0 9rem 0;
+  }
+}
