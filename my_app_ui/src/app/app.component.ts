@@ -5,11 +5,12 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { NavBarComponent } from './core/header/nav-bar/nav-bar.component';
 import { HomeComponent } from './modules/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, CoreModule, SharedModule, NavBarComponent, HomeComponent],
+  imports: [CommonModule,RouterOutlet, CoreModule, SharedModule, NavBarComponent, HomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
