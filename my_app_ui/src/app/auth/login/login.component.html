@@ -1,0 +1,44 @@
+<div class="signup">
+    <div class="main-w3layouts wrapper">
+      <h1>Welcome !!</h1>
+      <div class="main-agileinfo">
+        <div class="agileits-top">
+          <form [formGroup]="loginForm">
+            <input
+              class="text email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+            <input
+              class="text"
+              type="password"
+              name="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+            <div class="wthree-text">
+              <!-- this is the space between them  -->
+              <div class="clear"></div>
+            </div>
+            <input type="submit" value="LOGIN" [disabled]="loginForm.invalid" (click)="login()"/>
+          </form>
+          <p>Don't have an Account? <a routerLink="/Auth/signup"> Register Now!</a></p>
+        </div>
+      </div>
+      <ul class="colorlib-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+  
