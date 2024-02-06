@@ -11,11 +11,11 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   signup(signupRequest: any): Observable<any> {
-    return this.http.post(BASE_URL + 'sign-up', signupRequest); //we should add the url of the api in the backend
+    return this.http.post(BASE_URL + 'api/v1/auth/register', signupRequest); //we should add the url of the api in the backend
   }
 
   login(loginRequest: any): Observable<any> {
-    return this.http.post(BASE_URL + 'authenticate', loginRequest); //we should add the url of the api in the backend
+    return this.http.post(BASE_URL + 'api/v1/auth/authenticate', loginRequest); //we should add the url of the api in the backend
   }
 
   hello(): Observable<any> {

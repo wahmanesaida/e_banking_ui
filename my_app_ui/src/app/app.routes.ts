@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/Auth', pathMatch: 'full' },
+    { path: '', redirectTo: '/Home', pathMatch: 'full' },
 	{
 		path: 'Auth',
 		loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
@@ -15,6 +15,11 @@ export const routes: Routes = [
 	{
 		path: 'Shared',
 		loadChildren: () => import('./shared/shared.module').then((m) => m.SharedModule),
+		//canActivate: [authGuard],
+	},
+	{
+		path: 'Home',
+		loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),
 		//canActivate: [authGuard],
 	}
 ];

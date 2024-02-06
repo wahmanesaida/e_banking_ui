@@ -14,14 +14,14 @@
             type="text"
             name="Username"
             placeholder="Username"
-            formControlName="username"
+            formControlName="name"
           />
           <input
             class="text email"
             type="email"
             name="email"
             placeholder="Email"
-            formControlName="email"
+            formControlName="username"
           />
           <input
             class="text"
@@ -43,7 +43,7 @@
           </div>
           <input type="submit" value="SIGNUP" [disabled]="signupForm.invalid" (click)="signup()"/>
         </form>
-        <p>Already have an Account? <a routerLink="/login"> Login Now!</a></p>
+        <p>Already have an Account? <a routerLink="/Auth/login"> Login Now!</a></p>
       </div>
     </div>
 

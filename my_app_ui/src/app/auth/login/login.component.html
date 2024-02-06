@@ -9,7 +9,7 @@
               type="email"
               name="email"
               placeholder="Email"
-              formControlName="email"
+              formControlName="username"
             />
             <input
               class="text"
@@ -24,7 +24,7 @@
             </div>
             <input type="submit" value="LOGIN" [disabled]="loginForm.invalid" (click)="login()"/>
           </form>
-          <p>Don't have an Account? <a routerLink="/signup"> Register Now!</a></p>
+          <p>Don't have an Account? <a routerLink="/Auth/signup"> Register Now!</a></p>
         </div>
       </div>
       <ul class="colorlib-bubbles">
