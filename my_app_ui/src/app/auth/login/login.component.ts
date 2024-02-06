@@ -6,12 +6,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule
-  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -28,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
       this.loginForm = this.fb.group({
-        email: new FormControl('', [Validators.email, Validators.required]),
+        username: new FormControl('', [Validators.email, Validators.required]),
         password: new FormControl('', Validators.required)
       })
   }
@@ -37,9 +31,9 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm.value);
     this.service.login(this.loginForm.value).subscribe((response) => {
       console.log(response);
-      if (response.jwtToken) {
-        alert(response.jwtToken);
-        const jwtToken = response.jwtToken;
+      if (response.token) {
+        alert(response.token);
+        const jwtToken = response.token;
         localStorage.setItem('JWT', jwtToken);
         this.router.navigateByUrl('/Auth/home');
       }

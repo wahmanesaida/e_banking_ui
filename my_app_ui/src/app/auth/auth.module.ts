@@ -6,13 +6,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SignupComponent,
+    LoginComponent
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  exports:[
     SignupComponent,
     LoginComponent
   ],

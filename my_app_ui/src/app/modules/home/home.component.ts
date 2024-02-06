@@ -9,7 +9,7 @@ import { SignupComponent } from '../../auth/signup/signup.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavBarComponent, HeaderComponent, AboutComponent, FeatureComponent, OurServicesComponent, NewsletterComponent, SignupComponent],
+  imports: [NavBarComponent, HeaderComponent, AboutComponent, FeatureComponent, OurServicesComponent, NewsletterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

@@ -4,12 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-signup',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule
-  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
@@ -26,8 +20,8 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
-      username : new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.email, Validators.required]),
+      name : new FormControl('', Validators.required),
+      username: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', Validators.required),
       confirmPassword : new FormControl('', Validators.required)
     }, {validator:this.passwordMatchValidator})
