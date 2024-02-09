@@ -291,3 +291,28 @@ body{
   left:250px;
   width: calc(100% - 250px);
 }
+
+
+
+/* Add styles for the dropdown arrow */
+.sidebar .dropdown .arrow {
+  margin-left: auto;
+}
+
+/* Add styles for sub-items container */
+.sidebar .sub-items {
+  list-style: none;
+  padding-left: 60px;
+}
+
+/* Show sub-items when dropdown is open */
+.sidebar .dropdown.open .sub-items {
+  display: block;  
+}
+
+
+
+
+
+
+

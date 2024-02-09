@@ -9,6 +9,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavBarDashComponent {
   faArrowLeft = faArrowLeft;
+  isSidebarOpen: boolean = false;
+  isDropdownOpen: boolean = false;
 
 
   @ViewChild('sidebar') sidebar: ElementRef<HTMLElement>;
@@ -17,6 +19,13 @@ export class NavBarDashComponent {
   toggleSidebar() {
     this.sidebar.nativeElement.classList.toggle("open");
     this.menuBtnChange();
+
+
+    this.isSidebarOpen = !this.isSidebarOpen;
+    // Close the dropdown when the sidebar is closed
+    if (!this.isSidebarOpen) {
+      this.isDropdownOpen = false;
+    }
   }
 
   menuBtnChange() {
@@ -26,6 +35,16 @@ export class NavBarDashComponent {
       this.closeBtn.nativeElement.classList.replace("bx-menu-alt-right", "bx-menu");
     }
   }
+
+  
+
+  toggleDropdown() {
+    // Only toggle the dropdown if the sidebar is open
+    if (this.isSidebarOpen) {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    }
+  }
+
 
 
 }

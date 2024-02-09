@@ -17,6 +17,8 @@
       </a>
       <span class="tooltip">Dashboard</span>
     </li>
+
+
     <li>
       <a href="#">
         <i class="bx bx-user"></i>
@@ -24,6 +26,15 @@
       </a>
       <span class="tooltip">User</span>
     </li>
+
+    
+
+
+
+
+
+
+
     <li>
       <a href="#">
         <i class="bx bx-chat"></i>
@@ -52,6 +63,8 @@
       </a>
       <span class="tooltip">Order</span>
     </li>
+
+
     <li>
       <a href="#">
         <i class="bx bx-cog"></i>
@@ -59,6 +72,35 @@
       </a>
       <span class="tooltip">Settings</span>
     </li>
+
+
+
+
+    <li class="dropdown">
+      <a (click)="toggleDropdown()">
+        <i class="bx bx-category"></i>
+        <span class="link_name">New transaction</span>
+        <i class="bx bx-chevron-down arrow" *ngIf="isDropdownOpen"></i>
+      </a>
+      <span class="tooltip">New transaction</span>
+      <!-- Sub-items container -->
+      <ul class="sub-items" *ngIf="isDropdownOpen">
+        <li>
+          <a href="#">
+            <span class="link_name">Par debit de compte</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="link_name">En especes</span>
+          </a>
+        </li>
+        <!-- Add more sub-items as needed -->
+      </ul>
+    </li>
+    
+
+
     <li class="profile">
       <div class="profile_details">
         <img src="assets/profile.jpeg" alt="profile image">
