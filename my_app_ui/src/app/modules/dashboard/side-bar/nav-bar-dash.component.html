@@ -5,11 +5,13 @@
     <i class="bx bx-menu" id="btn" #closeBtn  (click)="toggleSidebar()"></i>
   </div>
   <ul class="nav-list">
+
     <li>
       <i class="bx bx-search"></i>
       <input type="text" placeholder="Search...">
        <span class="tooltip">Search</span>
     </li>
+
     <li>
       <a href="#">
         <i class="bx bx-grid-alt"></i>
@@ -26,14 +28,6 @@
       </a>
       <span class="tooltip">User</span>
     </li>
-
-    
-
-
-
-
-
-
 
     <li>
       <a href="#">
@@ -73,6 +67,8 @@
       <span class="tooltip">Settings</span>
     </li>
 
+
+
     <li class="dropdown">
       <a (click)="toggleDropdown()">
         <i class="bx bx-category"></i>
@@ -83,12 +79,12 @@
       <!-- Sub-items container -->
       <ul class="sub-items" *ngIf="isDropdownOpen">
         <li>
-          <a >
+          <a  routerLink="header-dash">
             <span class="link_name">Par debit de compte</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a routerLink="par-debit-compte">
             <span class="link_name">En especes</span>
           </a>
         </li>
@@ -108,8 +104,16 @@
       </div>
       <i class="bx bx-log-out" id="log_out"></i>
     </li>
+
   </ul>
 </div>
+<!-- this is the header-dassh -->
+
+<div class="header-section">
+  <app-header-dash></app-header-dash>
+</div>
+
+<!-- this is the component  -->
 <section class="home-section">
-  <div class="text">Dashboard</div>
+  <router-outlet></router-outlet>
 </section>

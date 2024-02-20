@@ -1,0 +1,81 @@
+/* Add CSS rules for different screen sizes */
+@media (min-width: 576px) { /* Small devices (576px and up) */
+    .search-input {
+      width: 250px; /* Adjust width for small devices */
+    }
+  }
+  
+  @media (min-width: 768px) { /* Medium devices (768px and up) */
+    .search-input {
+      width: 400px; /* Adjust width for medium devices */
+    }
+  }
+  
+  @media (min-width: 992px) { /* Large devices (992px and up) */
+    .search-input {
+      width: 500px; /* Adjust width for large devices */
+    }
+  }
+  
+  @media (min-width: 1200px) { /* Extra large devices (1200px and up) */
+    .search-input {
+      width: 600px; /* Adjust width for extra large devices */
+    }
+  }
+  
+
+
+  /* Add CSS for the search bar */
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+ 
+  
+  /* Add CSS for responsiveness */
+  @media (max-width: 576px) {
+    .search-input {
+      display: none; /* Hide the search bar on extra small devices */
+    }
+    /* .options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+
+  }
+  
+
+
+  .custom-btn {
+    background-color: #004f83;
+    margin: 5px;
+    color: white;
+    border: none;
+    padding: 7px;
+    width: 35px;
+    border-radius: 5px; 
+    transition: transform 0.3s ease;
+}
+
+/* Add hover effect */
+.custom-btn:hover {
+    background-color: #0067ac; 
+    transform: scale(1.2); 
+}
+
+
+
+
+ 
+  
