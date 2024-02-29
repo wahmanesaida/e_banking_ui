@@ -29,5 +29,14 @@ export const routes: Routes = [
 		//canActivate: [authGuard],
 	},
 
+	{
+		path: 'ConsoleAgent',
+		loadChildren: () =>
+		  import('./modules/console-agent/console-agent.module').then(
+			(m) => m.ConsoleAgentModule
+		  ),
+		//canActivate: [authGuard],
+	  },
+
 
 ];
