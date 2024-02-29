@@ -13,165 +13,178 @@
           <li [ngClass]="step == 3 ? 'active' : 'inactive'">
             Notification du transfert
           </li>
-          
+
         </ul>
         <!-- fieldsets -->
 
         <fieldset *ngIf="step == 1">
           <h2 class="fs-title">Personal Details</h2>
+          <select
+            formControlName="typetransfer"
+            class="form-control"
+            [ngClass]="{
+      'is-invalid': personal_step && personal['typetransfer'].errors}"
+          >
+            <option value="" disabled selected>Select Transfer Type</option>
+            <option value="ACCOUNT_DEBIT"> ACCOUNT_DEBIT</option>
+            <option value="SPECIES">SPECIES</option>
+          </select>
+
           <div>
-            <input type="text" formControlName="name" placeholder="Search..." />
+            <input type="text" formControlName="phone" placeholder="Phone number" />
             <input
-              (click)="next()"
+              (click)="searchByPhoneNumber()"
               type="button"
               name="next"
               class="next action-button"
               value="Search"
             />
           </div>
+
+          <input
+            type="number"
+            formControlName="id_donor"
+            [ngClass]="{
+              'is-invalid': personal_step && personal['id_donor'].errors
+            }"
+            readonly
+            [value]="tt"
+            placeholder="Id"
+
+          />
+
           <input
             type="text"
-            formControlName="name"
+            formControlName="username"
             [ngClass]="{
-              'is-invalid': personal_step && personal['name'].errors
+              'is-invalid': personal_step && personal['username'].errors
             }"
-            placeholder="Full Name"
+            readonly
+            [value]="tt"
+            placeholder="email"
+
           />
+
           <input
-          type="text"
-          formControlName="name"
-          [ngClass]="{
-            'is-invalid': personal_step && personal['name'].errors
-          }"
-          placeholder="Full Name"
-        />
-        <input
-        type="text"
-        formControlName="name"
-        [ngClass]="{
-          'is-invalid': personal_step && personal['name'].errors
+            type="text"
+            formControlName="title"
+            [ngClass]="{
+              'is-invalid': personal_step && personal['title'].errors
+            }"
+            readonly
+            [value]="tt"
+            placeholder="Title"
+
+          />
+
+
+          <input
+            type="text"
+            formControlName="pieceIdentite"
+            [ngClass]="{
+          'is-invalid': personal_step && personal['pieceIdentite'].errors
         }"
-        placeholder="Full Name"
-      />
-      <input
-      type="text"
-      formControlName="name"
-      [ngClass]="{
-        'is-invalid': personal_step && personal['name'].errors
+            readonly
+            placeholder="Piece Identite"
+          />
+          <input
+            type="text"
+            formControlName="paysEmission"
+            [ngClass]="{
+        'is-invalid': personal_step && personal['paysEmission'].errors
       }"
-      placeholder="Full Name"
-    />
-    <input
-    type="text"
-    formControlName="name"
-    [ngClass]="{
-      'is-invalid': personal_step && personal['name'].errors
+            readonly
+            placeholder="Pay d'emission"
+          />
+          <input
+            type="text"
+            formControlName="numeroPieceIdentite"
+            [ngClass]="{
+      'is-invalid': personal_step && personal['numeroPieceIdentite'].errors
     }"
-    placeholder="Full Name"
-  />
-  <input
-  type="text"
-  formControlName="name"
-  [ngClass]="{
-    'is-invalid': personal_step && personal['name'].errors
+            readonly
+            placeholder="numero de Piece d'identite"
+          />
+          <input
+            type="text"
+            formControlName="expirationPieceIdentite"
+            [ngClass]="{
+    'is-invalid': personal_step && personal['expirationPieceIdentite'].errors
   }"
-  placeholder="Full Name"
-/>
-<input
-type="text"
-formControlName="name"
-[ngClass]="{
-  'is-invalid': personal_step && personal['name'].errors
-}"
-placeholder="Full Name"
-/>
-<input
-type="text"
-formControlName="name"
-[ngClass]="{
-  'is-invalid': personal_step && personal['name'].errors
-}"
-placeholder="Full Name"
-/>
-<input
-type="text"
-formControlName="name"
-[ngClass]="{
-  'is-invalid': personal_step && personal['name'].errors
-}"
-placeholder="Full Name"
-/>
-<input
-type="text"
-formControlName="name"
-[ngClass]="{
-  'is-invalid': personal_step && personal['name'].errors
-}"
-placeholder="Full Name"
-/>
-<input
-type="text"
-formControlName="name"
-[ngClass]="{
-  'is-invalid': personal_step && personal['name'].errors
-}"
-placeholder="Full Name"
-/>
-<input
-type="text"
-formControlName="name"
-[ngClass]="{
-  'is-invalid': personal_step && personal['name'].errors
-}"
-placeholder="Full Name"
-/>
-          <input
-            type="text"
-            formControlName="name"
-            [ngClass]="{
-              'is-invalid': personal_step && personal['name'].errors
-            }"
-            placeholder="Full Name"
+            readonly
+            placeholder="expiration Piece d'identite"
           />
           <input
             type="text"
-            formControlName="name"
+            formControlName="validitePieceIdentite"
             [ngClass]="{
-              'is-invalid': personal_step && personal['name'].errors
-            }"
-            placeholder="Full Name"
+  'is-invalid': personal_step && personal['validitePieceIdentite'].errors
+}"
+            readonly
+            placeholder="validite de Piece d'identite"
           />
-          <div *ngIf="personal_step && personalDetails.controls['name'].errors">
-            <div *ngIf="personal['name'].errors['required']">
-              Name is required
+          <input
+            type="text"
+            formControlName="datenaissance"
+            [ngClass]="{
+  'is-invalid': personal_step && personal['datenaissance'].errors
+}"
+            readonly
+            placeholder="date de naissance"
+          />
+          <input
+            type="text"
+            formControlName="profession"
+            [ngClass]="{
+  'is-invalid': personal_step && personal['profession'].errors
+}"
+            readonly
+            placeholder="profession"
+          />
+          <input
+            type="text"
+            formControlName="payeNationale"
+            [ngClass]="{
+  'is-invalid': personal_step && personal['payeNationale'].errors
+}"
+            readonly
+            placeholder="paye de Nationalé"
+          />
+
+
+
+          <input
+            type="text"
+            formControlName="ville"
+            [ngClass]="{
+              'is-invalid': personal_step && personal['ville'].errors
+            }"
+            readonly
+            placeholder="Ville"
+          />
+          <div *ngIf="personal_step && personalDetails.controls['ville'].errors">
+            <div *ngIf="personal['ville'].errors['required']">
+              ville is required
             </div>
           </div>
+
           <input
             type="text"
-            formControlName="email"
-            name="email"
-            placeholder="Email"
+            formControlName="gsm"
+            name="gsm"
+            placeholder="Gsm"
+            readonly
           />
           <div
-            *ngIf="personal_step && personalDetails.controls['email'].errors"
+            *ngIf="personal_step && personalDetails.controls['gsm'].errors"
           >
-            <div *ngIf="personal['email'].errors['required']">
-              Email is required
+            <div *ngIf="personal['gsm'].errors['required']">
+              GSM is required
             </div>
           </div>
-          <input
-            type="text"
-            formControlName="phone"
-            name="phone"
-            placeholder="Phone"
-          />
-          <div
-            *ngIf="personal_step && personalDetails.controls['phone'].errors"
-          >
-            <div *ngIf="personal['phone'].errors['required']">
-              Phone is required
-            </div>
-          </div>
+
+
+
           <input
             (click)="next()"
             type="button"
@@ -181,34 +194,73 @@ placeholder="Full Name"
           />
         </fieldset>
       </form>
-      <form [formGroup]="addressDetails" id="msform">
+
+      <form [formGroup]="transferDetails" id="msform">
         <fieldset *ngIf="step == 2">
-          <h2 class="fs-title">Address Details</h2>
-          <input type="text" formControlName="city" placeholder="City" />
-          <div *ngIf="address_step && addressDetails.controls['city'].errors">
-            <div *ngIf="address['city'].errors['required']">
-              City is required
+          <h2 class="fs-title">Transfer Details</h2>
+
+          <input type="number" name="amount" formControlName="amount"  placeholder="montant du transfert" />
+          <div *ngIf="address_step && transferDetails.controls['amount'].errors">
+            <div *ngIf="transferD['amount'].errors['required']">
+              amount is required
             </div>
           </div>
-          <textarea
-            rows="5"
-            cols="5"
-            formControlName="address"
-            placeholder="address"
-          ></textarea>
-          <div
-            *ngIf="address_step && addressDetails.controls['address'].errors"
+
+          <select
+            formControlName="notification"
+            class="form-control"
+            [ngClass]="{
+      'is-invalid': address_step && transferD['notification'].errors['required']}"
           >
-            <div *ngIf="address['address'].errors['required']">
-              Address is required
+            <option value="" disabled selected>Notification du transfer</option>
+            <option value="true"> true</option>
+            <option value="false">false</option>
+
+          </select>
+
+          <select
+            formControlName="typeOffees"
+            class="form-control"
+            [ngClass]="{
+      'is-invalid': address_step && transferD['typeOffees'].errors['required']}"
+          >
+            <option value="" disabled selected>Type des frais</option>
+            <option value="donor"> donor</option>
+            <option value="beneficiary">beneficiary</option>
+            <option value="shared">shared</option>
+
+          </select>
+
+
+
+          <input type="number" name="id" formControlName="id" placeholder="id du bénéficaire" [ngClass]="{
+      'is-invalid': address_step && transferD['id'].errors['required']}"/>
+
+          <input type="text" formControlName="name" placeholder="le nom du bénéficaire" />
+          <div
+            *ngIf="address_step && transferDetails.controls['name'].errors"
+          >
+            <div *ngIf="transferD['name'].errors['required']">
+              name is required
             </div>
           </div>
-          <input type="text" formControlName="pincode" placeholder="Pincode" />
+
+          <input type="text" formControlName="first_name" placeholder="le prénom du bénéficaire" />
           <div
-            *ngIf="address_step && addressDetails.controls['pincode'].errors"
+            *ngIf="address_step && transferDetails.controls['first_name'].errors"
           >
-            <div *ngIf="address['pincode'].errors['required']">
-              Pincode is required
+            <div *ngIf="transferD['first_name'].errors['required']">
+              first name is required
+            </div>
+          </div>
+
+
+          <input type="email" formControlName="email" placeholder="Email" />
+          <div
+            *ngIf="address_step && transferDetails.controls['email'].errors"
+          >
+            <div *ngIf="transferD['email'].errors['required']">
+              email
             </div>
           </div>
           <input
@@ -227,53 +279,33 @@ placeholder="Full Name"
           />
         </fieldset>
       </form>
-      <form [formGroup]="educationalDetails" id="msform">
+
+
+      <form [formGroup]="Otp" id="msform">
         <fieldset *ngIf="step == 3">
-          <h2 class="fs-title">Educational Details</h2>
+          <h2 class="fs-title">Validation de l'otp</h2>
           <input
             type="text"
-            formControlName="highest_qualification"
-            placeholder="Highest Qualification"
+            formControlName="otpfield"
+            placeholder="otp"
           />
           <div
             *ngIf="
               education_step &&
-              educationalDetails.controls['highest_qualification'].errors
+              Otp.controls['otpfield'].errors
             "
           >
-            <div *ngIf="education['highest_qualification'].errors['required']">
-              Highest qualification is required
+            <div *ngIf="otp['otpfield'].errors['required']">
+              Otp is required
+            </div>
+            <div *ngIf="validOtp" class="otp-valid-message">
+              OTP is valid. You can proceed with the next step.
+            </div>
+            <div *ngIf="!validOtp" class="otp-invalid-message">
+              OTP is not valid. Please try again.
             </div>
           </div>
-          <input
-            type="text"
-            formControlName="university"
-            placeholder="University"
-          />
-          <div
-            *ngIf="
-              education_step && educationalDetails.controls['university'].errors
-            "
-          >
-            <div *ngIf="education['university'].errors['required']">
-              University is required
-            </div>
-          </div>
-          <input
-            type="text"
-            formControlName="total_marks"
-            placeholder="Total Marks"
-          />
-          <div
-            *ngIf="
-              education_step &&
-              educationalDetails.controls['total_marks'].errors
-            "
-          >
-            <div *ngIf="education['total_marks'].errors['required']">
-              Total marks is required
-            </div>
-          </div>
+
           <input
             (click)="previous()"
             type="button"
