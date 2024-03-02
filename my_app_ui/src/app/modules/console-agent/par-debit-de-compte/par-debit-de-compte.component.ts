@@ -4,6 +4,7 @@ import {TransferRequest} from "../../../models/TransferRequest.model";
 import {ConsoleAgentService} from "../console-agent.service";
 import {debounceTime, distinctUntilChanged} from "rxjs";
 import {User} from "../../../models/User.model";
+import { CheckAmountRequest } from '../../../models/CheckAmountRequest';
 
 @Component({
   selector: 'app-par-debit-de-compte',
@@ -11,6 +12,12 @@ import {User} from "../../../models/User.model";
   styleUrl: './par-debit-de-compte.component.css'
 })
 export class ParDebitDeCompteComponent implements OnInit {
+  userAccountAmount : number
+  amountMessage : string;
+  errorMessage: string;
+  transferDone: boolean = false;
+  otpValidated: boolean = false;
+  otpSent: boolean = false;
 
 
   title = 'angular13bestcode';
@@ -68,19 +75,8 @@ export class ParDebitDeCompteComponent implements OnInit {
     });
 
     this.Otp = this.formBuilder.group({
-      otpfield: ['', Validators.required]
+      otp: ['', Validators.required]
     });
-
-    this.Otp.get('otpfield').valueChanges.pipe(
-      debounceTime(400),
-      distinctUntilChanged()
-    ).subscribe(() => {
-      const otpValue = this.Otp.value.otpfield;
-      console.log("this is the otp: " + otpValue);
-      this.validateOtp(otpValue);
-    });
-
-    this.validOtp = false;
 
 
   }
@@ -127,6 +123,7 @@ export class ParDebitDeCompteComponent implements OnInit {
     this.personalDetails.get('gsm').setValue(user.gsm);
     this.personalDetails.get('id_donor').setValue(user.id);
     this.personalDetails.get('username').setValue(user.username);
+    this.userAccountAmount = user.account_amount;
     this.personalDetails.updateValueAndValidity();
   }
 
@@ -164,6 +161,7 @@ export class ParDebitDeCompteComponent implements OnInit {
       this.transfer_service.makeTransferAgent(transferAgent).subscribe(
         (response) => {
           console.log('Transfer successful:', response);
+          this.transferDone = true;
         },
         (error) => {
           console.error('An error occurred:', error);
@@ -172,26 +170,7 @@ export class ParDebitDeCompteComponent implements OnInit {
     }
   }
 
-  validateOtp(otpValue: string) {
-    console.log("method is called ")
-    console.log("this is the otp: " + otpValue)
-    this.transfer_service.validateOtp(this.personalDetails.value.username, otpValue).subscribe(
-      (response) => {
-        console.log('OTP validated successfully:', response);
-        if (response === "OTP validated successfully") {
-          this.validOtp = true;
-        } else {
-          this.validOtp = false;
-        }
-      },
-      (error) => {
-        console.error('An error occurred:', error);
-        console.error('Status code:', error.status);
-        console.error('Error message:', error.message);
-        console.error('Error body:', error.body);
-      }
-    );
-  }
+  
 
 
   next() {
@@ -206,15 +185,7 @@ export class ParDebitDeCompteComponent implements OnInit {
       if (this.transferDetails.valid) {
         this.address_step = true;
         this.step++;
-        console.log('email:', this.personalDetails.value.username);
-        this.transfer_service.sendOtp(this.personalDetails.value.username).subscribe(
-          (response) => {
-            console.log('email has been send  successfully:', response);
-          },
-          (error) => {
-            console.error('An error occurred:', error);
-          }
-        );
+        
       }
     }
   }
@@ -244,6 +215,90 @@ export class ParDebitDeCompteComponent implements OnInit {
       //alert("Well done!!")
     }
   }
+
+
+  sendOtp(){
+    console.log(this.personalDetails.value.username);
+    
+    this.transfer_service.sendOtp(this.personalDetails.value.username).subscribe(
+      (data :string)=>{
+        this.otpSent = true;
+      },
+      (error)=>{
+        this.otpSent = false;
+      }
+    );
+  }
+
+
+  validateOtp() {
+    const otp = this.Otp.get('otp').value;
+    this.transfer_service.validateOtp(this.personalDetails.value.username, otp).subscribe(
+      (response: any) => {
+        this.errorMessage = response.message;
+        if (response.message === 'OTP is valid') {
+          this.otpValidated = true;
+        }
+      },
+      (error) => {
+        this.errorMessage = error.error;
+        console.log(this.errorMessage);
+        this.otpValidated = false;
+      }
+    );
+  }
+
+
+  checkAmountTransfer(){
+    if (this.transferDetails.invalid) {
+      this.transferDetails.markAllAsTouched(); // Mark all fields as touched to display errors
+      return;
+    }
+    const checkAmountRequest: CheckAmountRequest = {
+      transfertDto: {
+        amount_entred: this.transferDetails.value.amount,
+        notification: this.transferDetails.value.notification,
+        typeOftransfer: this.personalDetails.value.typetransfer,
+        fees: this.transferDetails.value.typeOffees
+      },
+      user:{
+        account_amount: this.userAccountAmount,
+        title: this.transferDetails.get('title').value,
+        pieceIdentite: this.transferDetails.get('pieceIdentite').value,
+        paysEmission: this.transferDetails.get('paysEmission').value,
+        numeroPieceIdentite: this.transferDetails.get('numeroPieceIdentite').value,
+        expirationPieceIdentite: this.transferDetails.get('expirationPieceIdentite').value,
+        validitePieceIdentite: this.transferDetails.get('validitePieceIdentite').value,
+        datenaissance: this.transferDetails.get('datenaissance').value,
+        profession: this.transferDetails.get('profession').value,
+        payeNationale: this.transferDetails.get('payeNationale').value,
+        ville: this.transferDetails.get('ville').value,
+        gsm: this.transferDetails.get('gsm').value,
+        id: this.transferDetails.get('id').value,
+        username: this.transferDetails.get('username').value,
+      },
+      checkAmount:this.transferDetails.get('amount').value
+    }
+    this.transfer_service.checkAmountOfTransfert(checkAmountRequest).subscribe(
+      (response: any) => {
+        this.amountMessage = response.message;
+       /*  if (response.message === 'OTP is valid') {
+          this.otpValidated = true;
+        } */
+      },
+      (error) => {
+        this.amountMessage = error.error;
+        console.log(this.errorMessage);
+        
+      }
+
+
+    );
+  }
+
+
+
+  
 }
 
 
