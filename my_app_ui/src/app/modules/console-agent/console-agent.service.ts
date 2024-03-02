@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
+import {Observable, catchError, of, throwError} from "rxjs";
 import {User} from "../../models/User.model";
 import {TransferRequest} from "../../models/TransferRequest.model";
+import { NgToastService } from 'ng-angular-popup';
+import { TransfertDto } from '../../models/TransfertDto.model';
+import { CheckAmountRequest } from '../../models/CheckAmountRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,7 @@ import {TransferRequest} from "../../models/TransferRequest.model";
 export class ConsoleAgentService {
 
   private  baseUrl='http://localhost:8080/api/v1/auth'
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toast: NgToastService) { }
 
   getUserByPhone(phone: string): Observable<User> {
     const url = `${this.baseUrl}/showkyc/${phone}`;
@@ -23,17 +26,23 @@ export class ConsoleAgentService {
   }
 
   sendOtp(email: string): Observable<any> {
-
-    const body0 =email;
-    return this.http.post<any>(`${this.baseUrl}/send-otp`, body0);
+    return this.http.post(`${this.baseUrl}/send-otp`, email).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 400 && error.error === 'OTP already sent for this email') {
+          this.toast.error({ detail: 'OTP already sent for this email', summary: 'Already Sent', duration: 5000, position: 'topCenter' });
+        }
+        return throwError(error); // re-throw the error so it can be handled elsewhere
+      })
+    );
   }
-
-
-
 
   validateOtp(email: string, otp: string): Observable<any> {
     const body = { email, otp };
-    return this.http.post<any>(`${this.baseUrl}/validate-otp`, body);
+    return this.http.post(`${this.baseUrl}/validate-otp`, body);
+  }
+
+  checkAmountOfTransfert(checkAmountRequest: CheckAmountRequest): Observable<any>{
+    return this.http.post(`${this.baseUrl}/check-amount`,checkAmountRequest);
   }
 
 

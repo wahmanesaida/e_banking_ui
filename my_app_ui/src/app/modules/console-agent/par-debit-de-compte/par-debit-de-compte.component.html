@@ -48,7 +48,6 @@
               'is-invalid': personal_step && personal['id_donor'].errors
             }"
             readonly
-            [value]="tt"
             placeholder="Id"
 
           />
@@ -60,7 +59,6 @@
               'is-invalid': personal_step && personal['username'].errors
             }"
             readonly
-            [value]="tt"
             placeholder="email"
 
           />
@@ -205,6 +203,9 @@
               amount is required
             </div>
           </div>
+          <div *ngIf="amountMessage" class="error-message">
+            {{ amountMessage }}
+          </div>  
 
           <select
             formControlName="notification"
@@ -284,27 +285,28 @@
       <form [formGroup]="Otp" id="msform">
         <fieldset *ngIf="step == 3">
           <h2 class="fs-title">Validation de l'otp</h2>
+          <ng-toast></ng-toast>
+          <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
+
           <input
-            type="text"
-            formControlName="otpfield"
-            placeholder="otp"
-          />
-          <div
-            *ngIf="
-              education_step &&
-              Otp.controls['otpfield'].errors
-            "
-          >
-            <div *ngIf="otp['otpfield'].errors['required']">
-              Otp is required
-            </div>
-            <div *ngIf="validOtp" class="otp-valid-message">
-              OTP is valid. You can proceed with the next step.
-            </div>
-            <div *ngIf="!validOtp" class="otp-invalid-message">
-              OTP is not valid. Please try again.
-            </div>
-          </div>
+          type="text"
+          formControlName="otp"
+          placeholder="enter the otp"
+        />
+
+        <div
+          *ngIf="otp && Otp.controls['otp'].errors"
+        >
+          <div *ngIf="Otp.controls['otp'].errors['required']">
+            Otp is required
+          </div> 
+        </div>
+
+        <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>    
 
           <input
             (click)="previous()"
@@ -315,6 +317,7 @@
           />
           <input
             (click)="submit()"
+            [disabled]="transferDone"
             type="submit"
             name="submit"
             class="submit action-button"
