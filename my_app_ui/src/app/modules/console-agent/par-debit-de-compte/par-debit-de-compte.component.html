@@ -22,16 +22,28 @@
           <select
             formControlName="typetransfer"
             class="form-control"
-            [ngClass]="{
-      'is-invalid': personal_step && personal['typetransfer'].errors}"
           >
             <option value="" disabled selected>Select Transfer Type</option>
             <option value="ACCOUNT_DEBIT"> ACCOUNT_DEBIT</option>
             <option value="SPECIES">SPECIES</option>
           </select>
+          <div *ngIf="personal && personalDetails.controls['typetransfer'].errors">
+            <div *ngIf="personalDetails.controls['typetransfer'].errors['required']">
+              you should select type of transfer
+            </div>
+          </div>
+
 
           <div>
             <input type="text" formControlName="phone" placeholder="Phone number" />
+            <div
+              *ngIf="personal && personalDetails.controls['phone'].errors"
+            >
+              <div *ngIf="personalDetails.controls['phone'].errors['required']">
+                phone is required
+              </div>
+            </div>
+            <div *ngIf="errorPhone">{{ errorPhone }}</div>
             <input
               (click)="searchByPhoneNumber()"
               type="button"
@@ -39,6 +51,9 @@
               class="next action-button"
               value="Search"
             />
+          </div>
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
           </div>
 
           <input
@@ -198,48 +213,21 @@
           <h2 class="fs-title">Transfer Details</h2>
 
           <input type="number" name="amount" formControlName="amount"  placeholder="montant du transfert" />
-          <div *ngIf="address_step && transferDetails.controls['amount'].errors">
+          <div *ngIf="transfer_step && transferDetails.controls['amount'].errors">
             <div *ngIf="transferD['amount'].errors['required']">
               amount is required
             </div>
           </div>
-          <div *ngIf="amountMessage" class="error-message">
-            {{ amountMessage }}
-          </div>  
-
-          <select
-            formControlName="notification"
-            class="form-control"
-            [ngClass]="{
-      'is-invalid': address_step && transferD['notification'].errors['required']}"
-          >
-            <option value="" disabled selected>Notification du transfer</option>
-            <option value="true"> true</option>
-            <option value="false">false</option>
-
-          </select>
-
-          <select
-            formControlName="typeOffees"
-            class="form-control"
-            [ngClass]="{
-      'is-invalid': address_step && transferD['typeOffees'].errors['required']}"
-          >
-            <option value="" disabled selected>Type des frais</option>
-            <option value="donor"> donor</option>
-            <option value="beneficiary">beneficiary</option>
-            <option value="shared">shared</option>
-
-          </select>
-
-
-
-          <input type="number" name="id" formControlName="id" placeholder="id du bénéficaire" [ngClass]="{
-      'is-invalid': address_step && transferD['id'].errors['required']}"/>
+          <input type="number" name="id" formControlName="id"  placeholder="id du bénéficaire"/>
+          <div *ngIf="transfer_step && transferDetails.controls['id'].errors">
+            <div *ngIf="transferD['id'].errors['required']">
+              id is required
+            </div>
+          </div>
 
           <input type="text" formControlName="name" placeholder="le nom du bénéficaire" />
           <div
-            *ngIf="address_step && transferDetails.controls['name'].errors"
+            *ngIf="transfer_step && transferDetails.controls['name'].errors"
           >
             <div *ngIf="transferD['name'].errors['required']">
               name is required
@@ -248,7 +236,7 @@
 
           <input type="text" formControlName="first_name" placeholder="le prénom du bénéficaire" />
           <div
-            *ngIf="address_step && transferDetails.controls['first_name'].errors"
+            *ngIf="transfer_step && transferDetails.controls['first_name'].errors"
           >
             <div *ngIf="transferD['first_name'].errors['required']">
               first name is required
@@ -258,12 +246,47 @@
 
           <input type="email" formControlName="email" placeholder="Email" />
           <div
-            *ngIf="address_step && transferDetails.controls['email'].errors"
+            *ngIf="transfer_step && transferDetails.controls['email'].errors"
           >
             <div *ngIf="transferD['email'].errors['required']">
               email
             </div>
           </div>
+
+          <select
+            formControlName="notification"
+            class="form-control"
+
+          >
+            <option value="" disabled selected>Notification du transfer</option>
+            <option value="true"> true</option>
+            <option value="false">false</option>
+          </select>
+          <div *ngIf="transfer_step && transferDetails.controls['notification'].errors">
+            <div *ngIf="transferD['notification'].errors['required']">
+              notification is required
+            </div>
+          </div>
+
+
+          <select
+            formControlName="typeOffees"
+            class="form-control"
+
+          >
+            <option value="" disabled selected>Type des frais</option>
+            <option value="donor"> donor</option>
+            <option value="beneficiary">beneficiary</option>
+            <option value="shared">shared</option>
+
+          </select>
+          <div *ngIf="transfer_step && transferDetails.controls['typeOffees'].errors">
+            <div *ngIf="transferD['typeOffees'].errors['required']">
+              type Of fees is required
+            </div>
+          </div>
+
+
           <input
             (click)="previous()"
             type="button"
@@ -289,24 +312,24 @@
           <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
 
           <input
-          type="text"
-          formControlName="otp"
-          placeholder="enter the otp"
-        />
+            type="text"
+            formControlName="otp"
+            placeholder="enter the otp"
+          />
 
-        <div
-          *ngIf="otp && Otp.controls['otp'].errors"
-        >
-          <div *ngIf="Otp.controls['otp'].errors['required']">
-            Otp is required
-          </div> 
-        </div>
+          <div
+            *ngIf="otp && Otp.controls['otp'].errors"
+          >
+            <div *ngIf="Otp.controls['otp'].errors['required']">
+              Otp is required
+            </div>
+          </div>
 
-        <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
+          <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
 
-        <div *ngIf="errorMessage" class="error-message">
-          {{ errorMessage }}
-        </div>    
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
 
           <input
             (click)="previous()"
