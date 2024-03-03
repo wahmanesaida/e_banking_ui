@@ -5,7 +5,6 @@ import {ConsoleAgentService} from "../console-agent.service";
 import {debounceTime, distinctUntilChanged} from "rxjs";
 import {User} from "../../../models/User.model";
 import { CheckAmountRequest } from '../../../models/CheckAmountRequest';
-
 @Component({
   selector: 'app-par-debit-de-compte',
   templateUrl: './par-debit-de-compte.component.html',
@@ -18,6 +17,7 @@ export class ParDebitDeCompteComponent implements OnInit {
   transferDone: boolean = false;
   otpValidated: boolean = false;
   otpSent: boolean = false;
+  errorPhone: string='';
 
 
   title = 'angular13bestcode';
@@ -26,7 +26,7 @@ export class ParDebitDeCompteComponent implements OnInit {
   transferDetails!: FormGroup;
   Otp!: FormGroup;
   personal_step = false;
-  address_step = false;
+  transfer_step = false;
   education_step = false;
   step = 1;
   validOtp: boolean;
@@ -41,7 +41,7 @@ export class ParDebitDeCompteComponent implements OnInit {
 
     this.personalDetails = this.formBuilder.group({
       typetransfer: ['', Validators.required],
-      phone: ['', Validators.required],
+      phone: ['+212', Validators.required],
       title: ['', Validators.required],
       pieceIdentite: ['', Validators.required],
       paysEmission: ['', Validators.required],
@@ -64,12 +64,14 @@ export class ParDebitDeCompteComponent implements OnInit {
 
     this.transferDetails = this.formBuilder.group({
       amount: ['', Validators.required],
+      //saida: ['', Validators.required],
       id: ['', Validators.required],
       name: ['', Validators.required],
       first_name: ['', Validators.required],
+      email: ['', Validators.required],
       notification: ['', Validators.required],
       typeOffees: ['', Validators.required],
-      email: ['', Validators.required]
+
 
 
     });
@@ -100,10 +102,23 @@ export class ParDebitDeCompteComponent implements OnInit {
     if (phone) {
       this.transfer_service.getUserByPhone(phone).subscribe(
         (user: User) => {
-          this.patchFormWithUserData(user);
+          if(user){
+            this.patchFormWithUserData(user);
+            this.errorMessage='';
+          } else {
+            console.log(user);
+            this.errorMessage= "Invalid phone number ! ";
+          }
+
         },
         (error: any) => {
-          console.error('Error fetching user data:', error);
+          if(error.status === 400){
+            this.errorPhone=error.error.message
+          }else {
+            console.error('Error fetching user data:', error);
+
+          }
+
         }
       );
     }
@@ -128,7 +143,7 @@ export class ParDebitDeCompteComponent implements OnInit {
   }
 
   makeTransferAgent(): void {
-    if (this.transferDetails.valid) {
+     if (this.transferDetails.valid) {
       console.log(this.transferDetails.value.amount);
       console.log(this.transferDetails.value.notification);
       console.log(this.transferDetails.value.typeOffees);
@@ -154,6 +169,7 @@ export class ParDebitDeCompteComponent implements OnInit {
         },
         id_user: this.personalDetails.getRawValue()['id_donor'] // New property
       };
+      this.personalDetails.updateValueAndValidity();
       console.log("this is transer dto: " + transferAgent.transfertDto.typeOftransfer)
 
       // this.formdataservice.setFormData(transferAgent);
@@ -170,7 +186,7 @@ export class ParDebitDeCompteComponent implements OnInit {
     }
   }
 
-  
+
 
 
   next() {
@@ -182,27 +198,51 @@ export class ParDebitDeCompteComponent implements OnInit {
       }
     } else if (this.step === 2) {
       console.log('Transfer details form valid:', this.transferDetails.valid);
+
       if (this.transferDetails.valid) {
-        this.address_step = true;
+        this.transfer_step= true;
         this.step++;
-        
+
       }
     }
   }
 
 
-  previous() {
+ previous() {
     this.step--
+   if (this.step == 1) {
+     this.transfer_step = false;
+   }
+   if (this.step == 2) {
+     this.education_step = false;
+   }
 
-    if (this.step == 1) {
-      this.address_step = false;
-    }
-    if (this.step == 2) {
-      this.education_step = false;
-    }
+
 
 
   }
+
+ /** previous(
+  ) {
+    if (this.step > 1) {
+      this.step--;
+    }
+    if (this.step === 1) {
+      this.address_step = true;
+    }
+    if (this.step === 2) {
+      this.education_step = false;
+      this.address_step = true;
+    }
+    if(this.step ===3){
+      this.personal_step=false
+
+    }
+    // Add the following lines to ensure form data is visible when navigating back
+    this.personalDetails.updateValueAndValidity();
+    this.transferDetails.updateValueAndValidity();
+  }**/
+
 
   submit() {
 
@@ -219,7 +259,7 @@ export class ParDebitDeCompteComponent implements OnInit {
 
   sendOtp(){
     console.log(this.personalDetails.value.username);
-    
+
     this.transfer_service.sendOtp(this.personalDetails.value.username).subscribe(
       (data :string)=>{
         this.otpSent = true;
@@ -289,7 +329,7 @@ export class ParDebitDeCompteComponent implements OnInit {
       (error) => {
         this.amountMessage = error.error;
         console.log(this.errorMessage);
-        
+
       }
 
 
@@ -298,7 +338,7 @@ export class ParDebitDeCompteComponent implements OnInit {
 
 
 
-  
+
 }
 
 
