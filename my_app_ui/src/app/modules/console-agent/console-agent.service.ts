@@ -6,6 +6,8 @@ import {TransferRequest} from "../../models/TransferRequest.model";
 import { NgToastService } from 'ng-angular-popup';
 import { TransfertDto } from '../../models/TransfertDto.model';
 import { CheckAmountRequest } from '../../models/CheckAmountRequest';
+import { TransferRefDTO } from './servir-transfert/models/TransferRefDTO';
+import { TransferPaymentDto } from './servir-transfert/models/TransferPaymentDto';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +45,16 @@ export class ConsoleAgentService {
 
   checkAmountOfTransfert(checkAmountRequest: CheckAmountRequest): Observable<any>{
     return this.http.post(`${this.baseUrl}/check-amount`,checkAmountRequest);
+  }
+
+  searchTransfer(transferRefDTO :TransferRefDTO):Observable<any>{
+    return this.http.post(`${this.baseUrl}/showTransfer`, transferRefDTO);
+
+  }
+
+
+  validatePayment(transferPaymentDto: TransferPaymentDto):Observable<any>{
+    return this.http.post(`${this.baseUrl}/validateTransfer`,transferPaymentDto);
   }
 
 
