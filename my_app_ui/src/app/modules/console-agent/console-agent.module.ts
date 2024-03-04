@@ -8,11 +8,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ParDebitDeCompteComponent } from './par-debit-de-compte/par-debit-de-compte.component';
 import { ConsoleAgentService } from './console-agent.service';
 import { NgToastModule } from 'ng-angular-popup';
+import { ServirTransfertComponent } from './servir-transfert/servir-transfert.component';
 
 
 @NgModule({
   declarations: [
-    ParDebitDeCompteComponent
+    ParDebitDeCompteComponent,
+    ServirTransfertComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { NgToastModule } from 'ng-angular-popup';
 
   ],
   exports: [
-    ParDebitDeCompteComponent
+    ParDebitDeCompteComponent,
+    ServirTransfertComponent
   ],
   providers: [ConsoleAgentService],
 })
