@@ -11,6 +11,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { ServirTransfertComponent } from './servir-transfert/servir-transfert.component';
 
 
+
 @NgModule({
   declarations: [
     ParDebitDeCompteComponent,
@@ -22,7 +23,10 @@ import { ServirTransfertComponent } from './servir-transfert/servir-transfert.co
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgToastModule
+    NgToastModule,
+    ToastrModule,
+    ToastrModule.forRoot(),
+
 
   ],
   exports: [

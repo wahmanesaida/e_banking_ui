@@ -190,3 +190,11 @@ select {
 .otp-invalid-message {
   color: red;
 }
+.my-custom-toast {
+  background-color: #95979a; /* Change the background color */
+  color: black !important; /* Change the text color */
+  border: 1px solid #062f5e; /* Add a border */
+  border-radius: 5px; /* Add border radius */
+  padding: 10px; /* Add padding */
+  font-size: 16px; /* Change font size */
+}
