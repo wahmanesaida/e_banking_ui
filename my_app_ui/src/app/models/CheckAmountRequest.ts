@@ -4,13 +4,13 @@ import { User } from "./User.model";
 
 export class CheckAmountRequest{
     transfertDto: TransfertDto;
-    user: User;
-    checkAmount: number;
+    id: number;
 
-    constructor(transfertDto: TransfertDto,user: User, checkAmount: number) {
+
+    constructor(transfertDto: TransfertDto, id: number) {
         this.transfertDto = transfertDto;
-        this.user= user;
-        this.checkAmount = checkAmount;
+        this.id= id;
+
     }
 
 

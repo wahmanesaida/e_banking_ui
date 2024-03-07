@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ParDebitDeCompteComponent } from './par-debit-de-compte/par-debit-de-compte.component';
 import { ConsoleAgentService } from './console-agent.service';
 import { NgToastModule } from 'ng-angular-popup';
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -20,7 +22,10 @@ import { NgToastModule } from 'ng-angular-popup';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgToastModule
+    NgToastModule,
+    ToastrModule,
+    ToastrModule.forRoot(),
+
 
   ],
   exports: [

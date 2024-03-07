@@ -6,6 +6,7 @@ import {TransferRequest} from "../../models/TransferRequest.model";
 import { NgToastService } from 'ng-angular-popup';
 import { TransfertDto } from '../../models/TransfertDto.model';
 import { CheckAmountRequest } from '../../models/CheckAmountRequest';
+import {BeneficiaryDto} from "../../models/BeneficiaryDto.model";
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,9 @@ export class ConsoleAgentService {
 
   checkAmountOfTransfert(checkAmountRequest: CheckAmountRequest): Observable<any>{
     return this.http.post(`${this.baseUrl}/check-amount`,checkAmountRequest);
+  }
+  selectBeneficiary(id_beneficiary: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/selectbene/${id_beneficiary}`, "");
   }
 
 

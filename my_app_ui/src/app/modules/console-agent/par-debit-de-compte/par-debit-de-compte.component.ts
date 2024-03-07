@@ -5,6 +5,11 @@ import {ConsoleAgentService} from "../console-agent.service";
 import {debounceTime, distinctUntilChanged} from "rxjs";
 import {User} from "../../../models/User.model";
 import { CheckAmountRequest } from '../../../models/CheckAmountRequest';
+import {IToast, NgToastService} from "ng-angular-popup";
+import {ToastrService} from "ngx-toastr";
+// @ts-ignore
+import { NgToastConfig } from 'ng-angular-popup';
+
 @Component({
   selector: 'app-par-debit-de-compte',
   templateUrl: './par-debit-de-compte.component.html',
@@ -18,6 +23,8 @@ export class ParDebitDeCompteComponent implements OnInit {
   otpValidated: boolean = false;
   otpSent: boolean = false;
   errorPhone: string='';
+  transferMessage: string;
+
 
 
   title = 'angular13bestcode';
@@ -31,10 +38,9 @@ export class ParDebitDeCompteComponent implements OnInit {
   step = 1;
   validOtp: boolean;
 
-  transfer: TransferRequest;
   tt = "saida";
 
-  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService) {
+  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService) {
   }
 
   ngOnInit() {
@@ -95,19 +101,37 @@ export class ParDebitDeCompteComponent implements OnInit {
     return this.Otp.controls;
   }
 
+  searchBeneficiaryById(){
+    const id=this.transferDetails['id'].value;
+    console.log(id);
+    if(id){
+      this.transfer_service.selectBeneficiary(id).subscribe(
+      );
+      this.PatchFormWithBeneData()
+    }
+  }
+
+  PatchFormWithBeneData(){}
+
   // Integrate the changes for fetching user data and patching the form
   searchByPhoneNumber() {
+
     const phone = this.personal['phone'].value;
+    //this.toastr.info('Processing your request. Please wait...', 'Notification');
 
     if (phone) {
       this.transfer_service.getUserByPhone(phone).subscribe(
         (user: User) => {
           if(user){
             this.patchFormWithUserData(user);
+            this.toastService.info({ detail: "SUCCES", summary: "user found successfuly", duration: 5000, position: 'topCenter' });
+
             this.errorMessage='';
           } else {
             console.log(user);
             this.errorMessage= "Invalid phone number ! ";
+            this.toastService.error({ detail: "Pay Attention", summary: this.errorMessage, duration: 5000, position: 'topCenter' });
+
           }
 
         },
@@ -176,8 +200,15 @@ export class ParDebitDeCompteComponent implements OnInit {
 
       this.transfer_service.makeTransferAgent(transferAgent).subscribe(
         (response) => {
-          console.log('Transfer successful:', response);
-          this.transferDone = true;
+          console.log('Transfer Message:', response);
+          this.transferMessage=response.message;
+          this.toastService.info({ detail: "Transfer Message", summary: response.message, duration: 5000, position: 'topRight' });
+
+          if(response.message == "congratulations, your transaction has been successful with a good amount"){
+            this.transferDone = true;
+
+          }
+
         },
         (error) => {
           console.error('An error occurred:', error);
@@ -222,34 +253,50 @@ export class ParDebitDeCompteComponent implements OnInit {
 
   }
 
- /** previous(
-  ) {
-    if (this.step > 1) {
-      this.step--;
-    }
-    if (this.step === 1) {
-      this.address_step = true;
-    }
-    if (this.step === 2) {
-      this.education_step = false;
-      this.address_step = true;
-    }
-    if(this.step ===3){
-      this.personal_step=false
-
-    }
-    // Add the following lines to ensure form data is visible when navigating back
-    this.personalDetails.updateValueAndValidity();
-    this.transferDetails.updateValueAndValidity();
-  }**/
-
 
   submit() {
 
     if (this.step == 3) {
       this.education_step = true;
+      if(this.otpValidated == false) {
+        this.toastService.error({
+          detail: "Error",
+          summary: "you should validate the Otp before making the transfer !",
+          duration: 5000,
+          position: 'topRight'
+
+        })
+        return;
+      }
+        if(this.otpSent == false){
+          this.toastService.error({
+            detail: "Error",
+            summary: "you should send and validate the Otp before making the transfer !",
+            duration: 5000,
+            position: 'topRight'
+
+          });
+          return;
+
+        }
+
+
       this.makeTransferAgent();
+      this.toastService.info({
+        detail : "Processing your request. Please wait...",
+        summary: "...",
+        duration: 5000,
+        position: 'topCenter'
+
+      })
       if (this.Otp.invalid) {
+        this.toastService.error({
+          detail : "Error",
+          summary: "an error occured in the last form !",
+          duration: 5000,
+          position: 'topCenter'
+
+        })
         return
       }
       //alert("Well done!!")
@@ -263,6 +310,14 @@ export class ParDebitDeCompteComponent implements OnInit {
     this.transfer_service.sendOtp(this.personalDetails.value.username).subscribe(
       (data :string)=>{
         this.otpSent = true;
+        this.toastService.success({
+          detail : "Success",
+          summary: "Otp send successfuly",
+          duration: 5000,
+          position: 'topRight'
+
+        })
+
       },
       (error)=>{
         this.otpSent = false;
@@ -289,52 +344,10 @@ export class ParDebitDeCompteComponent implements OnInit {
   }
 
 
-  checkAmountTransfer(){
-    if (this.transferDetails.invalid) {
-      this.transferDetails.markAllAsTouched(); // Mark all fields as touched to display errors
-      return;
-    }
-    const checkAmountRequest: CheckAmountRequest = {
-      transfertDto: {
-        amount_entred: this.transferDetails.value.amount,
-        notification: this.transferDetails.value.notification,
-        typeOftransfer: this.personalDetails.value.typetransfer,
-        fees: this.transferDetails.value.typeOffees
-      },
-      user:{
-        account_amount: this.userAccountAmount,
-        title: this.transferDetails.get('title').value,
-        pieceIdentite: this.transferDetails.get('pieceIdentite').value,
-        paysEmission: this.transferDetails.get('paysEmission').value,
-        numeroPieceIdentite: this.transferDetails.get('numeroPieceIdentite').value,
-        expirationPieceIdentite: this.transferDetails.get('expirationPieceIdentite').value,
-        validitePieceIdentite: this.transferDetails.get('validitePieceIdentite').value,
-        datenaissance: this.transferDetails.get('datenaissance').value,
-        profession: this.transferDetails.get('profession').value,
-        payeNationale: this.transferDetails.get('payeNationale').value,
-        ville: this.transferDetails.get('ville').value,
-        gsm: this.transferDetails.get('gsm').value,
-        id: this.transferDetails.get('id').value,
-        username: this.transferDetails.get('username').value,
-      },
-      checkAmount:this.transferDetails.get('amount').value
-    }
-    this.transfer_service.checkAmountOfTransfert(checkAmountRequest).subscribe(
-      (response: any) => {
-        this.amountMessage = response.message;
-       /*  if (response.message === 'OTP is valid') {
-          this.otpValidated = true;
-        } */
-      },
-      (error) => {
-        this.amountMessage = error.error;
-        console.log(this.errorMessage);
-
-      }
 
 
-    );
-  }
+
+
 
 
 
