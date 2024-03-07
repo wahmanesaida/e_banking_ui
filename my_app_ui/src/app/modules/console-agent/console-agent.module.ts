@@ -24,8 +24,6 @@ import { ServirTransfertComponent } from './servir-transfert/servir-transfert.co
     FormsModule,
     HttpClientModule,
     NgToastModule,
-    ToastrModule,
-    ToastrModule.forRoot(),
 
 
   ],
