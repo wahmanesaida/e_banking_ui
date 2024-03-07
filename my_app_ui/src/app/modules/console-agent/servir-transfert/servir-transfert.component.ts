@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferRequest } from '../../../models/TransferRequest.model';
 import { ConsoleAgentService } from '../console-agent.service';
-import { User } from '../../../models/User.model';
-import { CheckAmountRequest } from '../../../models/CheckAmountRequest';
 import { TransferRefDTO } from './models/TransferRefDTO';
 import { Transfert } from './models/Transfert';
 import { TransferPaymentDto } from './models/TransferPaymentDto';
@@ -20,6 +18,8 @@ export class ServirTransfertComponent implements OnInit {
   beneficiaryId:number;
   transferId:number;
   transferType:TypeOftransfer;
+  walletSelected:boolean = false;
+  emailBeneficiary:string;
 
 
 
@@ -31,7 +31,7 @@ export class ServirTransfertComponent implements OnInit {
   otpSent: boolean = false;
   errorPhone: string = '';
 
-  title = 'angular13bestcode';
+ 
 
   transferDetails!: FormGroup;
   beneficiaryDetails!: FormGroup;
@@ -43,7 +43,7 @@ export class ServirTransfertComponent implements OnInit {
   validOtp: boolean;
 
   transfer: TransferRequest;
-  tt = 'saida';
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,8 +63,6 @@ export class ServirTransfertComponent implements OnInit {
       firstName: ['', Validators.required],
       lastname: ['', Validators.required]
     });
-
-    console.log(this.transferDetails);
 
     this.beneficiaryDetails = this.formBuilder.group({
         title: ['', Validators.required],
@@ -96,111 +94,15 @@ export class ServirTransfertComponent implements OnInit {
     return this.Otp.controls;
   }
 
-  // Integrate the changes for fetching user data and patching the form
- /*  searchByPhoneNumber() {
-    const phone = this.personal['phone'].value;
-
-    if (phone) {
-      this.transfer_service.getUserByPhone(phone).subscribe(
-        (user: User) => {
-          if (user) {
-            this.patchFormWithUserData(user);
-            this.errorMessage = '';
-          } else {
-            console.log(user);
-            this.errorMessage = 'Invalid phone number ! ';
-          }
-        },
-        (error: any) => {
-          if (error.status === 400) {
-            this.errorPhone = error.error.message;
-          } else {
-            console.error('Error fetching user data:', error);
-          }
-        }
-      );
-    }
-  } */
-
-  /* patchFormWithUserData(user: User) {
-    this.personalDetails.get('title').setValue(user.title);
-    this.personalDetails.get('pieceIdentite').setValue(user.pieceIdentite);
-    this.personalDetails.get('paysEmission').setValue(user.paysEmission);
-    this.personalDetails
-      .get('numeroPieceIdentite')
-      .setValue(user.numeroPieceIdentite);
-    this.personalDetails
-      .get('expirationPieceIdentite')
-      .setValue(user.expirationPieceIdentite);
-    this.personalDetails
-      .get('validitePieceIdentite')
-      .setValue(user.validitePieceIdentite);
-    this.personalDetails.get('datenaissance').setValue(user.datenaissance);
-    this.personalDetails.get('profession').setValue(user.profession);
-    this.personalDetails.get('payeNationale').setValue(user.payeNationale);
-    this.personalDetails.get('ville').setValue(user.ville);
-    this.personalDetails.get('gsm').setValue(user.gsm);
-    this.personalDetails.get('id_donor').setValue(user.id);
-    this.personalDetails.get('username').setValue(user.username);
-    this.userAccountAmount = user.account_amount;
-    this.personalDetails.updateValueAndValidity();
-  } */
-
- /*  makeTransferAgent(): void {
-    if (this.transferDetails.valid) {
-      console.log(this.transferDetails.value.amount);
-      console.log(this.transferDetails.value.notification);
-      console.log(this.transferDetails.value.typeOffees);
-      console.log(this.personalDetails.value.typetransfer);
-      console.log(this.transferDetails.value.id);
-      console.log(this.transferDetails.value.first_name);
-      console.log(this.transferDetails.value.name);
-      console.log(this.transferDetails.value.gsm);
-      console.log(this.transferDetails.value.email);
-      const transferAgent: TransferRequest = {
-        transfertDto: {
-          amount_entred: this.transferDetails.value.amount,
-          notification: this.transferDetails.value.notification,
-          typeOftransfer: this.personalDetails.value.typetransfer,
-          fees: this.transferDetails.value.typeOffees,
-        },
-        id_beneficiary: this.transferDetails.value.id,
-        bene: {
-          firstName: this.transferDetails.value.first_name,
-          lastname: this.transferDetails.value.name,
-          //GSM: this.transferDetails.value.gsm,
-          username: this.transferDetails.value.email,
-        },
-        id_user: this.personalDetails.getRawValue()['id_donor'], // New property
-      };
-      this.personalDetails.updateValueAndValidity();
-      console.log(
-        'this is transer dto: ' + transferAgent.transfertDto.typeOftransfer
-      );
-
-      // this.formdataservice.setFormData(transferAgent);
-
-      this.transfer_service.makeTransferAgent(transferAgent).subscribe(
-        (response) => {
-          console.log('Transfer successful:', response);
-          this.transferDone = true;
-        },
-        (error) => {
-          console.error('An error occurred:', error);
-        }
-      );
-    }
-  } */
-
   next() {
     if (this.step === 1) {
       console.log('Personal details form valid:', this.transferDetails.valid);
       if (this.transferDetails.valid) {
-        this.personal_step = true;
-        this.step++;
+          this.personal_step = true;
+          this.step++;
       }
     } else if (this.step === 2) {
-      console.log('Transfer details form valid:', this.beneficiaryDetails.valid);
+      console.log('Beneficiary details form valid:', this.beneficiaryDetails.valid);
 
       if (this.beneficiaryDetails.valid) {
         this.transfer_step = true;
@@ -251,10 +153,8 @@ export class ServirTransfertComponent implements OnInit {
   }
 
   sendOtp() {
-    console.log(this.transferDetails.value.username);
-
     this.transfer_service
-      .sendOtp(this.transferDetails.value.username)
+      .sendOtp(this.emailBeneficiary)
       .subscribe(
         (data: string) => {
           this.otpSent = true;
@@ -268,7 +168,7 @@ export class ServirTransfertComponent implements OnInit {
   validateOtp() {
     const otp = this.Otp.get('otp').value;
     this.transfer_service
-      .validateOtp(this.transferDetails.value.username, otp)
+      .validateOtp(this.emailBeneficiary, otp)
       .subscribe(
         (response: any) => {
           this.errorMessage = response.message;
@@ -297,6 +197,7 @@ export class ServirTransfertComponent implements OnInit {
           this.beneficiaryId = transfert.beneficiary.id;
           this.transferId = transfert.id;
           this.transferType = transfert.type_transfer;
+          this.emailBeneficiary = transfert.beneficiary.username;
           this.transferDetails.get('idAgent').setValue(transfert.client.id);
           this.transferDetails.get('title').setValue(transfert.client.title);
           this.transferDetails.get('name').setValue(transfert.client.username);
@@ -346,6 +247,8 @@ export class ServirTransfertComponent implements OnInit {
     this.transfer_service.validatePayment(transferPaymentDto).subscribe(
       (response: Blob) => {
         this.toast.success({ detail: "Congrats", summary: 'Payment validated', duration: 5000, position: 'topCenter' });
+        console.log(response);
+        
         // Create a blob object from the response
         const blob = new Blob([response], { type: 'application/pdf' });
         // Create a download link for the blob
@@ -360,11 +263,21 @@ export class ServirTransfertComponent implements OnInit {
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
       },
-      (error) => {
+      (error:any) => {
+        console.log(error);
         this.toast.error({ detail: "Pay Attention", summary: error.error, duration: 5000, position: 'topCenter' });
       }
     );
   }
+
+
+  onTransferTypeChange() {
+    const transferType = this.transferDetails.get('typetransfer').value;
+    this.walletSelected = transferType === 'WALLET';
+  }
+  
+  
+  
 
 
 

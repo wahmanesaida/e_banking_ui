@@ -23,6 +23,7 @@
             <select
               formControlName="typetransfer"
               class="form-control"
+              (change)="onTransferTypeChange()"
             >
               <option value="" disabled selected>Select Transfer Type</option>
               <option value="SPECIES">SPECIES</option>
@@ -260,29 +261,32 @@
           <fieldset *ngIf="step == 3">
             <h2 class="fs-title">Validation du paiement du transfert</h2>
             <ng-toast></ng-toast>
-           <!--  <ng-toast></ng-toast>
-            <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
+            <div *ngIf="walletSelected">
+
+              <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
   
-            <input
-              type="text"
-              formControlName="otp"
-              placeholder="enter the otp"
-            />
-  
-            <div
-              *ngIf="otp && Otp.controls['otp'].errors"
-            >
-              <div *ngIf="Otp.controls['otp'].errors['required']">
-                Otp is required
+              <input
+                type="text"
+                formControlName="otp"
+                placeholder="enter the otp"
+              />
+    
+              <div
+                *ngIf="otp && Otp.controls['otp'].errors"
+              >
+                <div *ngIf="Otp.controls['otp'].errors['required']">
+                  Otp is required
+                </div>
               </div>
+    
+              <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
+    
+              <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+              </div> 
+
             </div>
-  
-            <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
-  
-            <div *ngIf="errorMessage" class="error-message">
-              {{ errorMessage }}
-            </div> -->
-  
+           
             <input
               (click)="previous()"
               type="button"
