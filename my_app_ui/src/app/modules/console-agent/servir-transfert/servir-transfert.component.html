@@ -19,12 +19,12 @@
   
           <fieldset *ngIf="step == 1">
             <h2 class="fs-title">Affichage des informations du Transfert</h2>
+            <ng-toast></ng-toast>
             <select
               formControlName="typetransfer"
               class="form-control"
             >
               <option value="" disabled selected>Select Transfer Type</option>
-              <option value="ACCOUNT_DEBIT"> ACCOUNT_DEBIT</option>
               <option value="SPECIES">SPECIES</option>
               <option value="WALLET">WALLET</option>
             </select>
@@ -136,12 +136,12 @@
           </fieldset>
         </form>
   
-        <form [formGroup]="transferDetails" id="msform">
+        <form [formGroup]="beneficiaryDetails" id="msform">
           <fieldset *ngIf="step == 2">
             <h2 class="fs-title">La saisie des informations du bénéficiaire</h2>
   
             <input type="text" name="title" formControlName="title"  placeholder="title" />
-            <div *ngIf="transfer_step && transferDetails.controls['title'].errors">
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['title'].errors">
               <div *ngIf="transferD['title'].errors['required']">
                 title is required
               </div>
@@ -149,7 +149,7 @@
 
 
             <input type="text" name="pieceIdentite" formControlName="pieceIdentite"  placeholder="pieceIdentite" />
-            <div *ngIf="transfer_step && transferDetails.controls['pieceIdentite'].errors">
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['pieceIdentite'].errors">
               <div *ngIf="transferD['pieceIdentite'].errors['required']">
                 pieceIdentite is required
               </div>
@@ -157,7 +157,7 @@
 
 
             <input type="text" name="paysEmission" formControlName="paysEmission"  placeholder="paysEmission" />
-            <div *ngIf="transfer_step && transferDetails.controls['paysEmission'].errors">
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['paysEmission'].errors">
               <div *ngIf="transferD['paysEmission'].errors['required']">
                 paysEmission is required
               </div>
@@ -165,7 +165,7 @@
 
 
             <input type="text" name="numeroPieceIdentite" formControlName="numeroPieceIdentite"  placeholder="numeroPieceIdentite" />
-            <div *ngIf="transfer_step && transferDetails.controls['numeroPieceIdentite'].errors">
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['numeroPieceIdentite'].errors">
               <div *ngIf="transferD['numeroPieceIdentite'].errors['required']">
                 numeroPieceIdentite is required
               </div>
@@ -173,7 +173,7 @@
 
 
             <input type="text" name="expirationPieceIdentite" formControlName="expirationPieceIdentite"  placeholder="expirationPieceIdentite"/>
-            <div *ngIf="transfer_step && transferDetails.controls['expirationPieceIdentite'].errors">
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['expirationPieceIdentite'].errors">
               <div *ngIf="transferD['expirationPieceIdentite'].errors['required']">
                 expirationPieceIdentite is required
               </div>
@@ -181,7 +181,7 @@
   
             <input type="text" formControlName="validitePieceIdentite" placeholder="validitePieceIdentite" />
             <div
-              *ngIf="transfer_step && transferDetails.controls['validitePieceIdentite'].errors"
+              *ngIf="transfer_step && beneficiaryDetails.controls['validitePieceIdentite'].errors"
             >
               <div *ngIf="transferD['validitePieceIdentite'].errors['required']">
                 validitePieceIdentite is required
@@ -190,7 +190,7 @@
   
             <input type="text" formControlName="datenaissance" placeholder="datenaissance" />
             <div
-              *ngIf="transfer_step && transferDetails.controls['datenaissance'].errors"
+              *ngIf="transfer_step && beneficiaryDetails.controls['datenaissance'].errors"
             >
               <div *ngIf="transferD['datenaissance'].errors['required']">
                 datenaissance is required
@@ -201,13 +201,11 @@
             <select
               formControlName="profession"
               class="form-control"
-  
             >
               <option value="" disabled selected>profession</option>
-              <option value="true"> true</option>
-              <option value="false">false</option>
+              <option value="ingénieur">ingénieur</option>
             </select>
-            <div *ngIf="transfer_step && transferDetails.controls['profession'].errors">
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['profession'].errors">
               <div *ngIf="transferD['profession'].errors['required']">
                 profession is required
               </div>
@@ -216,7 +214,7 @@
 
             <input type="text" formControlName="payeNationale" placeholder="payeNationale" />
             <div
-              *ngIf="transfer_step && transferDetails.controls['payeNationale'].errors"
+              *ngIf="transfer_step && beneficiaryDetails.controls['payeNationale'].errors"
             >
               <div *ngIf="transferD['payeNationale'].errors['required']">
                 payeNationale is required
@@ -227,15 +225,13 @@
             <select
               formControlName="ville"
               class="form-control"
-  
             >
               <option value="" disabled selected>ville</option>
-              <option value="donor"> donor</option>
-              <option value="beneficiary">beneficiary</option>
-              <option value="shared">shared</option>
-  
+              <option value="safi">safi</option>
+              <option value="Casablanca">Casablanca</option>
+              <option value="Tanger">Tanger</option>
             </select>
-            <div *ngIf="transfer_step && transferDetails.controls['ville'].errors">
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['ville'].errors">
               <div *ngIf="transferD['ville'].errors['required']">
                 ville is required
               </div>
@@ -264,6 +260,7 @@
           <fieldset *ngIf="step == 3">
             <h2 class="fs-title">Validation du paiement du transfert</h2>
             <ng-toast></ng-toast>
+           <!--  <ng-toast></ng-toast>
             <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
   
             <input
@@ -284,7 +281,7 @@
   
             <div *ngIf="errorMessage" class="error-message">
               {{ errorMessage }}
-            </div>
+            </div> -->
   
             <input
               (click)="previous()"
@@ -294,8 +291,7 @@
               value="Previous"
             />
             <input
-              (click)="submit()"
-              [disabled]="transferDone"
+              (click)="submit() ; validatePayment()"
               type="submit"
               name="submit"
               class="submit action-button"
