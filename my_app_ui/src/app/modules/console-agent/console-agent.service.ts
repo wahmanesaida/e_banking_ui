@@ -7,6 +7,9 @@ import { NgToastService } from 'ng-angular-popup';
 import { TransfertDto } from '../../models/TransfertDto.model';
 import { CheckAmountRequest } from '../../models/CheckAmountRequest';
 import {BeneficiaryDto} from "../../models/BeneficiaryDto.model";
+import { TransferRefDTO } from './servir-transfert/models/TransferRefDTO';
+import { TransferPaymentDto } from './servir-transfert/models/TransferPaymentDto';
+
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +51,16 @@ export class ConsoleAgentService {
   selectBeneficiary(id_beneficiary: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/selectbene/${id_beneficiary}`, "");
   }
+
+  searchTransfer(transferRefDTO :TransferRefDTO):Observable<any>{
+    return this.http.post(`${this.baseUrl}/showTransfer`, transferRefDTO);
+
+  }
+
+
+  validatePayment(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+    return this.http.post(`${this.baseUrl}/validateTransfer`, transferPaymentDto, { responseType: 'blob' });
+  }  
 
 
 

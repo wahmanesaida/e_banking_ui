@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderDashComponent } from './header-dash/header-dash.component';
 import { ParDebitDeCompteComponent } from '../console-agent/par-debit-de-compte/par-debit-de-compte.component';
+import { ServirTransfertComponent } from '../console-agent/servir-transfert/servir-transfert.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
     {
       path: 'par-debit-compte',
       component: ParDebitDeCompteComponent,
+    },
+    {
+      path: 'servir-transfert',
+      component: ServirTransfertComponent,
     }
   ]
   }

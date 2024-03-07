@@ -1,0 +1,305 @@
+<div class="container py-5">
+    <div class="row">
+      <div class="col-md-12 col-md-offset-3">
+        <form [formGroup]="transferDetails" id="msform">
+          <!-- progressbar -->
+          <ul id="progressbar">
+            <li [ngClass]="step >= 1 ? 'active ' : 'inactive'">
+              Affichage des informations du Transfert
+            </li>
+            <li [ngClass]="step >= 2 ? 'active' : 'inactive'">
+              La saisie des informations du bénéficiaire
+            </li>
+            <li [ngClass]="step == 3 ? 'active' : 'inactive'">
+              Validation du paiement du transfert
+            </li>
+  
+          </ul>
+          <!-- fieldsets -->
+  
+          <fieldset *ngIf="step == 1">
+            <h2 class="fs-title">Affichage des informations du Transfert</h2>
+            <ng-toast></ng-toast>
+            <select
+              formControlName="typetransfer"
+              class="form-control"
+            >
+              <option value="" disabled selected>Select Transfer Type</option>
+              <option value="SPECIES">SPECIES</option>
+              <option value="WALLET">WALLET</option>
+            </select>
+            <div *ngIf="personal && transferDetails.controls['typetransfer'].errors">
+              <div *ngIf="transferDetails.controls['typetransfer'].errors['required']">
+                you should select type of transfer
+              </div>
+            </div>
+  
+  
+            <div>
+              <input type="text" formControlName="transferRef" placeholder="enter the reference of transfer" />
+              <div
+                *ngIf="personal && transferDetails.controls['transferRef'].errors"
+              >
+                <div *ngIf="transferDetails.controls['transferRef'].errors['required']">
+                  transferRef is required
+                </div>
+              </div>
+              <div *ngIf="errorPhone">{{ errorPhone }}</div>
+              <input
+                (click)="searchTransfer()"
+                type="button"
+                name="next"
+                class="next action-button"
+                value="Search"
+              />
+            </div>
+            <div *ngIf="errorMessage" class="error-message">
+              {{ errorMessage }}
+            </div>
+  
+            <input
+              type="number"
+              formControlName="idAgent"
+              [ngClass]="{
+                'is-invalid': personal_step && personal['idAgent'].errors
+              }"
+              readonly
+              placeholder="Id Agent"
+  
+            />
+  
+            <input
+              type="text"
+              formControlName="title"
+              [ngClass]="{
+                'is-invalid': personal_step && personal['title'].errors
+              }"
+              readonly
+              placeholder="Title"
+  
+            />
+  
+            <input
+              type="text"
+              formControlName="name"
+              [ngClass]="{
+                'is-invalid': personal_step && personal['name'].errors
+              }"
+              readonly
+              placeholder="Name"
+  
+            />
+
+            <input
+              type="text"
+              formControlName="createTime"
+              [ngClass]="{
+            'is-invalid': personal_step && personal['createTime'].errors
+          }"
+              readonly
+              placeholder="Date d'émission"
+            />
+            <input
+              type="text"
+              formControlName="amount_transfer"
+              [ngClass]="{
+          'is-invalid': personal_step && personal['amount_transfer'].errors
+        }"
+              readonly
+              placeholder="Montant à servir"
+            />
+            <input
+              type="text"
+              formControlName="firstName"
+              [ngClass]="{
+        'is-invalid': personal_step && personal['firstName'].errors
+      }"
+              readonly
+              placeholder="Prénom du bénéficaire"
+            />
+            <input
+              type="text"
+              formControlName="lastname"
+              [ngClass]="{
+      'is-invalid': personal_step && personal['lastname'].errors
+    }"
+              readonly
+              placeholder="Nom du bénéficaire"
+            />
+            <input
+              (click)="next()"
+              type="button"
+              name="next"
+              class="next action-button"
+              value="Next"
+            />
+          </fieldset>
+        </form>
+  
+        <form [formGroup]="beneficiaryDetails" id="msform">
+          <fieldset *ngIf="step == 2">
+            <h2 class="fs-title">La saisie des informations du bénéficiaire</h2>
+  
+            <input type="text" name="title" formControlName="title"  placeholder="title" />
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['title'].errors">
+              <div *ngIf="transferD['title'].errors['required']">
+                title is required
+              </div>
+            </div>
+
+
+            <input type="text" name="pieceIdentite" formControlName="pieceIdentite"  placeholder="pieceIdentite" />
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['pieceIdentite'].errors">
+              <div *ngIf="transferD['pieceIdentite'].errors['required']">
+                pieceIdentite is required
+              </div>
+            </div>
+
+
+            <input type="text" name="paysEmission" formControlName="paysEmission"  placeholder="paysEmission" />
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['paysEmission'].errors">
+              <div *ngIf="transferD['paysEmission'].errors['required']">
+                paysEmission is required
+              </div>
+            </div>
+
+
+            <input type="text" name="numeroPieceIdentite" formControlName="numeroPieceIdentite"  placeholder="numeroPieceIdentite" />
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['numeroPieceIdentite'].errors">
+              <div *ngIf="transferD['numeroPieceIdentite'].errors['required']">
+                numeroPieceIdentite is required
+              </div>
+            </div>
+
+
+            <input type="text" name="expirationPieceIdentite" formControlName="expirationPieceIdentite"  placeholder="expirationPieceIdentite"/>
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['expirationPieceIdentite'].errors">
+              <div *ngIf="transferD['expirationPieceIdentite'].errors['required']">
+                expirationPieceIdentite is required
+              </div>
+            </div>
+  
+            <input type="text" formControlName="validitePieceIdentite" placeholder="validitePieceIdentite" />
+            <div
+              *ngIf="transfer_step && beneficiaryDetails.controls['validitePieceIdentite'].errors"
+            >
+              <div *ngIf="transferD['validitePieceIdentite'].errors['required']">
+                validitePieceIdentite is required
+              </div>
+            </div>
+  
+            <input type="text" formControlName="datenaissance" placeholder="datenaissance" />
+            <div
+              *ngIf="transfer_step && beneficiaryDetails.controls['datenaissance'].errors"
+            >
+              <div *ngIf="transferD['datenaissance'].errors['required']">
+                datenaissance is required
+              </div>
+            </div>
+
+  
+            <select
+              formControlName="profession"
+              class="form-control"
+            >
+              <option value="" disabled selected>profession</option>
+              <option value="ingénieur">ingénieur</option>
+            </select>
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['profession'].errors">
+              <div *ngIf="transferD['profession'].errors['required']">
+                profession is required
+              </div>
+            </div>
+
+
+            <input type="text" formControlName="payeNationale" placeholder="payeNationale" />
+            <div
+              *ngIf="transfer_step && beneficiaryDetails.controls['payeNationale'].errors"
+            >
+              <div *ngIf="transferD['payeNationale'].errors['required']">
+                payeNationale is required
+              </div>
+            </div>
+  
+  
+            <select
+              formControlName="ville"
+              class="form-control"
+            >
+              <option value="" disabled selected>ville</option>
+              <option value="safi">safi</option>
+              <option value="Casablanca">Casablanca</option>
+              <option value="Tanger">Tanger</option>
+            </select>
+            <div *ngIf="transfer_step && beneficiaryDetails.controls['ville'].errors">
+              <div *ngIf="transferD['ville'].errors['required']">
+                ville is required
+              </div>
+            </div>
+  
+  
+            <input
+              (click)="previous()"
+              type="button"
+              name="previous"
+              class="previous action-button-previous"
+              value="Previous"
+            />
+            <input
+              (click)="next()"
+              type="button"
+              name="next"
+              class="next action-button"
+              value="Next"
+            />
+          </fieldset>
+        </form>
+  
+  
+        <form [formGroup]="Otp" id="msform">
+          <fieldset *ngIf="step == 3">
+            <h2 class="fs-title">Validation du paiement du transfert</h2>
+            <ng-toast></ng-toast>
+           <!--  <ng-toast></ng-toast>
+            <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
+  
+            <input
+              type="text"
+              formControlName="otp"
+              placeholder="enter the otp"
+            />
+  
+            <div
+              *ngIf="otp && Otp.controls['otp'].errors"
+            >
+              <div *ngIf="Otp.controls['otp'].errors['required']">
+                Otp is required
+              </div>
+            </div>
+  
+            <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
+  
+            <div *ngIf="errorMessage" class="error-message">
+              {{ errorMessage }}
+            </div> -->
+  
+            <input
+              (click)="previous()"
+              type="button"
+              name="previous"
+              class="previous action-button-previous"
+              value="Previous"
+            />
+            <input
+              (click)="submit() ; validatePayment()"
+              type="submit"
+              name="submit"
+              class="submit action-button"
+              value="Submit"
+            />
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  
