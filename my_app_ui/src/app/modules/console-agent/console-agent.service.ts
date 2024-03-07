@@ -53,9 +53,9 @@ export class ConsoleAgentService {
   }
 
 
-  validatePayment(transferPaymentDto: TransferPaymentDto):Observable<any>{
-    return this.http.post(`${this.baseUrl}/validateTransfer`,transferPaymentDto);
-  }
+  validatePayment(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+    return this.http.post(`${this.baseUrl}/validateTransfer`, transferPaymentDto, { responseType: 'blob' });
+  }  
 
 
 
