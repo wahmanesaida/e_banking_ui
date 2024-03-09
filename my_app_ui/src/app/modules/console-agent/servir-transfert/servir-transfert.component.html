@@ -301,6 +301,14 @@
               class="submit action-button"
               value="Submit"
             />
+            <input
+            (click)="generatePaymentReceipt()"
+            *ngIf="transferPaid"
+            type="submit"
+            name="submit"
+            class="submit action-button"
+            value="download"
+          />
           </fieldset>
         </form>
       </div>
