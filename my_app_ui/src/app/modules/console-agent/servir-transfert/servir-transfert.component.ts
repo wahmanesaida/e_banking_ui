@@ -7,6 +7,7 @@ import { Transfert } from './models/Transfert';
 import { TransferPaymentDto } from './models/TransferPaymentDto';
 import { TypeOftransfer } from '../../../models/TypeOftransfer.enum';
 import { NgToastService } from 'ng-angular-popup';
+import { BeneficiaryDto } from './models/BeneficiaryDto';
 
 @Component({
   selector: 'app-servir-transfert',
@@ -203,6 +204,20 @@ export class ServirTransfertComponent implements OnInit {
           this.transferDetails
             .get('lastname')
             .setValue(transfert.beneficiary.lastname);
+
+            const existingBeneficiaryDto: BeneficiaryDto = {
+              title: transfert.beneficiary.title,
+              pieceIdentite: transfert.beneficiary.pieceIdentite,
+              paysEmission: transfert.beneficiary.paysEmission,
+              numeroPieceIdentite: transfert.beneficiary.numeroPieceIdentite,
+              expirationPieceIdentite: transfert.beneficiary.expirationPieceIdentite,
+              validitePieceIdentite: transfert.beneficiary.validitePieceIdentite,
+              datenaissance: transfert.beneficiary.datenaissance,
+              profession: transfert.beneficiary.profession,
+              payeNationale: transfert.beneficiary.payeNationale,
+              ville: transfert.beneficiary.ville,
+            };
+            this.updateBeneficiaryInfo(existingBeneficiaryDto);
         },
         (error) => {
           this.toast.error({
@@ -263,6 +278,23 @@ export class ServirTransfertComponent implements OnInit {
         });
       }
     );
+
+  }
+
+
+  updateBeneficiaryInfo(beneficiaryDto: BeneficiaryDto): void {
+    this.beneficiaryDetails.patchValue({
+      title: beneficiaryDto.title,
+      pieceIdentite: beneficiaryDto.pieceIdentite,
+      paysEmission: beneficiaryDto.paysEmission,
+      numeroPieceIdentite: beneficiaryDto.numeroPieceIdentite,
+      expirationPieceIdentite: beneficiaryDto.expirationPieceIdentite,
+      validitePieceIdentite: beneficiaryDto.validitePieceIdentite,
+      datenaissance: beneficiaryDto.datenaissance,
+      profession: beneficiaryDto.profession,
+      payeNationale: beneficiaryDto.payeNationale,
+      ville: beneficiaryDto.ville,
+    });
   }
 
   generatePaymentReceipt() {
@@ -322,4 +354,5 @@ export class ServirTransfertComponent implements OnInit {
     const transferType = this.transferDetails.get('typetransfer').value;
     this.walletSelected = transferType === 'WALLET';
   }
+  
 }
