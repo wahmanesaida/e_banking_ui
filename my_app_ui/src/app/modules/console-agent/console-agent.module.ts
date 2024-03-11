@@ -9,13 +9,26 @@ import { ParDebitDeCompteComponent } from './par-debit-de-compte/par-debit-de-co
 import { ConsoleAgentService } from './console-agent.service';
 import { NgToastModule } from 'ng-angular-popup';
 import { ServirTransfertComponent } from './servir-transfert/servir-transfert.component';
+import {MatButton, MatButtonModule} from "@angular/material/button";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogTitle
+} from "@angular/material/dialog";
+import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
 
 
 
 @NgModule({
   declarations: [
     ParDebitDeCompteComponent,
-    ServirTransfertComponent
+    ServirTransfertComponent,
+    DialogBeneficiaryComponent
   ],
   imports: [
     CommonModule,
@@ -24,12 +37,25 @@ import { ServirTransfertComponent } from './servir-transfert/servir-transfert.co
     FormsModule,
     HttpClientModule,
     NgToastModule,
+    MatButton,
+    //BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
 
 
   ],
   exports: [
     ParDebitDeCompteComponent,
-    ServirTransfertComponent
+    ServirTransfertComponent,
+    DialogBeneficiaryComponent
   ],
   providers: [ConsoleAgentService],
 })

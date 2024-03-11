@@ -15,7 +15,7 @@ import { ConsoleAgentModule } from '../console-agent/console-agent.module';
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent
-    
+
   ],
   imports: [
     CommonModule,
@@ -23,7 +23,8 @@ import { ConsoleAgentModule } from '../console-agent/console-agent.module';
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    ConsoleAgentModule
+    ConsoleAgentModule,
+
   ],
   exports: [
     NavBarDashComponent,
