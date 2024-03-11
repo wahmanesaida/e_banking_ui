@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {TransferRequest} from "../../../models/TransferRequest.model";
 import {ConsoleAgentService} from "../console-agent.service";
-import {debounceTime, distinctUntilChanged} from "rxjs";
 import {User} from "../../../models/User.model";
-import { CheckAmountRequest } from '../../../models/CheckAmountRequest';
-import {IToast, NgToastService} from "ng-angular-popup";
-import {ToastrService} from "ngx-toastr";
-// @ts-ignore
-import { NgToastConfig } from 'ng-angular-popup';
+import {NgToastService} from "ng-angular-popup";
+import {Beneficiary} from "../servir-transfert/models/Beneficiary";
+import {DialogBeneficiaryComponent} from "./dialog-beneficiary/dialog-beneficiary.component";
+import {MatDialog} from "@angular/material/dialog";
+import {BeneficiaryDto} from "../../../models/BeneficiaryDto.model";
 
 @Component({
   selector: 'app-par-debit-de-compte',
@@ -39,8 +38,10 @@ export class ParDebitDeCompteComponent implements OnInit {
   validOtp: boolean;
 
   tt = "saida";
+  private name: any;
+  private animal: any;
 
-  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService) {
+  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -102,16 +103,49 @@ export class ParDebitDeCompteComponent implements OnInit {
   }
 
   searchBeneficiaryById(){
-    const id=this.transferDetails['id'].value;
+    console.log("the button is clicked !");
+    const id=this.transferD['id'].value;
+    console.log(this.personal['id_donor'].value)
     console.log(id);
     if(id){
       this.transfer_service.selectBeneficiary(id).subscribe(
+        (beneficiary: Beneficiary) => {
+          if(beneficiary != null){
+            this.PatchFormWithBeneData(beneficiary);
+            this.toastService.info({ detail: "SUCCES", summary: "user found successfuly", duration: 5000, position: 'topCenter' });
+
+            this.errorMessage='';
+          } else {
+            console.log(beneficiary);
+            this.PatchFormWithBeneData(beneficiary);
+            this.errorMessage= "Invalid ID , there is no beneficiary with this Id ! ";
+            this.toastService.error({ detail: "Pay Attention", summary: this.errorMessage, duration: 5000, position: 'topCenter' });
+
+
+
+          }
+
+        }
       );
-      this.PatchFormWithBeneData()
     }
   }
 
-  PatchFormWithBeneData(){}
+  PatchFormWithBeneData(beneficiary : Beneficiary){
+    if(beneficiary != null) {
+      this.transferDetails.get('name').setValue(beneficiary.lastname);
+      this.transferDetails.get('first_name').setValue(beneficiary.firstName);
+      this.transferDetails.get('email').setValue(beneficiary.username);
+      this.transferDetails.updateValueAndValidity();
+
+    }else{
+      this.transferDetails.get('name').setValue('');
+      this.transferDetails.get('first_name').setValue('');
+      this.transferDetails.get('email').setValue('');
+      this.transferDetails.updateValueAndValidity();
+
+    }
+
+  }
 
   // Integrate the changes for fetching user data and patching the form
   searchByPhoneNumber() {
@@ -341,6 +375,33 @@ export class ParDebitDeCompteComponent implements OnInit {
         this.otpValidated = false;
       }
     );
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogBeneficiaryComponent, {
+      data: { id_user: this.personal['id_donor'].value }// Pass id_user if necessary
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const beneficiaryDto: BeneficiaryDto = {
+          firstName: result.firstName,
+          lastname: result.lastName,
+          username: result.email,
+          // Add other properties as needed
+        };
+
+        this.transfer_service.AddBeneficiary(beneficiaryDto, this.personal['id_donor'].value).subscribe(
+          (response: any) => {
+            console.log('Beneficiary added successfully');
+          },
+          (error) => {
+            console.error('Error adding beneficiary:', error);
+          }
+        );
+      }
+    });
   }
 
 
