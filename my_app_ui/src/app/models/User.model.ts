@@ -1,5 +1,6 @@
 export class User {
   title: string;
+  name:string;
   pieceIdentite: string;
   paysEmission: string;
   numeroPieceIdentite: string;
@@ -17,6 +18,7 @@ export class User {
 
   constructor(
     title: string,
+    name:string,
     pieceIdentite: string,
     paysEmission: string,
     numeroPieceIdentite: string,
@@ -32,6 +34,7 @@ export class User {
     username: string
   ) {
     this.title = title;
+    this.name = name;
     this.pieceIdentite = pieceIdentite;
     this.paysEmission = paysEmission;
     this.numeroPieceIdentite = numeroPieceIdentite;

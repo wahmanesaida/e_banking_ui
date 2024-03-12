@@ -71,23 +71,23 @@
   
             <input
               type="text"
-              formControlName="title"
-              [ngClass]="{
-                'is-invalid': personal_step && personal['title'].errors
-              }"
-              readonly
-              placeholder="Title"
-  
-            />
-  
-            <input
-              type="text"
               formControlName="name"
               [ngClass]="{
                 'is-invalid': personal_step && personal['name'].errors
               }"
               readonly
               placeholder="Name"
+  
+            />
+  
+            <input
+              type="text"
+              formControlName="username"
+              [ngClass]="{
+                'is-invalid': personal_step && personal['username'].errors
+              }"
+              readonly
+              placeholder="Username"
   
             />
 

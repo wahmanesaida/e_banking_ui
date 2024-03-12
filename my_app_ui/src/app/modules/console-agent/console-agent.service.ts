@@ -60,9 +60,6 @@ export class ConsoleAgentService {
     return this.http.post(`${this.baseUrl}/showTransfer`, transferRefDTO);
 
   }
-   validatePayment(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
-    return this.http.post(`${this.baseUrl}/validateTransfer`, transferPaymentDto, { responseType: 'blob' });
-  }
    validatePayment(transferPaymentDto: TransferPaymentDto): Observable<any> {
     return this.http.post(`${this.baseUrl}/validateTransfer`, transferPaymentDto);
   }
