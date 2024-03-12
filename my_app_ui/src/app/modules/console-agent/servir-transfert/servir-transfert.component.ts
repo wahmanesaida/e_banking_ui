@@ -52,8 +52,8 @@ export class ServirTransfertComponent implements OnInit {
       typetransfer: ['', Validators.required],
       transferRef: ['', Validators.required],
       idAgent: ['', Validators.required],
-      title: ['', Validators.required],
       name: ['', Validators.required],
+      username: ['', Validators.required],
       createTime: ['', Validators.required],
       amount_transfer: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -190,20 +190,13 @@ export class ServirTransfertComponent implements OnInit {
           this.transferId = transfert.id;
           this.transferType = transfert.type_transfer;
           this.emailBeneficiary = transfert.beneficiary.username;
-          this.transferDetails.get('idAgent').setValue(transfert.client.id);
-          this.transferDetails.get('title').setValue(transfert.client.title);
-          this.transferDetails.get('name').setValue(transfert.client.username);
-          this.transferDetails.get('title').setValue(transfert.client.title);
+          this.transferDetails.get('idAgent').setValue(transfert.agent.id); 
+          this.transferDetails.get('name').setValue(transfert.client.name);
+          this.transferDetails.get('username').setValue(transfert.client.username);
           this.transferDetails.get('createTime').setValue(transfert.createTime);
-          this.transferDetails
-            .get('amount_transfer')
-            .setValue(transfert.amount_transfer);
-          this.transferDetails
-            .get('firstName')
-            .setValue(transfert.beneficiary.firstName);
-          this.transferDetails
-            .get('lastname')
-            .setValue(transfert.beneficiary.lastname);
+          this.transferDetails.get('amount_transfer').setValue(transfert.amount_transfer);
+          this.transferDetails.get('firstName').setValue(transfert.beneficiary.firstName);
+          this.transferDetails.get('lastname').setValue(transfert.beneficiary.lastname);
 
             const existingBeneficiaryDto: BeneficiaryDto = {
               title: transfert.beneficiary.title,
@@ -241,7 +234,6 @@ export class ServirTransfertComponent implements OnInit {
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
         typeOftransfer: this.transferType,
-        idClient: this.transferDetails.get('idAgent').value,
       },
       beneficiaryDto: {
         id: this.beneficiaryId,
@@ -305,7 +297,6 @@ export class ServirTransfertComponent implements OnInit {
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
         typeOftransfer: this.transferType,
-        idClient: this.transferDetails.get('idAgent').value,
       },
       beneficiaryDto: {
         id: this.beneficiaryId,
