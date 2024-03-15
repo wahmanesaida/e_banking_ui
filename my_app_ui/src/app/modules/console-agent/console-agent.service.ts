@@ -66,6 +66,9 @@ export class ConsoleAgentService {
    generatePaymentReceipt(transferPaymentDto: TransferPaymentDto): Observable<Blob>{
     return this.http.post(`${this.baseUrl}/generatePaymentReciept`, transferPaymentDto, { responseType: 'blob' });
   }
+  reverseTransfer(transferPaymentDto: TransferPaymentDto):Observable<any>{
+    return this.http.post(`${this.baseUrl}/reverseTransfer`, transferPaymentDto);
+  }
 
 
 
