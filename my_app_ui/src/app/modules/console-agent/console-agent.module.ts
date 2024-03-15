@@ -21,6 +21,7 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
+import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transfert.component';
 
 
 
@@ -28,6 +29,7 @@ import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficia
   declarations: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
+    ExtourneTransfertComponent,
     DialogBeneficiaryComponent
   ],
   imports: [
@@ -55,6 +57,7 @@ import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficia
   exports: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
+    ExtourneTransfertComponent,
     DialogBeneficiaryComponent
   ],
   providers: [ConsoleAgentService],

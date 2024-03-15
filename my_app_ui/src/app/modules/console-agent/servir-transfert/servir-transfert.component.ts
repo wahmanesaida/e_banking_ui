@@ -22,13 +22,11 @@ export class ServirTransfertComponent implements OnInit {
   emailBeneficiary: string;
   transferPaid:boolean = false;
 
-  userAccountAmount: number;
-  amountMessage: string;
-  errorMessage: string;
+
+  errorMessage:string;
   transferDone: boolean = false;
   otpValidated: boolean = false;
   otpSent: boolean = false;
-  errorPhone: string = '';
 
   transferDetails!: FormGroup;
   beneficiaryDetails!: FormGroup;
@@ -37,7 +35,6 @@ export class ServirTransfertComponent implements OnInit {
   transfer_step = false;
   education_step = false;
   step = 1;
-  validOtp: boolean;
 
   transfer: TransferRequest;
 
@@ -50,7 +47,7 @@ export class ServirTransfertComponent implements OnInit {
   ngOnInit() {
     this.transferDetails = this.formBuilder.group({
       typetransfer: ['', Validators.required],
-      transferRef: ['', Validators.required],
+      transferRef: ['', [Validators.required, Validators.pattern(/^837\d{10}$/)]],
       idAgent: ['', Validators.required],
       name: ['', Validators.required],
       username: ['', Validators.required],
@@ -59,7 +56,7 @@ export class ServirTransfertComponent implements OnInit {
       firstName: ['', Validators.required],
       lastname: ['', Validators.required],
     });
-
+    
     this.beneficiaryDetails = this.formBuilder.group({
       title: ['', Validators.required],
       pieceIdentite: ['', Validators.required],
@@ -74,7 +71,7 @@ export class ServirTransfertComponent implements OnInit {
     });
 
     this.Otp = this.formBuilder.group({
-      otp: ['', Validators.required],
+      otp: ['',[Validators.required, Validators.pattern(/^\d{6}$/)]],
     });
   }
 

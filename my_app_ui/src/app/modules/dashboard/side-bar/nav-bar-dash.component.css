@@ -11,7 +11,7 @@ body{
 }
 
 .sidebar{
-  min-height: 100vh;
+  height: 100vh; /* Set a fixed height for the sidebar */
   width: 78px;
   padding: 6px 14px;
   z-index: 99;
@@ -20,7 +20,14 @@ body{
   position: fixed;
   top:0;
   left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
 
 .sidebar.open{
   width: 250px;

@@ -17,6 +17,7 @@ export class Transfert{
     transferRef?:string;
     client?:User;
     agent?:User;
+    motif?:string;
     beneficiary?:Beneficiary;
     //transaction madrthach
 
@@ -31,6 +32,7 @@ export class Transfert{
         transferRef?:string,
         client?:User,
         agent?:User,
+        motif?:string,
         beneficiary?:Beneficiary
 
     ) {
@@ -44,6 +46,7 @@ export class Transfert{
         this.transferRef = transferRef;
         this.client = client;
         this.agent = agent;
+        this.motif = motif;
         this.beneficiary = beneficiary;
     }
 
