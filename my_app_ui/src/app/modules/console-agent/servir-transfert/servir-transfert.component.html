@@ -29,35 +29,39 @@
               <option value="SPECIES">SPECIES</option>
               <option value="WALLET">WALLET</option>
             </select>
-            <div *ngIf="personal && transferDetails.controls['typetransfer'].errors">
+            <div
+             *ngIf="personal_step && transferDetails.controls['typetransfer'].errors">
               <div *ngIf="transferDetails.controls['typetransfer'].errors['required']">
                 you should select type of transfer
               </div>
             </div>
   
-  
             <div>
               <input type="text" formControlName="transferRef" placeholder="enter the reference of transfer" />
               <div
-                *ngIf="personal && transferDetails.controls['transferRef'].errors"
+                style="color: red"
+                *ngIf="personal && transferDetails.controls['transferRef'].errors &&
+                transferDetails.controls['transferRef'].invalid &&
+                transferDetails.controls['transferRef'].touched"
               >
                 <div *ngIf="transferDetails.controls['transferRef'].errors['required']">
-                  transferRef is required
+                  transfer reference is required
+                </div>
+                <div *ngIf="transferDetails.controls['transferRef'].errors['pattern']">
+                  the reference should begin with 837 and contain 13 numbers only
                 </div>
               </div>
-              <div *ngIf="errorPhone">{{ errorPhone }}</div>
+
               <input
                 (click)="searchTransfer()"
                 type="button"
                 name="next"
                 class="next action-button"
                 value="Search"
+                [disabled]="!transferDetails.controls['typetransfer'].valid || !transferDetails.controls['transferRef'].valid"
               />
             </div>
-            <div *ngIf="errorMessage" class="error-message">
-              {{ errorMessage }}
-            </div>
-  
+        
             <input
               type="number"
               formControlName="idAgent"
@@ -71,23 +75,23 @@
   
             <input
               type="text"
-              formControlName="title"
-              [ngClass]="{
-                'is-invalid': personal_step && personal['title'].errors
-              }"
-              readonly
-              placeholder="Title"
-  
-            />
-  
-            <input
-              type="text"
               formControlName="name"
               [ngClass]="{
                 'is-invalid': personal_step && personal['name'].errors
               }"
               readonly
               placeholder="Name"
+  
+            />
+  
+            <input
+              type="text"
+              formControlName="username"
+              [ngClass]="{
+                'is-invalid': personal_step && personal['username'].errors
+              }"
+              readonly
+              placeholder="Username"
   
             />
 
@@ -140,21 +144,34 @@
         <form [formGroup]="beneficiaryDetails" id="msform">
           <fieldset *ngIf="step == 2">
             <h2 class="fs-title">La saisie des informations du bénéficiaire</h2>
-  
-            <input type="text" name="title" formControlName="title"  placeholder="title" />
-            <div *ngIf="transfer_step && beneficiaryDetails.controls['title'].errors">
-              <div *ngIf="transferD['title'].errors['required']">
-                title is required
-              </div>
-            </div>
 
-
-            <input type="text" name="pieceIdentite" formControlName="pieceIdentite"  placeholder="pieceIdentite" />
-            <div *ngIf="transfer_step && beneficiaryDetails.controls['pieceIdentite'].errors">
-              <div *ngIf="transferD['pieceIdentite'].errors['required']">
-                pieceIdentite is required
-              </div>
+            <select
+            formControlName="title"
+            class="form-control"
+          >
+            <option value="" disabled selected>title</option>
+            <option value="Mme">Mme</option>
+            <option value="M">M</option>
+          </select>
+          <div *ngIf="transfer_step && beneficiaryDetails.controls['title'].errors">
+            <div *ngIf="transferD['title'].errors['required']">
+              title is required
             </div>
+          </div>
+
+            <select
+            formControlName="pieceIdentite"
+            class="form-control"
+          >
+            <option value="" disabled selected>pieceIdentite</option>
+            <option value="carteNational">carteNational</option>
+            <option value="passport">passport</option>
+          </select>
+          <div *ngIf="transfer_step && beneficiaryDetails.controls['pieceIdentite'].errors">
+            <div *ngIf="transferD['pieceIdentite'].errors['required']">
+              pieceIdentite is required
+            </div>
+          </div>
 
 
             <input type="text" name="paysEmission" formControlName="paysEmission"  placeholder="paysEmission" />
@@ -281,9 +298,6 @@
     
               <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
     
-              <div *ngIf="errorMessage" class="error-message">
-                {{ errorMessage }}
-              </div> 
 
             </div>
            

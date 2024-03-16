@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderDashComponent } from './header-dash/header-dash.component';
 import { ParDebitDeCompteComponent } from '../console-agent/par-debit-de-compte/par-debit-de-compte.component';
 import { ServirTransfertComponent } from '../console-agent/servir-transfert/servir-transfert.component';
+import { ExtourneTransfertComponent } from '../console-agent/extourne-transfert/extourne-transfert.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
     {
       path: 'servir-transfert',
       component: ServirTransfertComponent,
+    },
+    {
+      path: 'extourne-transfert',
+      component: ExtourneTransfertComponent,
     }
   ]
   }

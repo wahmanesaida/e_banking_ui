@@ -22,6 +22,8 @@ import {
 } from "@angular/material/dialog";
 import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
 import {AuthService} from "../../auth/auth.service";
+import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transfert.component';
+
 
 
 
@@ -29,6 +31,7 @@ import {AuthService} from "../../auth/auth.service";
   declarations: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
+    ExtourneTransfertComponent,
     DialogBeneficiaryComponent
   ],
   imports: [
@@ -56,6 +59,7 @@ import {AuthService} from "../../auth/auth.service";
   exports: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
+    ExtourneTransfertComponent,
     DialogBeneficiaryComponent
   ],
   providers: [ConsoleAgentService, AuthService],

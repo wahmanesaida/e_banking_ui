@@ -22,13 +22,11 @@ export class ServirTransfertComponent implements OnInit {
   emailBeneficiary: string;
   transferPaid:boolean = false;
 
-  userAccountAmount: number;
-  amountMessage: string;
-  errorMessage: string;
+
+  errorMessage:string;
   transferDone: boolean = false;
   otpValidated: boolean = false;
   otpSent: boolean = false;
-  errorPhone: string = '';
 
   transferDetails!: FormGroup;
   beneficiaryDetails!: FormGroup;
@@ -37,7 +35,6 @@ export class ServirTransfertComponent implements OnInit {
   transfer_step = false;
   education_step = false;
   step = 1;
-  validOtp: boolean;
 
   transfer: TransferRequest;
 
@@ -50,16 +47,16 @@ export class ServirTransfertComponent implements OnInit {
   ngOnInit() {
     this.transferDetails = this.formBuilder.group({
       typetransfer: ['', Validators.required],
-      transferRef: ['', Validators.required],
+      transferRef: ['', [Validators.required, Validators.pattern(/^837\d{10}$/)]],
       idAgent: ['', Validators.required],
-      title: ['', Validators.required],
       name: ['', Validators.required],
+      username: ['', Validators.required],
       createTime: ['', Validators.required],
       amount_transfer: ['', Validators.required],
       firstName: ['', Validators.required],
       lastname: ['', Validators.required],
     });
-
+    
     this.beneficiaryDetails = this.formBuilder.group({
       title: ['', Validators.required],
       pieceIdentite: ['', Validators.required],
@@ -74,7 +71,7 @@ export class ServirTransfertComponent implements OnInit {
     });
 
     this.Otp = this.formBuilder.group({
-      otp: ['', Validators.required],
+      otp: ['',[Validators.required, Validators.pattern(/^\d{6}$/)]],
     });
   }
 
@@ -190,20 +187,13 @@ export class ServirTransfertComponent implements OnInit {
           this.transferId = transfert.id;
           this.transferType = transfert.type_transfer;
           this.emailBeneficiary = transfert.beneficiary.username;
-          this.transferDetails.get('idAgent').setValue(transfert.client.id);
-          this.transferDetails.get('title').setValue(transfert.client.title);
-          this.transferDetails.get('name').setValue(transfert.client.username);
-          this.transferDetails.get('title').setValue(transfert.client.title);
+          this.transferDetails.get('idAgent').setValue(transfert.agent.id); 
+          this.transferDetails.get('name').setValue(transfert.client.name);
+          this.transferDetails.get('username').setValue(transfert.client.username);
           this.transferDetails.get('createTime').setValue(transfert.createTime);
-          this.transferDetails
-            .get('amount_transfer')
-            .setValue(transfert.amount_transfer);
-          this.transferDetails
-            .get('firstName')
-            .setValue(transfert.beneficiary.firstName);
-          this.transferDetails
-            .get('lastname')
-            .setValue(transfert.beneficiary.lastname);
+          this.transferDetails.get('amount_transfer').setValue(transfert.amount_transfer);
+          this.transferDetails.get('firstName').setValue(transfert.beneficiary.firstName);
+          this.transferDetails.get('lastname').setValue(transfert.beneficiary.lastname);
 
             const existingBeneficiaryDto: BeneficiaryDto = {
               title: transfert.beneficiary.title,
@@ -241,7 +231,6 @@ export class ServirTransfertComponent implements OnInit {
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
         typeOftransfer: this.transferType,
-        idClient: this.transferDetails.get('idAgent').value,
       },
       beneficiaryDto: {
         id: this.beneficiaryId,
@@ -305,7 +294,6 @@ export class ServirTransfertComponent implements OnInit {
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
         typeOftransfer: this.transferType,
-        idClient: this.transferDetails.get('idAgent').value,
       },
       beneficiaryDto: {
         id: this.beneficiaryId,
