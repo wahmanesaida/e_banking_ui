@@ -21,6 +21,7 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
+import {AuthService} from "../../auth/auth.service";
 
 
 
@@ -57,6 +58,6 @@ import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficia
     ServirTransfertComponent,
     DialogBeneficiaryComponent
   ],
-  providers: [ConsoleAgentService],
+  providers: [ConsoleAgentService, AuthService],
 })
 export class ConsoleAgentModule { }

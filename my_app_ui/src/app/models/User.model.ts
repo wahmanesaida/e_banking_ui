@@ -13,6 +13,7 @@ export class User {
   account_amount: number;
   id: number;
   username: string;
+  token: string="";
 
 
   constructor(
@@ -29,7 +30,8 @@ export class User {
     GSM: string,
     account_amount: number,
     id: number,
-    username: string
+    username: string,
+    token: string
   ) {
     this.title = title;
     this.pieceIdentite = pieceIdentite;
@@ -45,6 +47,7 @@ export class User {
     this.account_amount = account_amount;
     this.id=id;
     this.username=username;
+    this.token=token;
 
   }
 

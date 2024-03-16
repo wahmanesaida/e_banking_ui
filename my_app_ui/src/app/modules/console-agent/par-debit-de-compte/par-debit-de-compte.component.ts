@@ -8,6 +8,8 @@ import {Beneficiary} from "../servir-transfert/models/Beneficiary";
 import {DialogBeneficiaryComponent} from "./dialog-beneficiary/dialog-beneficiary.component";
 import {MatDialog} from "@angular/material/dialog";
 import {BeneficiaryDto} from "../../../models/BeneficiaryDto.model";
+import {AuthService} from "../../../auth/auth.service";
+import {TransfertDto} from "../../../models/TransfertDto.model";
 
 @Component({
   selector: 'app-par-debit-de-compte',
@@ -40,15 +42,21 @@ export class ParDebitDeCompteComponent implements OnInit {
   tt = "saida";
   private name: any;
   private animal: any;
+  transferDto: TransfertDto;
 
-  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService, private dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService, private dialog: MatDialog, private authService: AuthService) {
   }
 
   ngOnInit() {
+    console.log("this is id of current agent  "+ Number(localStorage.getItem('id')))
+    console.log("this is id   "+ Number(localStorage.getItem('id')))
+
 
     this.personalDetails = this.formBuilder.group({
       typetransfer: ['', Validators.required],
-      phone: ['+212', Validators.required],
+     typePieceIdentite: [''],
+      Idnumber: [''],
+      phone: ['+212'],
       title: ['', Validators.required],
       pieceIdentite: ['', Validators.required],
       paysEmission: ['', Validators.required],
@@ -182,6 +190,47 @@ export class ParDebitDeCompteComponent implements OnInit {
     }
   }
 
+  searchByIDNumber(){
+    const idnumber=this.personal['Idnumber'].value;
+    console.log(idnumber);
+
+    if(idnumber){
+      this.transfer_service.getClientBynum(idnumber).subscribe(
+        (agent: User)=> {
+          if(agent) {
+            this.patchFormWithUserData(agent)
+            this.toastService.info({
+              detail: "SUCCES",
+              summary: "Agent found successfuly",
+              duration: 5000,
+              position: 'topCenter'
+            });
+            this.errorMessage = '';
+          }
+          else {
+              console.log(agent);
+              this.errorMessage= "Invalid ID ! ";
+              this.toastService.error({ detail: "Pay Attention", summary: this.errorMessage, duration: 5000, position: 'topCenter' });
+
+            }
+
+
+          },
+        (error: any) => {
+          if(error.status === 400){
+            this.errorPhone=error.error.message
+          }else {
+            console.error('Error fetching user data:', error);
+
+          }
+
+        }
+
+      );
+    }
+
+  }
+
   patchFormWithUserData(user: User) {
     this.personalDetails.get('title').setValue(user.title);
     this.personalDetails.get('pieceIdentite').setValue(user.pieceIdentite);
@@ -211,12 +260,18 @@ export class ParDebitDeCompteComponent implements OnInit {
       console.log(this.transferDetails.value.name);
       console.log(this.transferDetails.value.gsm);
       console.log(this.transferDetails.value.email);
+      console.log("agent ", Number(localStorage.getItem('id')))
+       console.log("client id  ", this.personalDetails.getRawValue()['id_donor'])
       const transferAgent: TransferRequest = {
         transfertDto: {
           amount_entred: this.transferDetails.value.amount,
           notification: this.transferDetails.value.notification,
           typeOftransfer: this.personalDetails.value.typetransfer,
-          fees: this.transferDetails.value.typeOffees
+          fees: this.transferDetails.value.typeOffees,
+          typePieceIdentite: this.transferDetails.value.typePieceIdentite,
+          numeroPieceIdentite: this.transferDetails.value.Idnumber,
+          id_agent: Number(localStorage.getItem('id'))
+
         },
         id_beneficiary: this.transferDetails.value.id,
         bene: {
@@ -257,6 +312,7 @@ export class ParDebitDeCompteComponent implements OnInit {
   next() {
     if (this.step === 1) {
       console.log('Personal details form valid:', this.personalDetails.valid);
+      console.log("id client: ", this.personalDetails.getRawValue()['id_donor'])
       if (this.personalDetails.valid) {
         this.personal_step = true;
         this.step++;
@@ -291,6 +347,7 @@ export class ParDebitDeCompteComponent implements OnInit {
   submit() {
 
     if (this.step == 3) {
+      console.log("id client: ", this.personalDetails.getRawValue()['id_donor'])
       this.education_step = true;
       if(this.otpValidated == false) {
         this.toastService.error({
@@ -392,17 +449,43 @@ export class ParDebitDeCompteComponent implements OnInit {
           // Add other properties as needed
         };
 
+
         this.transfer_service.AddBeneficiary(beneficiaryDto, this.personal['id_donor'].value).subscribe(
           (response: any) => {
+
             console.log('Beneficiary added successfully');
+            this.toastService.success({
+              detail : "Beneficiary added successfully with id : " + response.id,
+              summary: "",
+              duration: 7000,
+              position: 'topRight'
+
+            })
           },
           (error) => {
             console.error('Error adding beneficiary:', error);
+            this.toastService.success({
+              detail : "Error adding beneficiary ",
+              summary: "",
+              duration: 5000,
+              position: 'topRight'
+
+            })
+
           }
         );
       }
     });
   }
+
+  performSearch(): void {
+    if (this.personalDetails.controls['typetransfer'].value === 'ACCOUNT_DEBIT') {
+      this.searchByPhoneNumber();
+    } else {
+      this.searchByIDNumber();
+    }
+  }
+
 
 
 

@@ -20,40 +20,48 @@
         <fieldset *ngIf="step == 1">
           <h2 class="fs-title">Personal Details</h2>
           <ng-toast></ng-toast>
-
-          <select
-            formControlName="typetransfer"
-            class="form-control"
-          >
+          <select formControlName="typetransfer" class="form-control">
             <option value="" disabled selected>Select Transfer Type</option>
             <option value="ACCOUNT_DEBIT"> ACCOUNT_DEBIT</option>
             <option value="SPECIES">SPECIES</option>
           </select>
           <div *ngIf="personal && personalDetails.controls['typetransfer'].errors">
             <div *ngIf="personalDetails.controls['typetransfer'].errors['required']">
-              you should select type of transfer
+              You should select type of transfer
             </div>
           </div>
-
-
-          <div>
+          <div *ngIf="personalDetails.controls['typetransfer'].value === 'ACCOUNT_DEBIT'">
             <input type="text" formControlName="phone" placeholder="Phone number" />
-            <div
-              *ngIf="personal && personalDetails.controls['phone'].errors"
-            >
+            <div *ngIf="personal && personalDetails.controls['phone'].errors">
               <div *ngIf="personalDetails.controls['phone'].errors['required']">
-                phone is required
+                Phone number is required
               </div>
             </div>
             <div *ngIf="errorPhone">{{ errorPhone }}</div>
-            <input
-              (click)="searchByPhoneNumber()"
-              type="button"
-              name="next"
-              class="next action-button"
-              value="Search"
-            />
           </div>
+          <div *ngIf="personalDetails.controls['typetransfer'].value !== 'ACCOUNT_DEBIT'">
+            <select formControlName="typePieceIdentite" class="form-control">
+              <option value="" disabled selected>Select type of identity document</option>
+              <option value="carteNational"> carteNational</option>
+              <option value="passport">passport</option>
+            </select>
+            <div *ngIf="personal && personalDetails.controls['typePieceIdentite'].errors">
+              <div *ngIf="personalDetails.controls['typePieceIdentite'].errors['required']">
+                You should select type of identity document
+              </div>
+            </div>
+            <input type="text" formControlName="Idnumber" placeholder="Id number" />
+            <div *ngIf="personal && personalDetails.controls['Idnumber'].errors">
+              <div *ngIf="personalDetails.controls['Idnumber'].errors['required']">
+                Id number is required
+              </div>
+            </div>
+            <div *ngIf="errorPhone">{{ errorPhone }}</div>
+          </div>
+          <button #searchButton type="button" class="next action-button" (click)="performSearch()">Search</button>
+
+
+
           <div *ngIf="errorMessage" class="error-message">
             {{ errorMessage }}
           </div>

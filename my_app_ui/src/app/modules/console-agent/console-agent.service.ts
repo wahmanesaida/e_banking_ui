@@ -63,13 +63,15 @@ export class ConsoleAgentService {
    validatePayment(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
     return this.http.post(`${this.baseUrl}/validateTransfer`, transferPaymentDto, { responseType: 'blob' });
   }
-   validatePayment(transferPaymentDto: TransferPaymentDto): Observable<any> {
-    return this.http.post(`${this.baseUrl}/validateTransfer`, transferPaymentDto);
-  }
+
    generatePaymentReceipt(transferPaymentDto: TransferPaymentDto): Observable<Blob>{
     return this.http.post(`${this.baseUrl}/generatePaymentReciept`, transferPaymentDto, { responseType: 'blob' });
   }
 
+  getClientBynum(numeroPieceIdentite: string): Observable<any>{
+    const body: {numeroPieceIdentite: string}={numeroPieceIdentite};
+    return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
+  }
 
 
 
