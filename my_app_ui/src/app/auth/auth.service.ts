@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, map, Observable} from 'rxjs';
+import { jwtDecode } from 'jwt-decode'
+import {User} from "../models/User.model";
 
 const BASE_URL = ['http://localhost:8080/'];
 
@@ -8,15 +10,32 @@ const BASE_URL = ['http://localhost:8080/'];
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<User>;
+  constructor(private http: HttpClient) {
+    let storageUser;
+    const storageUserAsStr = localStorage.getItem('currentUser');
+    if(storageUserAsStr){
+      storageUser=JSON.parse(storageUserAsStr);
+    }
+    this.currentUserSubject=new BehaviorSubject<User>(storageUser);
+    this.currentUser=this.currentUserSubject.asObservable();
+  }
+
+  public get currentUserValue(): User{
+    return this.currentUserSubject.value;
+  }
 
   signup(signupRequest: any): Observable<any> {
     return this.http.post(BASE_URL + 'api/v1/auth/register', signupRequest); //we should add the url of the api in the backend
   }
 
-  login(loginRequest: any): Observable<any> {
+ login(loginRequest: any): Observable<any> {
     return this.http.post(BASE_URL + 'api/v1/auth/authenticate', loginRequest); //we should add the url of the api in the backend
-  }
+ }
+
+
+
 
   hello(): Observable<any> {
     return this.http.get(BASE_URL + 'api/hello', {
@@ -32,8 +51,19 @@ export class AuthService {
       )
     }else{
       console.log('JWT token not found in the local Storage');
-      
+
     }
     return null;
+  }
+
+  getCurrentUserId(): any {
+    const jwtToken=localStorage.getItem('JWT');
+    const decodeToken: any=jwtDecode(jwtToken)
+    if(jwtToken){
+      return  decodeToken;
+    }else{
+      return null;
+    }
+
   }
 }

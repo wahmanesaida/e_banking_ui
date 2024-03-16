@@ -21,7 +21,9 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
+import {AuthService} from "../../auth/auth.service";
 import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transfert.component';
+
 
 
 
@@ -60,6 +62,6 @@ import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transf
     ExtourneTransfertComponent,
     DialogBeneficiaryComponent
   ],
-  providers: [ConsoleAgentService],
+  providers: [ConsoleAgentService, AuthService],
 })
 export class ConsoleAgentModule { }

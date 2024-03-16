@@ -60,9 +60,14 @@ export class ConsoleAgentService {
     return this.http.post(`${this.baseUrl}/showTransfer`, transferRefDTO);
 
   }
+
+  
+
+
    validatePayment(transferPaymentDto: TransferPaymentDto): Observable<any> {
     return this.http.post(`${this.baseUrl}/validateTransfer`, transferPaymentDto);
   }
+
    generatePaymentReceipt(transferPaymentDto: TransferPaymentDto): Observable<Blob>{
     return this.http.post(`${this.baseUrl}/generatePaymentReciept`, transferPaymentDto, { responseType: 'blob' });
   }
@@ -70,6 +75,10 @@ export class ConsoleAgentService {
     return this.http.post(`${this.baseUrl}/reverseTransfer`, transferPaymentDto);
   }
 
+  getClientBynum(numeroPieceIdentite: string): Observable<any>{
+    const body: {numeroPieceIdentite: string}={numeroPieceIdentite};
+    return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
+  }
 
 
 
