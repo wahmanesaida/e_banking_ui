@@ -11,18 +11,16 @@ import { TransferPaymentDto } from '../servir-transfert/models/TransferPaymentDt
 @Component({
   selector: 'app-extourne-transfert',
   templateUrl: './extourne-transfert.component.html',
-  styleUrl: './extourne-transfert.component.css'
+  styleUrl: './extourne-transfert.component.css',
 })
 export class ExtourneTransfertComponent implements OnInit {
-
   beneficiaryId: number;
   transferId: number;
   transferType: TypeOftransfer;
   emailBeneficiary: string;
-  transferPaid:boolean = false;
+  transferPaid: boolean = false;
 
-
-  errorMessage:string;
+  errorMessage: string;
   transferDone: boolean = false;
   otpValidated: boolean = false;
   otpSent: boolean = false;
@@ -45,7 +43,7 @@ export class ExtourneTransfertComponent implements OnInit {
 
   ngOnInit() {
     this.transferDetails = this.formBuilder.group({
-      transferRef: ['', [Validators.required, Validators.pattern(/^837\d{10}$/)]],
+      transferRef: ['',[Validators.required, Validators.pattern(/^837\d{10}$/)]],
       idAgent: ['', Validators.required],
       name: ['', Validators.required],
       username: ['', Validators.required],
@@ -55,13 +53,14 @@ export class ExtourneTransfertComponent implements OnInit {
       firstName: ['', Validators.required],
       lastname: ['', Validators.required],
     });
-    
+
     this.motifInfo = this.formBuilder.group({
-      motif: ['', Validators.required]
+      motif: ['', Validators.required],
+      otherMotif: ['', Validators.required],
     });
 
     this.Otp = this.formBuilder.group({
-      otp: ['',[Validators.required, Validators.pattern(/^\d{6}$/)]],
+      otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
     });
   }
 
@@ -85,10 +84,7 @@ export class ExtourneTransfertComponent implements OnInit {
         this.step++;
       }
     } else if (this.step === 2) {
-      console.log(
-        'Beneficiary details form valid:',
-        this.motifInfo.valid
-      );
+      console.log('Beneficiary details form valid:', this.motifInfo.valid);
 
       if (this.motifInfo.valid) {
         this.transfer_step = true;
@@ -107,8 +103,6 @@ export class ExtourneTransfertComponent implements OnInit {
     }
   }
 
-  
-
   submit() {
     if (this.step == 3) {
       this.education_step = true;
@@ -119,8 +113,6 @@ export class ExtourneTransfertComponent implements OnInit {
     }
   }
 
-
-  
   searchTransfer() {
     try {
       const transferDto: TransferRefDTO = {
@@ -132,14 +124,24 @@ export class ExtourneTransfertComponent implements OnInit {
           this.transferId = transfert.id;
           this.transferType = transfert.type_transfer;
           this.emailBeneficiary = transfert.beneficiary.username;
-          this.transferDetails.get('idAgent').setValue(transfert.agent.id); 
+          this.transferDetails.get('idAgent').setValue(transfert.agent.id);
           this.transferDetails.get('name').setValue(transfert.client.name);
-          this.transferDetails.get('username').setValue(transfert.client.username);
+          this.transferDetails
+            .get('username')
+            .setValue(transfert.client.username);
           this.transferDetails.get('createTime').setValue(transfert.createTime);
-          this.transferDetails.get('amount_transfer').setValue(transfert.amount_transfer);
-          this.transferDetails.get('amountOfFees').setValue(transfert.amountOfFees);
-          this.transferDetails.get('firstName').setValue(transfert.beneficiary.firstName);
-          this.transferDetails.get('lastname').setValue(transfert.beneficiary.lastname);
+          this.transferDetails
+            .get('amount_transfer')
+            .setValue(transfert.amount_transfer);
+          this.transferDetails
+            .get('amountOfFees')
+            .setValue(transfert.amountOfFees);
+          this.transferDetails
+            .get('firstName')
+            .setValue(transfert.beneficiary.firstName);
+          this.transferDetails
+            .get('lastname')
+            .setValue(transfert.beneficiary.lastname);
         },
         (error) => {
           this.toast.error({
@@ -156,6 +158,10 @@ export class ExtourneTransfertComponent implements OnInit {
   }
 
   reverseTransfer() {
+    let motifValue = this.motifInfo.get('motif').value;
+    if (motifValue === 'Autres') {
+      motifValue = this.motifInfo.get('otherMotif').value;
+    }
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
@@ -163,16 +169,19 @@ export class ExtourneTransfertComponent implements OnInit {
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
         typeOftransfer: this.transferType,
-        motif:this.motifInfo.get('motif').value
+        motif: motifValue
       },
-      beneficiaryDto: {
-       
-      },
+      beneficiaryDto: {},
     };
 
     this.transfer_service.reverseTransfer(transferPaymentDto).subscribe(
       (response: any) => {
-        this.toast.success({ detail: "Congrats", summary: 'le transfert est extourné', duration: 5000, position: 'topCenter' });
+        this.toast.success({
+          detail: 'Congrats',
+          summary: 'le transfert est extourné',
+          duration: 5000,
+          position: 'topCenter',
+        });
         this.transferPaid = true;
       },
       (error: any) => {
@@ -185,7 +194,6 @@ export class ExtourneTransfertComponent implements OnInit {
         });
       }
     );
-
   }
 
   generatePaymentReceipt() {
@@ -202,14 +210,11 @@ export class ExtourneTransfertComponent implements OnInit {
         title: this.motifInfo.get('title').value,
         pieceIdentite: this.motifInfo.get('pieceIdentite').value,
         paysEmission: this.motifInfo.get('paysEmission').value,
-        numeroPieceIdentite: this.motifInfo.get('numeroPieceIdentite')
+        numeroPieceIdentite: this.motifInfo.get('numeroPieceIdentite').value,
+        expirationPieceIdentite: this.motifInfo.get('expirationPieceIdentite')
           .value,
-        expirationPieceIdentite: this.motifInfo.get(
-          'expirationPieceIdentite'
-        ).value,
-        validitePieceIdentite: this.motifInfo.get(
-          'validitePieceIdentite'
-        ).value,
+        validitePieceIdentite: this.motifInfo.get('validitePieceIdentite')
+          .value,
         datenaissance: this.motifInfo.get('datenaissance').value,
         profession: this.motifInfo.get('profession').value,
         payeNationale: this.motifInfo.get('payeNationale').value,
@@ -239,7 +244,4 @@ export class ExtourneTransfertComponent implements OnInit {
       }
     );
   }
-
- 
-
 }
