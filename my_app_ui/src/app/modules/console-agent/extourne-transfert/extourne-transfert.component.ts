@@ -18,7 +18,7 @@ export class ExtourneTransfertComponent implements OnInit {
   transferId: number;
   transferType: TypeOftransfer;
   emailBeneficiary: string;
-  transferPaid: boolean = false;
+  transferReversed: boolean = false;
 
   errorMessage: string;
   transferDone: boolean = false;
@@ -56,7 +56,7 @@ export class ExtourneTransfertComponent implements OnInit {
 
     this.motifInfo = this.formBuilder.group({
       motif: ['', Validators.required],
-      otherMotif: ['', Validators.required],
+      otherMotif: [''],
     });
 
     this.Otp = this.formBuilder.group({
@@ -182,7 +182,7 @@ export class ExtourneTransfertComponent implements OnInit {
           duration: 5000,
           position: 'topCenter',
         });
-        this.transferPaid = true;
+        this.transferReversed = true;
       },
       (error: any) => {
         console.log(error);
