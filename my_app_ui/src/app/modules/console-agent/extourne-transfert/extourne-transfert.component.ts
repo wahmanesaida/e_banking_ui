@@ -21,16 +21,13 @@ export class ExtourneTransfertComponent implements OnInit {
   transferReversed: boolean = false;
 
   errorMessage: string;
-  transferDone: boolean = false;
-  otpValidated: boolean = false;
-  otpSent: boolean = false;
 
   transferDetails!: FormGroup;
   motifInfo!: FormGroup;
-  Otp!: FormGroup;
-  personal_step = false;
+  Validation!: FormGroup;
+  motif_step = false;
   transfer_step = false;
-  education_step = false;
+  validation_step = false;
   step = 1;
 
   transfer: TransferRequest;
@@ -59,35 +56,31 @@ export class ExtourneTransfertComponent implements OnInit {
       otherMotif: [''],
     });
 
-    this.Otp = this.formBuilder.group({
-      otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
+    this.Validation = this.formBuilder.group({
     });
   }
 
-  get personal() {
+  get transferD() {
     return this.transferDetails.controls;
   }
 
-  get transferD() {
+  get Motif() {
     return this.motifInfo.controls;
   }
 
-  get otp() {
-    return this.Otp.controls;
+  get validation() {
+    return this.Validation.controls;
   }
 
   next() {
     if (this.step === 1) {
-      console.log('Personal details form valid:', this.transferDetails.valid);
       if (this.transferDetails.valid) {
-        this.personal_step = true;
+        this.transfer_step = true; //personal_step 
         this.step++;
       }
     } else if (this.step === 2) {
-      console.log('Beneficiary details form valid:', this.motifInfo.valid);
-
       if (this.motifInfo.valid) {
-        this.transfer_step = true;
+        this.motif_step = true;// transfer_step
         this.step++;
       }
     }
@@ -96,20 +89,19 @@ export class ExtourneTransfertComponent implements OnInit {
   previous() {
     this.step--;
     if (this.step == 1) {
-      this.transfer_step = false;
+      this.motif_step = false;//motif_step
     }
     if (this.step == 2) {
-      this.education_step = false;
+      this.validation_step = false;
     }
   }
 
   submit() {
     if (this.step == 3) {
-      this.education_step = true;
-      if (this.Otp.invalid) {
+      this.validation_step = true;
+      if (this.Validation.invalid) {
         return;
       }
-      //alert("Well done!!")
     }
   }
 
@@ -196,7 +188,7 @@ export class ExtourneTransfertComponent implements OnInit {
     );
   }
 
-  generatePaymentReceipt() {
+  generateExtourneReceipt() {
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
@@ -205,30 +197,16 @@ export class ExtourneTransfertComponent implements OnInit {
         transferRef: this.transferDetails.get('transferRef').value,
         typeOftransfer: this.transferType,
       },
-      beneficiaryDto: {
-        id: this.beneficiaryId,
-        title: this.motifInfo.get('title').value,
-        pieceIdentite: this.motifInfo.get('pieceIdentite').value,
-        paysEmission: this.motifInfo.get('paysEmission').value,
-        numeroPieceIdentite: this.motifInfo.get('numeroPieceIdentite').value,
-        expirationPieceIdentite: this.motifInfo.get('expirationPieceIdentite')
-          .value,
-        validitePieceIdentite: this.motifInfo.get('validitePieceIdentite')
-          .value,
-        datenaissance: this.motifInfo.get('datenaissance').value,
-        profession: this.motifInfo.get('profession').value,
-        payeNationale: this.motifInfo.get('payeNationale').value,
-        ville: this.motifInfo.get('ville').value,
-      },
+      beneficiaryDto: {},
     };
-    this.transfer_service.generatePaymentReceipt(transferPaymentDto).subscribe(
+    this.transfer_service.generateExtourneReceipt(transferPaymentDto).subscribe(
       (response: Blob) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.href = url;
-        a.download = 'payment_receipt.pdf';
+        a.download = 'recu_extourne.pdf';
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);

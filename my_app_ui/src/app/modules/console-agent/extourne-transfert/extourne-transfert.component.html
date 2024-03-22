@@ -24,12 +24,12 @@
             <input
               type="text"
               formControlName="transferRef"
-              placeholder="enter the reference of transfer"
+              placeholder="Entrer la référence du transfert"
             />
             <div
               style="color: red"
               *ngIf="
-                personal &&
+                transferD &&
                 transferDetails.controls['transferRef'].errors &&
                 transferDetails.controls['transferRef'].invalid &&
                 transferDetails.controls['transferRef'].touched
@@ -65,27 +65,27 @@
             type="number"
             formControlName="idAgent"
             [ngClass]="{
-              'is-invalid': personal_step && personal['idAgent'].errors
+              'is-invalid': transfer_step && transferD['idAgent'].errors
             }"
             readonly
-            placeholder="Id Agent"
+            placeholder="Identifiant de l'agent"
           />
 
           <input
             type="text"
             formControlName="name"
             [ngClass]="{
-              'is-invalid': personal_step && personal['name'].errors
+              'is-invalid': transfer_step && transferD['name'].errors
             }"
             readonly
-            placeholder="Name"
+            placeholder="Nom du client"
           />
 
           <input
             type="text"
             formControlName="username"
             [ngClass]="{
-              'is-invalid': personal_step && personal['username'].errors
+              'is-invalid': transfer_step && transferD['username'].errors
             }"
             readonly
             placeholder="Username"
@@ -95,7 +95,7 @@
             type="text"
             formControlName="createTime"
             [ngClass]="{
-              'is-invalid': personal_step && personal['createTime'].errors
+              'is-invalid': transfer_step && transferD['createTime'].errors
             }"
             readonly
             placeholder="Date d'émission"
@@ -104,7 +104,7 @@
             type="text"
             formControlName="amount_transfer"
             [ngClass]="{
-              'is-invalid': personal_step && personal['amount_transfer'].errors
+              'is-invalid': transfer_step && transferD['amount_transfer'].errors
             }"
             readonly
             placeholder="Montant à servir"
@@ -113,7 +113,7 @@
             type="text"
             formControlName="amountOfFees"
             [ngClass]="{
-              'is-invalid': personal_step && personal['amountOfFees'].errors
+              'is-invalid': transfer_step && transferD['amountOfFees'].errors
             }"
             readonly
             placeholder="Frais du transfert"
@@ -122,7 +122,7 @@
             type="text"
             formControlName="firstName"
             [ngClass]="{
-              'is-invalid': personal_step && personal['firstName'].errors
+              'is-invalid': transfer_step && transferD['firstName'].errors
             }"
             readonly
             placeholder="Prénom du bénéficaire"
@@ -131,7 +131,7 @@
             type="text"
             formControlName="lastname"
             [ngClass]="{
-              'is-invalid': personal_step && personal['lastname'].errors
+              'is-invalid': transfer_step && transferD['lastname'].errors
             }"
             readonly
             placeholder="Nom du bénéficaire"
@@ -172,7 +172,7 @@
             <option value="Donation">Donation</option>
             <option value="Autres">Autres</option>
           </select>
-          <div *ngIf="transfer_step && motifInfo.controls['motif'].errors">
+          <div *ngIf="motif_step && motifInfo.controls['motif'].errors">
             <div *ngIf="transferD['title'].errors['required']">
               motif is required
             </div>
@@ -203,7 +203,7 @@
         </fieldset>
       </form>
 
-      <form [formGroup]="Otp" id="msform">
+      <form [formGroup]="Validation" id="msform">
         <fieldset *ngIf="step == 3">
           <h2 class="fs-title">Validation de l’extourne du transfert</h2>
           <ng-toast></ng-toast>
@@ -223,12 +223,12 @@
             value="Submit"
           />
           <input
-            (click)="generatePaymentReceipt()"
+            (click)="generateExtourneReceipt()"
             *ngIf="transferReversed"
             type="submit"
             name="submit"
             class="submit action-button"
-            value="download reciept"
+            value="Télécharger le reçu"
           />
         </fieldset>
       </form>
