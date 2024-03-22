@@ -109,6 +109,14 @@ export class ConsoleAgentService {
     );
   }
 
+  generateExtourneReceipt(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+    return this.http.post(
+      `${this.baseUrl}/generateExtourneReceipt`,
+      transferPaymentDto,
+      { responseType: 'blob' }
+    );
+  }
+
   getClientBynum(numeroPieceIdentite: string): Observable<any> {
     const body: { numeroPieceIdentite: string } = { numeroPieceIdentite };
     return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);

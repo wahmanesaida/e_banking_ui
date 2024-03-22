@@ -25,9 +25,9 @@
               class="form-control"
               (change)="onTransferTypeChange()"
             >
-              <option value="" disabled selected>Select Transfer Type</option>
-              <option value="SPECIES">SPECIES</option>
-              <option value="WALLET">WALLET</option>
+              <option value="" disabled selected>Sélectionner le type de transfert</option>
+              <option value="SPECIES">En ESPÈCES</option>
+              <option value="WALLET">En PORTEFEUILLE</option>
             </select>
             <div
              *ngIf="personal_step && transferDetails.controls['typetransfer'].errors">
@@ -37,7 +37,7 @@
             </div>
   
             <div>
-              <input type="text" formControlName="transferRef" placeholder="enter the reference of transfer" />
+              <input type="text" formControlName="transferRef" placeholder="Entrer la référence du transfert" />
               <div
                 style="color: red"
                 *ngIf="personal && transferDetails.controls['transferRef'].errors &&
@@ -69,7 +69,7 @@
                 'is-invalid': personal_step && personal['idAgent'].errors
               }"
               readonly
-              placeholder="Id Agent"
+              placeholder="Identifiant de l'agent"
   
             />
   
@@ -80,7 +80,7 @@
                 'is-invalid': personal_step && personal['name'].errors
               }"
               readonly
-              placeholder="Name"
+              placeholder="Nom du client"
   
             />
   
@@ -149,7 +149,7 @@
             formControlName="title"
             class="form-control"
           >
-            <option value="" disabled selected>title</option>
+            <option value="" disabled selected>Titre</option>
             <option value="Mme">Mme</option>
             <option value="M">M</option>
           </select>
@@ -163,7 +163,7 @@
             formControlName="pieceIdentite"
             class="form-control"
           >
-            <option value="" disabled selected>pieceIdentite</option>
+            <option value="" disabled selected>Type de pièce d'identité</option>
             <option value="carteNational">carteNational</option>
             <option value="passport">passport</option>
           </select>
@@ -174,7 +174,7 @@
           </div>
 
 
-            <input type="text" name="paysEmission" formControlName="paysEmission"  placeholder="paysEmission" />
+            <input type="text" name="paysEmission" formControlName="paysEmission"  placeholder="Pays d’émission" />
             <div *ngIf="transfer_step && beneficiaryDetails.controls['paysEmission'].errors">
               <div *ngIf="transferD['paysEmission'].errors['required']">
                 paysEmission is required
@@ -182,7 +182,7 @@
             </div>
 
 
-            <input type="text" name="numeroPieceIdentite" formControlName="numeroPieceIdentite"  placeholder="numeroPieceIdentite" />
+            <input type="text" name="numeroPieceIdentite" formControlName="numeroPieceIdentite"  placeholder="N° pièce d'identité" />
             <div *ngIf="transfer_step && beneficiaryDetails.controls['numeroPieceIdentite'].errors">
               <div *ngIf="transferD['numeroPieceIdentite'].errors['required']">
                 numeroPieceIdentite is required
@@ -197,7 +197,7 @@
               </div>
             </div>
   
-            <input type="text" formControlName="validitePieceIdentite" placeholder="validitePieceIdentite" />
+            <input type="text" formControlName="validitePieceIdentite" placeholder="Validité de pièce d’identité" />
             <div
               *ngIf="transfer_step && beneficiaryDetails.controls['validitePieceIdentite'].errors"
             >
@@ -206,7 +206,7 @@
               </div>
             </div>
   
-            <input type="text" formControlName="datenaissance" placeholder="datenaissance" />
+            <input type="text" formControlName="datenaissance" placeholder="Date de naissance" />
             <div
               *ngIf="transfer_step && beneficiaryDetails.controls['datenaissance'].errors"
             >
@@ -220,7 +220,7 @@
               formControlName="profession"
               class="form-control"
             >
-              <option value="" disabled selected>profession</option>
+              <option value="" disabled selected>Profession</option>
               <option value="ingénieur">ingénieur</option>
             </select>
             <div *ngIf="transfer_step && beneficiaryDetails.controls['profession'].errors">
@@ -230,7 +230,7 @@
             </div>
 
 
-            <input type="text" formControlName="payeNationale" placeholder="payeNationale" />
+            <input type="text" formControlName="payeNationale" placeholder="Pays de nationalité" />
             <div
               *ngIf="transfer_step && beneficiaryDetails.controls['payeNationale'].errors"
             >
@@ -244,7 +244,7 @@
               formControlName="ville"
               class="form-control"
             >
-              <option value="" disabled selected>ville</option>
+              <option value="" disabled selected>Ville</option>
               <option value="safi">safi</option>
               <option value="Casablanca">Casablanca</option>
               <option value="Tanger">Tanger</option>
@@ -321,7 +321,7 @@
             type="submit"
             name="submit"
             class="submit action-button"
-            value="download reciept"
+            value="Télécharger le reçu de paiement"
           />
           </fieldset>
         </form>
