@@ -21,6 +21,7 @@ import {
 import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
 import {AuthService} from "../../auth/auth.service";
 import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transfert.component';
+import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
 
 
 
