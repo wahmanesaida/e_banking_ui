@@ -22,18 +22,24 @@ export const routes: Routes = [
 		loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),
 		//canActivate: [authGuard],
 	},
-
-  {
+    {
 		path: 'Dashboard',
 		loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
 		//canActivate: [authGuard],
 	},
-
 	{
 		path: 'ConsoleAgent',
 		loadChildren: () =>
 		  import('./modules/console-agent/console-agent.module').then(
 			(m) => m.ConsoleAgentModule
+		  ),
+		//canActivate: [authGuard],
+	  },
+	  {
+		path: 'GabBoa',
+		loadChildren: () =>
+		  import('./modules/gab-boa/gab-boa.module').then(
+			(m) => m.GabBoaModule
 		  ),
 		//canActivate: [authGuard],
 	  },

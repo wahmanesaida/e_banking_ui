@@ -1,0 +1,214 @@
+<div class="back">
+    <section class="inner-header-title blank">
+      <div class="container">
+        <h1>Post a Job</h1>
+      </div>
+    </section>
+    
+    <ng-toast></ng-toast>
+    
+    
+    <div class="detail-desc section">
+      <div class="container">
+        <form class="add-feild" [formGroup]="transferDetails">
+          <div class="row">
+              <h2>La recherche du Transfert</h2>
+            <div class="col-md-6 col-sm-12 bottom-mrg top-mrg">
+                <div class="form-group">
+                    
+                    <input
+                      id="transferRef"
+                      type="text"
+                      formControlName="transferRef"
+                      class="form-control"
+                      placeholder="Entrer la référence du transfert"
+                    />
+                    <div
+                      *ngIf="
+                        transferD &&
+                        transferDetails.controls['transferRef'].errors &&
+                        transferDetails.controls['transferRef'].invalid &&
+                        transferDetails.controls['transferRef'].touched
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="transferDetails.controls['transferRef'].errors['required']">
+                        Référence du transfert requise
+                      </div>
+                      <div *ngIf="transferDetails.controls['transferRef'].errors['pattern']">
+                        La référence doit commencer par 837 et contenir 13 chiffres seulement
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="col-md-6 col-sm-12 bottom-mrg top-mrg">
+                  <div class="form-group">
+                    
+                    <input
+                      id="pin"
+                      type="text"
+                      formControlName="pin"
+                      class="form-control"
+                      placeholder="Entrer le code PIN reçu par Email"
+                    />
+                  </div>
+                </div>
+    
+                  <div class="col-md-12 col-sm-12 bottom-mrg">
+                    <button
+                      (click)="searchTransfer()"
+                      type="button"
+                      class="btn btn-primary"
+                      [disabled]="!transferDetails.controls['transferRef'].valid"
+                    >
+                      Recherche
+                    </button>
+                  </div>
+    
+                  <h2>Affichage des informations</h2>
+          
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg ">
+              <div class="form-group">
+                <input
+                type="number"
+                class="form-control"
+                formControlName="idAgent"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['idAgent'].errors
+                }"
+                readonly
+                placeholder="Identifiant de l'agent"
+              />
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg ">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['name'].errors
+                }"
+                readonly
+                placeholder="Nom du client"
+              />
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="username"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['username'].errors
+                }"
+                readonly
+                placeholder="Username"
+              />
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="createTime"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['createTime'].errors
+                }"
+                readonly
+                placeholder="Date d'émission"
+              />
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="amount_transfer"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['amount_transfer'].errors
+                }"
+                readonly
+                placeholder="Montant à servir"
+              />
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="amountOfFees"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['amountOfFees'].errors
+                }"
+                readonly
+                placeholder="Frais du transfert"
+              />
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="firstName"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['firstName'].errors
+                }"
+                readonly
+                placeholder="Prénom du bénéficaire"
+              />
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12 bottom-mrg">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="lastname"
+                [ngClass]="{
+                  'is-invalid': transfer_step && transferD['lastname'].errors
+                }"
+                readonly
+                placeholder="Nom du bénéficaire"
+              />
+              </div>
+            </div>
+    
+            <h2>Validation du paiement du transfert</h2>
+    
+            <div class="col-md-12 col-sm-12">
+                <button
+                (click)="submit()"
+                type="submit"
+                class="btn btn-success"
+              >
+                Valider
+              </button>
+              <button
+                *ngIf="transferReversed"
+                type="button"
+                class="btn btn-info"
+              >
+                Télécharger le reçu
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

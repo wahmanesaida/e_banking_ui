@@ -1,0 +1,50 @@
+.back{
+    background-color: aqua;
+}
+  
+  a {
+    transition: 0.3s all ease;
+    color: var(--primary);
+  }
+  
+  a:hover, a:focus {
+    text-decoration: none;
+    color: var(--primary);
+    outline: none !important;
+  }
+  
+  h1, h2, h3, h4, h5,
+  .h1, .h2, .h3, .h4, .h5 {
+    line-height: 1.5;
+    color: var(--darken);
+    font-weight: 400;
+  }
+  
+.inner-header-title {
+    border-bottom: 4px solid  #FFFBEB;
+  }
+  .inner-header-title.blank {
+    border-bottom: 4px solid #FFFBEB;
+    background:#FFFBEB;
+    text-align: center;
+    color: black;
+  }
+  
+  .bottom-mrg{
+    padding-bottom: 7px;
+  }
+  .top-mrg{
+    padding-top: 7px;
+  }
+  
+  .form-control:focus {
+    box-shadow: none;
+  }
+  
+  .detail-pannel-footer-btn{
+    font-weight: 500;
+  }
+  
+  .detail-title{
+     color: #4F200D;
+  }
