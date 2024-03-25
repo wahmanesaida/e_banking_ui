@@ -121,4 +121,5 @@ export class ConsoleAgentService {
     const body: { numeroPieceIdentite: string } = { numeroPieceIdentite };
     return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
   }
+  
 }
