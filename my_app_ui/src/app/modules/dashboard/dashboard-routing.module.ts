@@ -5,11 +5,13 @@ import { HeaderDashComponent } from './header-dash/header-dash.component';
 import { ParDebitDeCompteComponent } from '../console-agent/par-debit-de-compte/par-debit-de-compte.component';
 import { ServirTransfertComponent } from '../console-agent/servir-transfert/servir-transfert.component';
 import { ExtourneTransfertComponent } from '../console-agent/extourne-transfert/extourne-transfert.component';
+import { MenuCanalComponent } from './menu-canal/menu-canal.component';
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   {path: 'header-dash', component: HeaderDashComponent},
+  {path: 'menu-canal', component: MenuCanalComponent},
   {path: 'dashboard',
    component: DashboardComponent,
    children: [

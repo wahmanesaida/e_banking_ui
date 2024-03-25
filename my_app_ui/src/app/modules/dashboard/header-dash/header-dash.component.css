@@ -58,7 +58,7 @@
 
 
   .custom-btn {
-    background-color: #004f83;
+    background-color: #5D3587;
     margin: 5px;
     color: white;
     border: none;
@@ -70,7 +70,7 @@
 
 /* Add hover effect */
 .custom-btn:hover {
-    background-color: #0067ac; 
+    background-color: #392467; 
     transform: scale(1.2); 
 }
 

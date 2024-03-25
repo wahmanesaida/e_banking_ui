@@ -6,6 +6,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { Transfert } from '../../console-agent/servir-transfert/models/Transfert';
 import { GabBoaService } from '../gab-boa.service';
 import { TransferRefPinDto } from '../models/TransferRefPinDto';
+import { TransferPaymentDto } from '../../console-agent/servir-transfert/models/TransferPaymentDto';
 
 @Component({
   selector: 'app-gab-boa',
@@ -13,11 +14,12 @@ import { TransferRefPinDto } from '../models/TransferRefPinDto';
   styleUrl: './gab-boa.component.css'
 })
 export class GabBoaComponent implements OnInit {
+
   beneficiaryId: number;
   transferId: number;
   transferType: TypeOftransfer;
   emailBeneficiary: string;
-  transferReversed: boolean = false;
+  transferPaid: boolean = false;
 
   errorMessage: string;
 
@@ -150,32 +152,27 @@ export class GabBoaComponent implements OnInit {
     }
   }
 
-  /* reverseTransfer() {
-    let motifValue = this.motifInfo.get('motif').value;
-    if (motifValue === 'Autres') {
-      motifValue = this.motifInfo.get('otherMotif').value;
-    }
+  validatePaymentGab(){
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
         idAgent: this.transferDetails.get('idAgent').value,
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
-        typeOftransfer: this.transferType,
-        motif: motifValue
+        typeOftransfer: this.transferType
       },
       beneficiaryDto: {},
     };
 
-    this.transfer_service.reverseTransfer(transferPaymentDto).subscribe(
+    this.Gab_service.validatePaymentGab(transferPaymentDto).subscribe(
       (response: any) => {
         this.toast.success({
           detail: 'Congrats',
-          summary: 'le transfert est extourné',
+          summary: 'le transfert est payé en succés',
           duration: 5000,
           position: 'topCenter',
         });
-        this.transferReversed = true;
+        this.transferPaid = true;
       },
       (error: any) => {
         console.log(error);
@@ -187,9 +184,19 @@ export class GabBoaComponent implements OnInit {
         });
       }
     );
+
+
   }
 
-  generateExtourneReceipt() {
+
+   submitAndValidate() {
+    this.submit();
+    this.validatePaymentGab();
+  }
+
+
+
+  generateReceiptGab() {
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
@@ -200,7 +207,7 @@ export class GabBoaComponent implements OnInit {
       },
       beneficiaryDto: {},
     };
-    this.transfer_service.generateExtourneReceipt(transferPaymentDto).subscribe(
+    this.Gab_service.generateReceiptGab(transferPaymentDto).subscribe(
       (response: Blob) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
@@ -222,6 +229,6 @@ export class GabBoaComponent implements OnInit {
         });
       }
     );
-  } */
+  } 
 
 }
