@@ -8,6 +8,8 @@ import { AuthService } from '../auth.service';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
+  showPassword1: boolean = false;
+  showPassword2: boolean = false;
   signupForm:FormGroup | undefined
 
   
@@ -47,6 +49,16 @@ export class SignupComponent implements OnInit {
     })
     
   }
+
+  togglePasswordVisibility() {
+    this.showPassword1 = !this.showPassword1;
+  }
+
+  togglePasswordVisibility2(){
+    this.showPassword2 = !this.showPassword2;
+
+  }
+
 
 
 

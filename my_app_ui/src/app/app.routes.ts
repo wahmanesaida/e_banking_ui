@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ErrorPageComponent } from './shared/error-page/error-page.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/Dashboard', pathMatch: 'full' },
@@ -43,6 +44,8 @@ export const routes: Routes = [
 		  ),
 		//canActivate: [authGuard],
 	  },
+	  { path: 'error', component: ErrorPageComponent },
+	  { path: '**', redirectTo: '/error', pathMatch: 'full' } 
 
 
 ];
