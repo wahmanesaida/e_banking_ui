@@ -12,6 +12,7 @@ import {jwtDecode} from "jwt-decode";
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+  showPassword: boolean = false;
   loginForm: FormGroup;
   public currentUser: User;
   currentUserDecode: any;
@@ -45,6 +46,10 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/Auth/home');
       }
     })
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
 

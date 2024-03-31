@@ -1,13 +1,8 @@
-<!-- <app-nav-bar></app-nav-bar> -->
-<!-- <br>
-<br>
-<br> -->
-
-<div class="signup">
-  <div class="main-w3layouts wrapper">
-    <h1>Register Now</h1>
-    <div class="main-agileinfo">
-      <div class="agileits-top">
+<div class="containerForm">
+  <div class="signupForm">
+    <div class="firstPart">
+      <h1>SignUp</h1>
+      <div class="formFields">
         <form [formGroup]="signupForm">
           <input
             class="text"
@@ -17,47 +12,71 @@
             formControlName="name"
           />
           <input
-            class="text email"
+            class="text"
             type="email"
             name="email"
             placeholder="Email"
             formControlName="username"
           />
-          <input
-            class="text"
-            type="password"
-            name="password"
-            placeholder="Password"
-            formControlName="password"
-          />
-          <input
-            class="text w3lpass"
-            type="password"
-            name="password"
-            placeholder="Confirm Password"
-            formControlName="confirmPassword"
-          />
-          <div class="wthree-text">
-            <!-- this is the space between them  -->
-            <div class="clear"></div>
+          <div class="password-field">
+            <input
+              class="text"
+              type="password"
+              name="password"
+              placeholder="Password"
+              formControlName="password"
+              [type]="showPassword1 ? 'text' : 'password'"
+            />
+            <input
+              type="checkbox"
+              class="firstCheckBox"
+              id="showPassword1"
+              [(ngModel)]="showPassword1"
+              (change)="togglePasswordVisibility()"
+            />
+            <input
+              class="text"
+              type="password"
+              name="password"
+              placeholder="Confirm Password"
+              formControlName="confirmPassword"
+              [type]="showPassword2 ? 'text' : 'password'"
+            />
+            <input
+              type="checkbox"
+              id="showPassword2"
+              [(ngModel)]="showPassword2"
+              (change)="togglePasswordVisibility2()"
+            />
           </div>
-          <input type="submit" value="SIGNUP" [disabled]="signupForm.invalid" (click)="signup()"/>
+          <button
+            type="submit"
+            value="SIGNUP"
+            [disabled]="signupForm.invalid"
+            (click)="signup()"
+            class="button-86"
+          >
+            Register
+          </button>
         </form>
-        <p>Already have an Account? <a routerLink="/Auth/login"> Login Now!</a></p>
       </div>
     </div>
+    <div class="secondPart">
+      <h1>Transfer Your Money Anywhere</h1>
+      <img
+        data-v-4f74ca3d=""
+        src="https://ouch-cdn2.icons8.com/EXqRNzvD9i4KGLuJ-my2eyHBues1K8UcSYiFQR5I7qo/rs:fit:529:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvODYy/LzcyYTk4N2FhLTc0/NjMtNDRiNC04NzA2/LWY5YWI2NGRjNmE4/ZS5wbmc.png"
+        alt="3D business account PNG, SVG"
+        class="image-preview"
+        style=""
+      />
 
-    <ul class="colorlib-bubbles">
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+      <p>
+        Already have an Account? <a routerLink="/Auth/login"> Login Now!</a>
+      </p>
+      <!--  <button class="button-86">
+        Login
+      </button> -->
+    </div>
   </div>
 </div>
