@@ -24,9 +24,9 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.fb.group({
       name : new FormControl('', Validators.required),
       username: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', Validators.required),
-      confirmPassword : new FormControl('', Validators.required)
-    }, {validator:this.passwordMatchValidator})
+      password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/)]),
+      confirmPassword : new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/)])
+    })
   }
 
   private passwordMatchValidator(fg:FormGroup){

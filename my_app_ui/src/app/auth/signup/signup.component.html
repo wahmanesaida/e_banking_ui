@@ -11,6 +11,18 @@
             placeholder="Username"
             formControlName="name"
           />
+          <div
+            style="color: red"
+            *ngIf="
+              signupForm.controls['name'].errors &&
+              signupForm.controls['name'].invalid &&
+              signupForm.controls['name'].touched
+            "
+          >
+            <div *ngIf="signupForm.controls['name'].errors['required']">
+              Name is required
+            </div>
+          </div>
           <input
             class="text"
             type="email"
@@ -18,6 +30,21 @@
             placeholder="Email"
             formControlName="username"
           />
+          <div
+            style="color: red"
+            *ngIf="
+              signupForm.controls['username'].errors &&
+              signupForm.controls['username'].invalid &&
+              signupForm.controls['username'].touched
+            "
+          >
+            <div *ngIf="signupForm.controls['username'].errors['required']">
+              Email is required
+            </div>
+            <div *ngIf="signupForm.controls['username'].errors['email']">
+              Invalid Email
+            </div>
+          </div>
           <div class="password-field">
             <input
               class="text"
@@ -27,27 +54,78 @@
               formControlName="password"
               [type]="showPassword1 ? 'text' : 'password'"
             />
-            <input
+            <div
+              style="color: red"
+              *ngIf="
+                signupForm.controls['password'].errors &&
+                signupForm.controls['password'].invalid &&
+                signupForm.controls['password'].touched
+              "
+            >
+              <div *ngIf="signupForm.controls['password'].errors['required']">
+                Password is required
+              </div>
+
+              <div *ngIf="signupForm.controls['password'].errors['pattern']">
+                Password should contains at least one lowercase letter, one
+                uppercase letter, one digit, one special character, and is at
+                least 8 characters long
+              </div>
+            </div>
+            <!-- <input
               type="checkbox"
               class="firstCheckBox"
               id="showPassword1"
               [(ngModel)]="showPassword1"
               (change)="togglePasswordVisibility()"
-            />
+            /> -->
             <input
               class="text"
               type="password"
-              name="password"
+              name="confirmPassword"
               placeholder="Confirm Password"
               formControlName="confirmPassword"
               [type]="showPassword2 ? 'text' : 'password'"
             />
-            <input
+            <div
+              style="color: red"
+              *ngIf="
+                signupForm.controls['confirmPassword'].errors &&
+                signupForm.controls['confirmPassword'].invalid &&
+                signupForm.controls['confirmPassword'].touched
+              "
+            >
+              <div
+                *ngIf="
+                  signupForm.controls['confirmPassword'].errors['required']
+                "
+              >
+                confirmPassword is required
+              </div>
+              <div
+                style="color: red"
+                *ngIf="
+                  signupForm.hasError('passwordMismatch') &&
+                  signupForm.controls['confirmPassword'].touched
+                "
+              >
+                Passwords do not match
+              </div>
+
+              <div
+                *ngIf="signupForm.controls['confirmPassword'].errors['pattern']"
+              >
+                Password should contains at least one lowercase letter, one
+                uppercase letter, one digit, one special character, and is at
+                least 8 characters long
+              </div>
+            </div>
+            <!-- <input
               type="checkbox"
               id="showPassword2"
               [(ngModel)]="showPassword2"
               (change)="togglePasswordVisibility2()"
-            />
+            /> -->
           </div>
           <button
             type="submit"
