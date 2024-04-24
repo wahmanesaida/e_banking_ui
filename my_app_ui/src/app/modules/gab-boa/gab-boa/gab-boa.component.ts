@@ -2,23 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { TypeOftransfer } from '../../../models/TypeOftransfer.enum';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferRequest } from '../../../models/TransferRequest.model';
-import { ConsoleAgentService } from '../console-agent.service';
 import { NgToastService } from 'ng-angular-popup';
-import { TransferRefDTO } from '../servir-transfert/models/TransferRefDTO';
-import { Transfert } from '../servir-transfert/models/Transfert';
-import { TransferPaymentDto } from '../servir-transfert/models/TransferPaymentDto';
+import { Transfert } from '../../console-agent/servir-transfert/models/Transfert';
+import { GabBoaService } from '../gab-boa.service';
+import { TransferRefPinDto } from '../models/TransferRefPinDto';
+import { TransferPaymentDto } from '../../console-agent/servir-transfert/models/TransferPaymentDto';
 
 @Component({
-  selector: 'app-extourne-transfert',
-  templateUrl: './extourne-transfert.component.html',
-  styleUrl: './extourne-transfert.component.css',
+  selector: 'app-gab-boa',
+  templateUrl: './gab-boa.component.html',
+  styleUrl: './gab-boa.component.css'
 })
-export class ExtourneTransfertComponent implements OnInit {
+export class GabBoaComponent implements OnInit {
+
   beneficiaryId: number;
   transferId: number;
   transferType: TypeOftransfer;
   emailBeneficiary: string;
-  transferReversed: boolean = false;
+  transferPaid: boolean = false;
 
   errorMessage: string;
 
@@ -34,13 +35,14 @@ export class ExtourneTransfertComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private transfer_service: ConsoleAgentService,
+    private Gab_service: GabBoaService,
     private toast: NgToastService
   ) {}
 
   ngOnInit() {
     this.transferDetails = this.formBuilder.group({
       transferRef: ['',[Validators.required, Validators.pattern(/^837\d{10}$/)]],
+      pin: ['', Validators.required],
       idAgent: ['', Validators.required],
       name: ['', Validators.required],
       username: ['', Validators.required],
@@ -107,10 +109,11 @@ export class ExtourneTransfertComponent implements OnInit {
 
   searchTransfer() {
     try {
-      const transferDto: TransferRefDTO = {
+      const transferDto: TransferRefPinDto = {
         transferRef: this.transferDetails.get('transferRef').value,
+        codepin :this.transferDetails.get('pin').value
       };
-      this.transfer_service.searchTransfer(transferDto).subscribe(
+      this.Gab_service.searchTransferGab(transferDto).subscribe(
         (transfert: Transfert) => {
           this.beneficiaryId = transfert.beneficiary.id;
           this.transferId = transfert.id;
@@ -149,32 +152,27 @@ export class ExtourneTransfertComponent implements OnInit {
     }
   }
 
-  reverseTransfer() {
-    let motifValue = this.motifInfo.get('motif').value;
-    if (motifValue === 'Autres') {
-      motifValue = this.motifInfo.get('otherMotif').value;
-    }
+  validatePaymentGab(){
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
         idAgent: this.transferDetails.get('idAgent').value,
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
-        typeOftransfer: this.transferType,
-        motif: motifValue
+        typeOftransfer: this.transferType
       },
       beneficiaryDto: {},
     };
 
-    this.transfer_service.reverseTransfer(transferPaymentDto).subscribe(
+    this.Gab_service.validatePaymentGab(transferPaymentDto).subscribe(
       (response: any) => {
         this.toast.success({
           detail: 'Congrats',
-          summary: 'le transfert est extourné',
+          summary: 'le transfert est payé en succés',
           duration: 5000,
           position: 'topCenter',
         });
-        this.transferReversed = true;
+        this.transferPaid = true;
       },
       (error: any) => {
         console.log(error);
@@ -186,9 +184,19 @@ export class ExtourneTransfertComponent implements OnInit {
         });
       }
     );
+
+
   }
 
-  generateExtourneReceipt() {
+
+   submitAndValidate() {
+    this.submit();
+    this.validatePaymentGab();
+  }
+
+
+
+  generateReceiptGab() {
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
@@ -199,7 +207,7 @@ export class ExtourneTransfertComponent implements OnInit {
       },
       beneficiaryDto: {},
     };
-    this.transfer_service.generateExtourneReceipt(transferPaymentDto).subscribe(
+    this.Gab_service.generateReceiptGab(transferPaymentDto).subscribe(
       (response: Blob) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
@@ -221,5 +229,6 @@ export class ExtourneTransfertComponent implements OnInit {
         });
       }
     );
-  }
+  } 
+
 }

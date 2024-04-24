@@ -8,6 +8,8 @@ import { AuthService } from '../auth.service';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
+  showPassword1: boolean = false;
+  showPassword2: boolean = false;
   signupForm:FormGroup | undefined
 
   
@@ -22,9 +24,9 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.fb.group({
       name : new FormControl('', Validators.required),
       username: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', Validators.required),
-      confirmPassword : new FormControl('', Validators.required)
-    }, {validator:this.passwordMatchValidator})
+      password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/)]),
+      confirmPassword : new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/)])
+    })
   }
 
   private passwordMatchValidator(fg:FormGroup){
@@ -47,6 +49,16 @@ export class SignupComponent implements OnInit {
     })
     
   }
+
+  togglePasswordVisibility() {
+    this.showPassword1 = !this.showPassword1;
+  }
+
+  togglePasswordVisibility2(){
+    this.showPassword2 = !this.showPassword2;
+
+  }
+
 
 
 

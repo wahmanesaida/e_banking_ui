@@ -1,0 +1,109 @@
+/* this for buttons */
+
+:root {
+    --hue: 310;
+    --hue-adjust: 135;
+    --hue-2: calc(var(--hue) + var(--hue-adjust));
+    --page-background: hsl(310, 10%, 6%);
+}
+
+button {
+    --button-background: #A367B1;
+    --text-base: #FFF;
+    --text-hover: #FFD1E3;
+    --shadow-start: hsl(var(--hue-2), 95%, 95%);
+    --shadow-end: hsl(310, 60%, 60%);
+    --shadow-inner: hsl(310, 60%, 60%);
+
+    --gold: #ffb338;
+    --light-shadow: #77571d;
+    --dark-shadow: #3e2904;
+
+    all: unset;
+    color: var(--text-base);
+    font: 700 1.125rem/1.2 Poppins, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 30px;
+    max-width: 100%;
+    width: 300px;
+    height: 90px;
+    background-color: var(--button-background);
+    background-clip: padding-box;
+    border: 5px solid var(--text-base);
+    border-radius: 2em;
+    cursor: pointer;
+    position: relative;
+    transition: 0.25s ease-out;
+    margin: 15px;
+}
+
+button::before,
+button::after {
+    content: "";
+    border-radius: inherit;
+    transition: inherit;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+button::before {
+    inset: -0.2em;
+    z-index: -1;
+    background: linear-gradient(var(--shadow-start), var(--shadow-end));
+    filter: blur(1.2em) saturate(1.2);
+    transform-origin: bottom;
+    transform: scaleY(0.5);
+    opacity: 0;
+}
+
+button::after {
+    box-shadow: inset 0 0 0 1px #fff, 0 0 0 4px hsla(0deg, 0%, 100%, 0.5), 1px 1px 0 4px #fff;
+    mix-blend-mode: overlay;
+    opacity: 0;
+}
+
+button:hover,
+button:focus {
+    color: var(--text-hover);
+    border-color: transparent;
+    box-shadow: inset 0 1.4em 0 hsla(var(--shadow-inner) / 0.1), inset 0 0 1.4em hsla(var(--shadow-inner) / 0.32), 0 1px 1px hsla(var(--shadow-inner) / 0.32);
+    transform: scale(1.1);
+}
+
+button:hover::before,
+button:hover::after,
+button:focus::before,
+button:focus::after {
+    transform: none;
+    opacity: 1;
+}
+
+/* Page styling, ignore */
+.body {
+    background: var(--page-background);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+/* this is for title */
+
+.title{
+    font-weight: 800;
+    font-size: 40px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #392467;
+    padding-top: 25px;
+}
+

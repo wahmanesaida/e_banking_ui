@@ -89,17 +89,11 @@ export class ServirTransfertComponent implements OnInit {
 
   next() {
     if (this.step === 1) {
-      console.log('Personal details form valid:', this.transferDetails.valid);
       if (this.transferDetails.valid) {
         this.personal_step = true;
         this.step++;
       }
     } else if (this.step === 2) {
-      console.log(
-        'Beneficiary details form valid:',
-        this.beneficiaryDetails.valid
-      );
-
       if (this.beneficiaryDetails.valid) {
         this.transfer_step = true;
         this.step++;
@@ -117,26 +111,7 @@ export class ServirTransfertComponent implements OnInit {
     }
   }
 
-  /** previous(
-  ) {
-    if (this.step > 1) {
-      this.step--;
-    }
-    if (this.step === 1) {
-      this.address_step = true;
-    }
-    if (this.step === 2) {
-      this.education_step = false;
-      this.address_step = true;
-    }
-    if(this.step ===3){
-      this.personal_step=false
-
-    }
-    // Add the following lines to ensure form data is visible when navigating back
-    this.personalDetails.updateValueAndValidity();
-    this.transferDetails.updateValueAndValidity();
-  }**/
+ 
 
   submit() {
     if (this.step == 3) {
@@ -144,7 +119,6 @@ export class ServirTransfertComponent implements OnInit {
       if (this.Otp.invalid) {
         return;
       }
-      //alert("Well done!!")
     }
   }
 

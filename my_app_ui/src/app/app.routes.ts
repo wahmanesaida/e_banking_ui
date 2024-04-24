@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ErrorPageComponent } from './shared/error-page/error-page.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/Dashboard', pathMatch: 'full' },
@@ -22,13 +23,11 @@ export const routes: Routes = [
 		loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),
 		//canActivate: [authGuard],
 	},
-
-  {
+    {
 		path: 'Dashboard',
 		loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
 		//canActivate: [authGuard],
 	},
-
 	{
 		path: 'ConsoleAgent',
 		loadChildren: () =>
@@ -37,6 +36,16 @@ export const routes: Routes = [
 		  ),
 		//canActivate: [authGuard],
 	  },
+	  {
+		path: 'GabBoa',
+		loadChildren: () =>
+		  import('./modules/gab-boa/gab-boa.module').then(
+			(m) => m.GabBoaModule
+		  ),
+		//canActivate: [authGuard],
+	  },
+	  { path: 'error', component: ErrorPageComponent },
+	  { path: '**', redirectTo: '/error', pathMatch: 'full' } 
 
 
 ];

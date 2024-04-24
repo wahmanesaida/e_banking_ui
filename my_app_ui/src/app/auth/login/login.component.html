@@ -1,44 +1,85 @@
-<div class="signup">
-    <div class="main-w3layouts wrapper">
-      <h1>Welcome !!</h1>
-      <div class="main-agileinfo">
-        <div class="agileits-top">
-          <form [formGroup]="loginForm">
-            <input
-              class="text email"
-              type="email"
-              name="email"
-              placeholder="Email"
-              formControlName="username"
-            />
+<div class="containerForm">
+  <div class="signupForm">
+    <div class="firstPart">
+      <h1>Login</h1>
+      <div class="formFields">
+        <form [formGroup]="loginForm">
+          <input
+            class="text"
+            type="email"
+            name="email"
+            placeholder="Email"
+            formControlName="username"
+          />
+          <div
+          style="color: red"
+          *ngIf="loginForm.controls['username'].errors &&
+          loginForm.controls['username'].invalid &&
+          loginForm.controls['username'].touched"
+        >
+          <div *ngIf="loginForm.controls['username'].errors['required']">
+            Email is required
+          </div>
+          <div *ngIf="loginForm.controls['username'].errors['email']">
+            Invalid Email
+          </div>
+        </div>
+          <div class="password-field ">
             <input
               class="text"
               type="password"
               name="password"
+              id="typepass"
               placeholder="Password"
               formControlName="password"
+              [type]="showPassword ? 'text' : 'password'"
             />
-            <div class="wthree-text">
-              <!-- this is the space between them  -->
-              <div class="clear"></div>
+            <div
+            style="color: red"
+            *ngIf="loginForm.controls['password'].errors &&
+            loginForm.controls['password'].invalid &&
+            loginForm.controls['password'].touched"
+          >
+            <div *ngIf="loginForm.controls['password'].errors['required']">
+              Password is required
             </div>
-            <input type="submit" value="LOGIN" [disabled]="loginForm.invalid" (click)="login()"/>
-          </form>
-          <p>Don't have an Account? <a routerLink="/Auth/signup"> Register Now!</a></p>
-        </div>
+            <div *ngIf="loginForm.controls['password'].errors['pattern']">
+              Password should contains at least one lowercase letter, 
+              one uppercase letter, one digit, one special character, and is at least 8 characters long
+            </div>
+          </div>
+          <!--   <input
+              type="checkbox"
+              id="showPassword"
+              [(ngModel)]="showPassword"
+              (change)="togglePasswordVisibility()"
+            /> -->
+          </div>
+          <button
+            type="submit"
+            value="SIGNUP"
+            [disabled]="loginForm.invalid"
+            (click)="login()"
+            class="button-86"
+          >
+            Login
+          </button>
+        </form>
       </div>
-      <ul class="colorlib-bubbles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
+    </div>
+    <div class="secondPart">
+      <h1>Transfer Your Money Anywhere</h1>
+      <img
+        data-v-4f74ca3d=""
+        src="https://ouch-cdn2.icons8.com/EXqRNzvD9i4KGLuJ-my2eyHBues1K8UcSYiFQR5I7qo/rs:fit:529:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvODYy/LzcyYTk4N2FhLTc0/NjMtNDRiNC04NzA2/LWY5YWI2NGRjNmE4/ZS5wbmc.png"
+        alt="3D business account PNG, SVG"
+        class="image-preview"
+        style=""
+      />
+
+      <p>
+        Don't have an Account? <a routerLink="/Auth/signup"> Register Now!</a>
+      </p>
     </div>
   </div>
-  
+</div>

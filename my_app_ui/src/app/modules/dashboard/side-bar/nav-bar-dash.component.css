@@ -15,7 +15,7 @@ body{
   width: 78px;
   padding: 6px 14px;
   z-index: 99;
-  background-color: #004f83;
+  background-color: #392467;
   transition: all .5s ease;
   position: fixed;
   top:0;
@@ -30,7 +30,7 @@ body{
 
 
 .sidebar.open{
-  width: 250px;
+  width: 260px;
 }
 
 .sidebar .logo_details{
@@ -131,7 +131,7 @@ body{
   width: 35px;
   border:none;
   border-radius: 5px;
-  background-color: #0067ac;
+  background-color: #5D3587;
   transition: all .5s ease;
 }
 
@@ -150,7 +150,7 @@ body{
   left:0;
   transform: translateY(-50%);
   font-size: 22px;
-  background-color: #0067ac;
+  background-color: #5D3587;
   color: #fff;
 }
 
@@ -160,7 +160,7 @@ body{
   width: 100%;
   align-items: center;
   text-decoration: none;
-  background-color: #004f83;
+  background-color: #392467;
   position: relative;
   transition: all .5s ease;
   z-index: 12;
@@ -181,7 +181,7 @@ body{
 
 .sidebar li a:hover::after{
   transform: scaleX(1);
-  color: #004f83
+  color: #392467
 }
 
 .sidebar li a .link_name{
@@ -198,7 +198,7 @@ body{
 .sidebar li a:hover .link_name,
 .sidebar li a:hover i{
   transition: all 0.5s ease;
-  color: #004f83
+  color: #392467
 }
 
 .sidebar.open li a .link_name{
@@ -259,7 +259,7 @@ body{
   top:50%;
   right: 0;
   transform: translateY(-50%);
-  background-color: #0067ac;
+  background-color: #5D3587;
   width: 100%;
   height: 60px;
   line-height: 60px;
@@ -275,7 +275,7 @@ body{
 
 .home-section{
   position: relative;
-  background-color: #e4e9f7;
+  background-color: #F3F8FF;
   min-height: 100vh;
   top:0;
   left:78px;
@@ -298,7 +298,7 @@ body{
 
 .home-section .text{
   display: inline-block;
-  color: #004f83;
+  color: #392467;
   font-size: 25px;
   font-weight: 500;
   margin: 18px;

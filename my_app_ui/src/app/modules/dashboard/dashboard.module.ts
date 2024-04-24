@@ -8,13 +8,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsoleAgentModule } from '../console-agent/console-agent.module';
+import { MenuCanalComponent } from './menu-canal/menu-canal.component';
 
 
 @NgModule({
   declarations: [
     NavBarDashComponent,
     HeaderDashComponent,
-    DashboardComponent
+    DashboardComponent,
+    MenuCanalComponent
 
   ],
   imports: [
@@ -29,7 +31,8 @@ import { ConsoleAgentModule } from '../console-agent/console-agent.module';
   exports: [
     NavBarDashComponent,
     HeaderDashComponent,
-    DashboardComponent
+    DashboardComponent,
+    MenuCanalComponent
   ]
 })
 export class DashboardModule { }

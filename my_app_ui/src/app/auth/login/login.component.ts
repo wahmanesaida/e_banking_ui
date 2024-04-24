@@ -12,6 +12,7 @@ import {jwtDecode} from "jwt-decode";
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+  showPassword: boolean = false;
   loginForm: FormGroup;
   public currentUser: User;
   currentUserDecode: any;
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
       this.loginForm = this.fb.group({
         username: new FormControl('', [Validators.email, Validators.required]),
-        password: new FormControl('', Validators.required)
+        password: new FormControl('',  [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/)])
       })
   }
 
@@ -45,6 +46,10 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/Auth/home');
       }
     })
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
 
