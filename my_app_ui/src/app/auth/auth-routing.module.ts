@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../modules/home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import {MWalletComponent} from "../modules/home/m-wallet/m-wallet.component";
 
 //const routes: Routes = [];
 
@@ -10,7 +11,8 @@ import { LoginComponent } from './login/login.component';
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+   {path: 'wallet', component: MWalletComponent}
 
 
 ];

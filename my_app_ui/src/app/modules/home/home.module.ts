@@ -9,6 +9,11 @@ import { FeatureComponent } from './pages/feature/feature.component';
 import { NewsletterComponent } from './pages/newsletter/newsletter.component';
 import { OurServicesComponent } from './pages/our-services/our-services.component';
 import { HomeComponent } from './home.component';
+import {MWalletService} from "./m-wallet/m-wallet.service";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MWalletComponent} from "./m-wallet/m-wallet.component";
+import {NgToastModule} from "ng-angular-popup";
+import {MatButton} from "@angular/material/button";
 
 
 @NgModule({
@@ -17,11 +22,16 @@ import { HomeComponent } from './home.component';
     FeatureComponent,
     NewsletterComponent,
     OurServicesComponent,
-   HomeComponent],
+    MWalletComponent,
+    HomeComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    CoreModule
+    CoreModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgToastModule,
+    MatButton,
 
   ],
   exports: [
@@ -31,6 +41,9 @@ import { HomeComponent } from './home.component';
     OurServicesComponent,
     HomeComponent
 
+  ],
+  providers: [
+    MWalletService
   ]
 })
 export class HomeModule { }

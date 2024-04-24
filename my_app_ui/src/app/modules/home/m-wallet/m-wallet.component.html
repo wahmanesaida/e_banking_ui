@@ -1,0 +1,242 @@
+
+  <div class="info">
+    <h1>Transfert national</h1>
+    <span>
+      <div class="spoilers">
+        Entamez votre transfert avec confiance ! Veuillez fournir les détails requis pour une expérience fluide et satisfaisante.
+      </div>
+    </span>
+  </div>
+
+
+
+  <!-- Modal -info -->
+  <div class="container">
+    <div id="modal-3" class="modal" data-modal-effect="slide-top">
+      <div class="modal-content">
+        <h2 class="fs-title">Score Index</h2>
+        <h3 class="fs-subtitle">Getting the most out of your data</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis consectetur ligula. Morbi dapibus tellus a ipsum sollicitudin aliquet. Phasellus id est lacus. Pellentesque a elementum velit, a tempor nulla. Mauris mauris lectus, tincidunt et purus rhoncus, eleifend convallis turpis. Nunc ullamcorper bibendum diam, vitae tempus dolor hendrerit iaculis. Phasellus tellus elit, feugiat vel mi et, euismod varius augue. Nulla a porttitor sapien. Donec vestibulum ac nisl sed bibendum. Praesent neque ipsum, commodo eget venenatis vel, tempus sit amet ante. Curabitur vel odio eget urna dapibus imperdiet sit amet eget felis. Vestibulum eros velit, posuere a metus eget, aliquam euismod purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        <input type="button" name="next" class="next action-button modal-close" value="Got it!">
+      </div>
+    </div>
+  </div>
+
+  <form class="steps" [formGroup]="beneficiarylDetails" accept-charset="UTF-8" enctype="multipart/form-data" novalidate="">
+    <ul id="progressbar">
+      <li [ngClass]="step>= 1 ? 'active ' : 'inactive'">les informations du bénéficaire</li>
+      <li [ngClass]="step>=2 ? 'active ' : 'inactive'">les informations du transfert</li>
+      <li [ngClass]="step>= 3 ? 'active ' : 'inactive'">la validation de l'Otp</li>
+      <li [ngClass]="step>= 3 ? 'active ' : 'inactive'">Reçu du transfert</li>
+    </ul>
+
+
+
+    <!-- USER INFORMATION FIELD SET -->
+    <fieldset *ngIf="step==1">
+      <h2 class="fs-title">Accès à la transaction</h2>
+      <h3 class="fs-subtitle">We just need some basic information to begin your scoring</h3>
+      <ng-toast></ng-toast>
+      <div>
+        <select formControlName="typetransfer" class="form-control">
+          <option value="" disabled selected>choisit votre service</option>
+          <option value="WALLET"> Emmètre un transfert national</option>
+        </select>
+        <div *ngIf="beneficiary && beneficiarylDetails.controls['typetransfer'].errors">
+          <div *ngIf="beneficiarylDetails.controls['typetransfer'].errors['required']">
+            You should select type of transfer
+          </div>
+        </div>
+      </div>
+      <div>
+        <select formControlName="usernameSelected" class="form-control"  (change)="onSelectBeneficiary($event)">
+          <option value="" disabled selected>choisit votre client</option>
+          <option *ngFor="let beneficiary of beneficiaries$ | async" [value]="beneficiary.id">
+            {{ beneficiary.username }}
+          </option>
+        </select>
+        <!-- ... -->
+
+        <div *ngIf="beneficiary && beneficiarylDetails.controls['usernameSelected'].errors">
+          <div *ngIf="beneficiarylDetails.controls['usernameSelected'].errors['required']">
+            vous devez choisir un client
+          </div>
+        </div>
+        <button mat-raised-button (click)="openDialog()" class="addbenebutton">Add beneficiay</button>
+        <br>
+        <br>
+      </div>
+
+      <input type="number" formControlName="idbene" placeholder="ID du bénéficaire" />
+      <div
+        *ngIf="beneficiary && beneficiarylDetails.controls['idbene'].errors"
+      >
+        <div *ngIf="beneficiary['idbene'].errors['required']">
+          id is required
+        </div>
+      </div>
+
+
+
+          <!--
+           <div>
+          <input
+            (click)="searchBeneficiaryById()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Search"
+          />
+
+        </div>-->
+
+
+        <input type="text" formControlName="name" placeholder="le nom du bénéficaire" />
+        <div
+          *ngIf="beneficiary && beneficiarylDetails.controls['name'].errors"
+        >
+          <div *ngIf="beneficiary['name'].errors['required']">
+            name is required
+          </div>
+        </div>
+
+        <input type="text" formControlName="first_name" placeholder="le prénom du bénéficaire" />
+        <div
+          *ngIf="beneficiary && beneficiarylDetails.controls['first_name'].errors"
+        >
+          <div *ngIf="beneficiary['first_name'].errors['required']">
+            first name is required
+          </div>
+        </div>
+
+
+        <input type="email" formControlName="email" placeholder="Email" />
+        <div
+          *ngIf="beneficiary && beneficiarylDetails.controls['email'].errors"
+        >
+          <div *ngIf="beneficiary['email'].errors['required']">
+            email is required
+          </div>
+        </div>
+      <input
+        (click)="next()"
+        type="button"
+        name="next"
+        class="next action-button"
+        value="Next"
+      />
+    </fieldset>
+  </form>
+
+
+
+  <form class="steps" [formGroup]="transferDetails" id="msform">
+    <fieldset *ngIf="step == 2">
+      <h2 class="fs-title">Accès à la transaction</h2>
+      <h3 class="fs-subtitle">We just need some basic information to begin your scoring</h3>
+      <ng-toast></ng-toast>
+
+      <input type="number" name="amount" formControlName="amount"  placeholder="montant du transfert" />
+      <div *ngIf="transferD && transferDetails.controls['amount'].errors">
+        <div *ngIf="transferD['amount'].errors['required']">
+          amount is required
+        </div>
+      </div>
+
+      <select
+        formControlName="notification"
+        class="form-control"
+
+      >
+        <option value="" disabled selected>Notification du transfer</option>
+        <option value="true"> true</option>
+        <option value="false">false</option>
+      </select>
+      <div *ngIf="transferD && transferDetails.controls['notification'].errors">
+        <div *ngIf="transferD['notification'].errors['required']">
+          notification is required
+        </div>
+      </div>
+
+
+      <select
+        formControlName="typeOffees"
+        class="form-control"
+
+      >
+        <option value="" disabled selected>Type des frais</option>
+        <option value="donor"> donor</option>
+        <option value="beneficiary">beneficiary</option>
+        <option value="shared">shared</option>
+
+      </select>
+      <div *ngIf="transferD && transferDetails.controls['typeOffees'].errors">
+        <div *ngIf="transferD['typeOffees'].errors['required']">
+          type Of fees is required
+        </div>
+      </div>
+
+      <input
+        (click)="previous()"
+        type="button"
+        name="previous"
+        class="previous action-button"
+        value="Previous"
+      />
+      <input
+        (click)="next()"
+        type="button"
+        name="next"
+        class="next action-button"
+        value="Next"
+      />
+    </fieldset>
+  </form>
+
+  <form class="steps" [formGroup]="Otp" id="msform">
+    <fieldset *ngIf="step == 3">
+      <h2 class="fs-title">Validation de l'otp</h2>
+      <ng-toast></ng-toast>
+      <button [disabled]="otpSent" class="btn btn-link" style="display: block; align-items: start; padding: 6px; margin-bottom: 10px; margin-left: 200px; color: #1d1a23;" (click)="sendOtp()">Send Otp</button>
+      <!--   <div *ngIf="transferMessage">
+           {{ transferMessage }}
+         </div> -->
+
+      <input
+        type="text"
+        formControlName="otp"
+        placeholder="enter the otp"
+      />
+
+      <div
+        *ngIf="otp && Otp.controls['otp'].errors"
+      >
+        <div *ngIf="Otp.controls['otp'].errors['required']">
+          Otp is required
+        </div>
+      </div>
+
+      <button [disabled]="otpValidated" class="btn btn-link" style="display: block; align-items: start; padding: 6px; margin-left: 373px; color: #1d1a23;;" (click)="validateOtp()">Validate Otp</button>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <input
+        (click)="previous()"
+        type="button"
+        name="previous"
+        class="previous action-button"
+      value="Previous"
+      />
+      <input
+        (click)="submit()"
+        [disabled]="transferDone"
+        type="submit"
+        name="submit"
+        class="submit action-button"
+        value="Submit"
+      />
+    </fieldset>
+  </form>
+
