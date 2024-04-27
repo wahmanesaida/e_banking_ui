@@ -6,37 +6,41 @@ import { ParDebitDeCompteComponent } from '../console-agent/par-debit-de-compte/
 import { ServirTransfertComponent } from '../console-agent/servir-transfert/servir-transfert.component';
 import { ExtourneTransfertComponent } from '../console-agent/extourne-transfert/extourne-transfert.component';
 import { MenuCanalComponent } from './menu-canal/menu-canal.component';
-
+import { ConsultationTransfertComponent } from '../console-agent/consultation-transfert/consultation-transfert.component';
+import { RenvoiNotificationComponent } from '../console-agent/renvoi-notification/renvoi-notification.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-  {path: 'header-dash', component: HeaderDashComponent},
-  {path: 'menu-canal', component: MenuCanalComponent},
-  {path: 'dashboard',
-   component: DashboardComponent,
-   children: [
-    {
-      path: 'header-dash',
-      component: HeaderDashComponent,
-    },
-    {
-      path: 'par-debit-compte',
-      component: ParDebitDeCompteComponent,
-    },
-    {
-      path: 'servir-transfert',
-      component: ServirTransfertComponent,
-    },
-    {
-      path: 'extourne-transfert',
-      component: ExtourneTransfertComponent,
-    }
-  ]
-  }
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'header-dash', component: HeaderDashComponent },
+  { path: 'menu-canal', component: MenuCanalComponent },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
+      {
+        path: 'header-dash',
+        component: HeaderDashComponent,
+      },
+      {
+        path: 'par-debit-compte',
+        component: ParDebitDeCompteComponent,
+      },
+      {
+        path: 'servir-transfert',
+        component: ServirTransfertComponent,
+      },
+      {
+        path: 'extourne-transfert',
+        component: ExtourneTransfertComponent,
+      },
+      { path: 'consult-transfert', component: ConsultationTransfertComponent },
+      { path: 'renvoi-notification', component: RenvoiNotificationComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

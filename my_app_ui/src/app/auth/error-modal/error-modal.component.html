@@ -1,0 +1,8 @@
+<div class="modal" *ngIf="showErrorModal">
+    <div class="modal-content">
+      <h1>Ouups !!</h1>
+      <p>{{ errorMessage }}</p>
+      <button (click)="onTryAgain()">Try Again</button>
+    </div>
+  </div>
+  
