@@ -159,7 +159,7 @@ export class ServirTransfertComponent implements OnInit {
         (transfert: Transfert) => {
           this.beneficiaryId = transfert.beneficiary.id;
           this.transferId = transfert.id;
-          this.transferType = transfert.type_transfer;
+          this.transferType = transfert.typeOftransfer;
           this.emailBeneficiary = transfert.beneficiary.username;
           this.transferDetails.get('idAgent').setValue(transfert.agent.id); 
           this.transferDetails.get('name').setValue(transfert.client.name);

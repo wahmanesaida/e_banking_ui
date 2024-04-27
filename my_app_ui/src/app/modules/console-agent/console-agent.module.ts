@@ -22,6 +22,8 @@ import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficia
 import {AuthService} from "../../auth/auth.service";
 import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transfert.component';
 import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
+import { ConsultationTransfertComponent } from './consultation-transfert/consultation-transfert.component';
+import { RenvoiNotificationComponent } from './renvoi-notification/renvoi-notification.component';
 
 
 
@@ -31,7 +33,9 @@ import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
     ExtourneTransfertComponent,
-    DialogBeneficiaryComponent
+    DialogBeneficiaryComponent,
+    ConsultationTransfertComponent,
+    RenvoiNotificationComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +63,9 @@ import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
     ExtourneTransfertComponent,
-    DialogBeneficiaryComponent
+    DialogBeneficiaryComponent,
+    ConsultationTransfertComponent,
+    RenvoiNotificationComponent
   ],
   providers: [ConsoleAgentService, AuthService],
 })
