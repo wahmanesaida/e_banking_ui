@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MulticriteriaSearchDto } from '../../../models/MulticriteriaSearchDto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConsoleAgentService } from '../console-agent.service';
+import { ConsoleAgentService } from '../../console-agent/console-agent.service';
 import * as moment from 'moment';
-import { Transfert } from '../servir-transfert/models/Transfert';
+import { Transfert } from '../../console-agent/servir-transfert/models/Transfert';
 import { NgToastService } from 'ng-angular-popup';
 
 @Component({

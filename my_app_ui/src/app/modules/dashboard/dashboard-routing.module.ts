@@ -6,8 +6,9 @@ import { ParDebitDeCompteComponent } from '../console-agent/par-debit-de-compte/
 import { ServirTransfertComponent } from '../console-agent/servir-transfert/servir-transfert.component';
 import { ExtourneTransfertComponent } from '../console-agent/extourne-transfert/extourne-transfert.component';
 import { MenuCanalComponent } from './menu-canal/menu-canal.component';
-import { ConsultationTransfertComponent } from '../console-agent/consultation-transfert/consultation-transfert.component';
-import { RenvoiNotificationComponent } from '../console-agent/renvoi-notification/renvoi-notification.component';
+import { ConsultationTransfertComponent } from '../back-office/consultation-transfert/consultation-transfert.component';
+import { RenvoiNotificationComponent } from '../back-office/renvoi-notification/renvoi-notification.component';
+import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -35,6 +36,7 @@ const routes: Routes = [
       },
       { path: 'consult-transfert', component: ConsultationTransfertComponent },
       { path: 'renvoi-notification', component: RenvoiNotificationComponent },
+      {path: 'gab-boa', component: GabBoaComponent},
     ],
   },
 ];

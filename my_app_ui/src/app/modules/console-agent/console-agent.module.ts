@@ -21,21 +21,13 @@ import {
 import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
 import {AuthService} from "../../auth/auth.service";
 import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transfert.component';
-import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
-import { ConsultationTransfertComponent } from './consultation-transfert/consultation-transfert.component';
-import { RenvoiNotificationComponent } from './renvoi-notification/renvoi-notification.component';
-
-
-
 
 @NgModule({
   declarations: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
     ExtourneTransfertComponent,
-    DialogBeneficiaryComponent,
-    ConsultationTransfertComponent,
-    RenvoiNotificationComponent
+    DialogBeneficiaryComponent
   ],
   imports: [
     CommonModule,
@@ -56,16 +48,12 @@ import { RenvoiNotificationComponent } from './renvoi-notification/renvoi-notifi
     MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
-
-
   ],
   exports: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
     ExtourneTransfertComponent,
-    DialogBeneficiaryComponent,
-    ConsultationTransfertComponent,
-    RenvoiNotificationComponent
+    DialogBeneficiaryComponent
   ],
   providers: [ConsoleAgentService, AuthService],
 })

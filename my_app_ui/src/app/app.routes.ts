@@ -44,6 +44,14 @@ export const routes: Routes = [
 		  ),
 		//canActivate: [authGuard],
 	  },
+	  {
+		path: 'BackOffice',
+		loadChildren: () =>
+		  import('./modules/back-office/back-office.module').then(
+			(m) => m.BackOfficeModule
+		  ),
+		//canActivate: [authGuard],
+	  },
 	  { path: 'error', component: ErrorPageComponent },
 	  { path: '**', redirectTo: '/error', pathMatch: 'full' } 
 

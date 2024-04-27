@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConsoleAgentService } from '../console-agent.service';
+
 import { NgToastService } from 'ng-angular-popup';
-import { Transfert } from '../servir-transfert/models/Transfert';
-import { TransferRefDTO } from '../servir-transfert/models/TransferRefDTO';
+import { ConsoleAgentService } from '../../console-agent/console-agent.service';
+import { Transfert } from '../../console-agent/servir-transfert/models/Transfert';
+import { TransferRefDTO } from '../../console-agent/servir-transfert/models/TransferRefDTO';
 
 @Component({
   selector: 'app-renvoi-notification',
