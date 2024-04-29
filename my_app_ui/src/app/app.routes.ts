@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ErrorPageComponent } from './shared/error-page/error-page.component';
+import {BackOfficeModule} from "./modules/back-office/back-office.module";
 
 export const routes: Routes = [
     { path: '', redirectTo: '/Dashboard', pathMatch: 'full' },
@@ -44,8 +45,19 @@ export const routes: Routes = [
 		  ),
 		//canActivate: [authGuard],
 	  },
+  {
+    path: 'BackOffice',
+    loadChildren: () =>
+      import('./modules/back-office/back-office.module').then(
+        (m) => m.BackOfficeModule
+      ),
+    //canActivate: [authGuard],
+  },
 	  { path: 'error', component: ErrorPageComponent },
-	  { path: '**', redirectTo: '/error', pathMatch: 'full' } 
+	  { path: '**', redirectTo: '/error', pathMatch: 'full' },
+
+
+
 
 
 ];

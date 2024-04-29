@@ -6,6 +6,7 @@ import { ParDebitDeCompteComponent } from '../console-agent/par-debit-de-compte/
 import { ServirTransfertComponent } from '../console-agent/servir-transfert/servir-transfert.component';
 import { ExtourneTransfertComponent } from '../console-agent/extourne-transfert/extourne-transfert.component';
 import { MenuCanalComponent } from './menu-canal/menu-canal.component';
+import {ReturnTheTransferComponent} from "../back-office/return-the-transfer/return-the-transfer.component";
 
 
 const routes: Routes = [
@@ -30,7 +31,11 @@ const routes: Routes = [
     {
       path: 'extourne-transfert',
       component: ExtourneTransfertComponent,
-    }
+    },
+     {
+       path: 'return-the-transfer',
+       component: ReturnTheTransferComponent
+     }
   ]
   }
 ];
