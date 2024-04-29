@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, map, Observable} from 'rxjs';
 import { jwtDecode } from 'jwt-decode'
 import {User} from "../models/User.model";
+import { NgToastService } from 'ng-angular-popup';
 
 const BASE_URL = ['http://localhost:8080/'];
 
@@ -34,8 +35,14 @@ export class AuthService {
     return this.http.post(BASE_URL + 'api/v1/auth/authenticate', loginRequest); //we should add the url of the api in the backend
  }
 
+ loginError(loginRequest: any): Observable<any>{
+  return this.http.post(BASE_URL+'api/v1/auth/login', loginRequest);
 
+ }
 
+ checkCredentialsExist(loginRequest: any): Observable<any>{
+  return this.http.post(BASE_URL+'api/v1/auth/checkCredentialsExist', loginRequest);
+ }
 
   hello(): Observable<any> {
     return this.http.get(BASE_URL + 'api/hello', {

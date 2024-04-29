@@ -8,11 +8,14 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from '../modules/dashboard/dashboard.module';
+import { ErrorModalComponent } from './error-modal/error-modal.component';
+import { NgToastModule } from 'ng-angular-popup';
 
 @NgModule({
   declarations: [
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ErrorModalComponent
   ],
   imports: [
     CommonModule,
@@ -21,11 +24,13 @@ import { DashboardModule } from '../modules/dashboard/dashboard.module';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    DashboardModule
+    DashboardModule,
+    NgToastModule
   ],
   exports:[
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ErrorModalComponent
   ],
   providers: [AuthService],
 })

@@ -14,6 +14,8 @@ import { BeneficiaryDto } from '../../models/BeneficiaryDto.model';
 import { TransferRefDTO } from './servir-transfert/models/TransferRefDTO';
 import { TransferPaymentDto } from './servir-transfert/models/TransferPaymentDto';
 import { Beneficiary } from './servir-transfert/models/Beneficiary';
+import { MulticriteriaSearchDto } from '../../models/MulticriteriaSearchDto';
+import { Transfert } from './servir-transfert/models/Transfert';
 
 @Injectable({
   providedIn: 'root',
@@ -121,5 +123,18 @@ export class ConsoleAgentService {
     const body: { numeroPieceIdentite: string } = { numeroPieceIdentite };
     return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
   }
+
+  searchTransfertBackOffice(multicriteriaSearchDto:MulticriteriaSearchDto) :Observable<any>{
+    return this.http.post(`${this.baseUrl}/searchCriteria`,multicriteriaSearchDto);
+  }
+
+  exportTransfersToExcel(transfers: Transfert[]): Observable<Blob> {
+    return this.http.post(`${this.baseUrl}/exportFile`, transfers, { responseType: 'blob', headers: { 'Content-Type': 'application/json' } });
+  }
+
+  getAllTransfers():Observable<any>{
+    return this.http.get(`${this.baseUrl}/transfers`);
+  }
+  
   
 }

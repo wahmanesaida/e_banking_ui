@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   public currentUser: User;
   currentUserDecode: any;
+  showErrorModal = false;
+  errorMessage = '';
 
   constructor(
     private service:AuthService,
@@ -33,8 +35,10 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+
     //console.log(this.loginForm.value);
-    this.service.login(this.loginForm.value).subscribe((response) => {
+    this.service.login(this.loginForm.value).subscribe(
+      (response) => {
       //console.log(response);
       if (response.token) {
         alert(response.token);
@@ -45,12 +49,48 @@ export class LoginComponent implements OnInit {
         console.log("iddddddddd  " + localStorage.getItem('id'));
         this.router.navigateByUrl('/Auth/home');
       }
-    })
+    },
+    (error) => {
+      this.loginError();
+    }
+    )
   }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+
+
+  loginError() {
+    this.service.loginError(this.loginForm.value).subscribe(
+      (response) => {
+        // Handle successful login
+      },
+      (error) => {
+        if (error.status === 401) {
+          if (error.error === "Wrong password") {
+            this.errorMessage = 'Wrong password.';
+          } else if (error.error === "Username doesn't exist") {
+            this.errorMessage = 'User not found.';
+          } else {
+            this.errorMessage = 'An unexpected error occurred.';
+          }
+        } else {
+          this.errorMessage = 'An unexpected error occurred.';
+        }
+        this.showErrorModal = true;
+      }
+    );
+  }
+
+  tryAgain() {
+    this.showErrorModal = false;
+  }
+
+  goToHome() {
+    this.router.navigateByUrl('/Auth/home'); // Navigate to the home page
+  }
+
 
 
 

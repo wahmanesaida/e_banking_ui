@@ -9,7 +9,7 @@ export class Transfert{
    
     id?:number;
     amount_transfer?:number;
-    type_transfer?:TypeOftransfer;
+    typeOftransfer?:TypeOftransfer;
     typeOfFees?:TypeOfFees;
     amountOfFees?:number;
     status?:string;
@@ -19,12 +19,11 @@ export class Transfert{
     agent?:User;
     motif?:string;
     beneficiary?:Beneficiary;
-    //transaction madrthach
 
     constructor(
         id?:number,
         amount_transfer?:number,
-        type_transfer?:TypeOftransfer,
+        typeOftransfer?:TypeOftransfer,
         typeOfFees?:TypeOfFees,
         amountOfFees?:number,
         status?:string,
@@ -38,7 +37,7 @@ export class Transfert{
     ) {
         this.id = id;
         this.amount_transfer = amount_transfer;
-        this.type_transfer = type_transfer;
+        this.typeOftransfer = typeOftransfer;
         this.typeOfFees = typeOfFees;
         this.amountOfFees = amountOfFees;
         this.status = status;
