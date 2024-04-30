@@ -31,7 +31,6 @@ export class ConsultationTransfertComponent implements OnInit {
   onSubmit() {
     const searchInput = this.searchform.get('criteria')!.value;
     const criterion = this.determineSearchCriterion(searchInput);
-    
     if (!criterion) {
       this.toast.error({
         detail: 'You have entered a wrong criteria',

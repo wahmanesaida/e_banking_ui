@@ -1,52 +1,56 @@
-<!-- <ng-toast></ng-toast> -->
-<form [formGroup]="searchform" (ngSubmit)="onSubmit()" class="search-form">
-    <header class="header-of-search">
-      <div class="search-bar">
-        <input formControlName="transferRef" name="transferRef" id="transferRef" type="text"  class="search-input" placeholder="Search By transferRef" style="outline: none;">
-      </div>
-      <button class="custom-btn" type="submit">Search</button>
-    </header>
-  </form>
-
-  <div class="table-responsive tableau">
-  <table class="table table-bordered table-hover">
-    <caption>La liste des Transferts</caption>
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Transfer ID</th>
-        <th scope="col">Amount of transfer</th>
-        <th scope="col">Type of transfer</th>
-        <th scope="col">Agent Name</th>
-        <th scope="col">Client Name</th>
-        <th scope="col">Motif</th>
-        <th scope="col">Transfer reference</th>
-        <th scope="col">Amount of fees</th>
-        <th scope="col">Type of fees</th>
-        <th scope="col">Status</th>
-        <th scope="col">CreateTime</th>
-        <th scope="col">Beneficiary Name</th>
-      </tr>
-    </thead>
-    <tbody>
+<div>
+  <ng-toast></ng-toast>
+  <form [formGroup]="searchform" (ngSubmit)="onSubmit()" class="search-form">
+      <header class="header-of-search">
+        <div class="search-bar">
+          <input formControlName="transferRef" type="text" class="search-input" placeholder="Search By transferRef" style="outline: none;">
+        </div>
+        <button class="custom-btn" type="submit">Search</button>
+      </header>
+    </form>
+  
+    <div class="table-responsive tableau">
+    <table class="table table-bordered table-hover">
+      <caption>La liste des Transferts</caption>
+      <thead class="thead-dark">
         <tr>
-          <th scope="row">{{ transfers?.id }}</th>
-          <td>{{ transfers?.amount_transfer }}</td>
-          <td>{{ transfers?.typeOftransfer}}</td>
-          <td>{{ transfers?.agent.name }}</td>
-          <td>{{ transfers?.client.name }}</td>
-          <td>{{ transfers?.motif }}</td>
-          <td>{{ transfers?.transferRef }}</td>
-          <td>{{ transfers?.amountOfFees }}</td>
-          <td>{{ transfers?.typeOfFees }}</td>
-          <td>{{ transfers?.status }}</td>
-          <td>{{ transfers?.createTime }}</td>
-          <td>{{ transfers?.beneficiary.firstName }}</td>
+          <th scope="col">Transfer ID</th>
+          <th scope="col">Amount of transfer</th>
+          <th scope="col">Type of transfer</th>
+          <th scope="col">Agent Name</th>
+          <th scope="col">Client Name</th>
+          <th scope="col">Motif</th>
+          <th scope="col">Transfer reference</th>
+          <th scope="col">Amount of fees</th>
+          <th scope="col">Type of fees</th>
+          <th scope="col">Status</th>
+          <th scope="col">CreateTime</th>
+          <th scope="col">Beneficiary Name</th>
         </tr>
-      </tbody>
-  </table>
-  </div>
-  <button class="custom-btn exportButton" (click)="renvoyerNotification()">
-    <i class="fas fa-paper-plane"></i> renvoyer la notification
-  </button>
-  
-  
+      </thead>
+      <tbody>
+        <ng-container *ngIf="transfers">
+          <tr>
+            <th scope="row">{{ transfers.id }}</th>
+            <td>{{ transfers.amount_transfer }}</td>
+            <td>{{ transfers.typeOftransfer}}</td>
+            <td>{{ transfers.agent?.name }}</td>
+            <td>{{ transfers.client?.name }}</td>
+            <td>{{ transfers.motif }}</td>
+            <td>{{ transfers.transferRef }}</td>
+            <td>{{ transfers.amountOfFees }}</td>
+            <td>{{ transfers.typeOfFees }}</td>
+            <td>{{ transfers.status }}</td>
+            <td>{{ transfers.createTime }}</td>
+            <td>{{ transfers.beneficiary?.firstName }}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+    </table>
+    </div>
+    <button class="custom-btn exportButton" (click)="renvoyerNotification()">
+      <i class="fas fa-paper-plane"></i> renvoyer la notification
+    </button>
+    
+    
+</div>
