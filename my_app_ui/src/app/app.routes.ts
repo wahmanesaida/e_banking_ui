@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ErrorPageComponent } from './shared/error-page/error-page.component';
+import {BackOfficeModule} from "./modules/back-office/back-office.module";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/Dashboard', pathMatch: 'full' },

@@ -197,11 +197,11 @@ export class ParDebitDeCompteComponent implements OnInit {
     if(idnumber){
       this.transfer_service.getClientBynum(idnumber).subscribe(
         (agent: User)=> {
-          if(agent) {
+          if(agent != null) {
             this.patchFormWithUserData(agent)
             this.toastService.info({
               detail: "SUCCES",
-              summary: "Agent found successfuly",
+              summary: "client found successfuly",
               duration: 5000,
               position: 'topCenter'
             });
@@ -210,7 +210,7 @@ export class ParDebitDeCompteComponent implements OnInit {
           else {
               console.log(agent);
               this.errorMessage= "Invalid ID ! ";
-              this.toastService.error({ detail: "Pay Attention", summary: this.errorMessage, duration: 5000, position: 'topCenter' });
+              this.toastService.error({ detail: "User not found", summary: "Invalid ID Number !", duration: 5000, position: 'topCenter' });
 
             }
 
@@ -227,6 +227,12 @@ export class ParDebitDeCompteComponent implements OnInit {
         }
 
       );
+    }else{
+      this.toastService.error({
+        detail: "Invalid ID !",
+        summary: "Invalid ID !",
+        duration: 5000,
+        position: 'topCenter'})
     }
 
   }
@@ -337,10 +343,6 @@ export class ParDebitDeCompteComponent implements OnInit {
    if (this.step == 2) {
      this.education_step = false;
    }
-
-
-
-
   }
 
 
