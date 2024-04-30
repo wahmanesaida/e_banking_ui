@@ -27,17 +27,12 @@ import { ConsultationTransfertComponent } from './consultation-transfert/consult
 import { RenvoiNotificationComponent } from './renvoi-notification/renvoi-notification.component';
 
 
-
-
-
 @NgModule({
   declarations: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
     ExtourneTransfertComponent,
-    DialogBeneficiaryComponent,
-    ConsultationTransfertComponent,
-    RenvoiNotificationComponent
+    DialogBeneficiaryComponent
   ],
   imports: [
     CommonModule,
@@ -58,16 +53,12 @@ import { RenvoiNotificationComponent } from './renvoi-notification/renvoi-notifi
     MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
-
-
   ],
   exports: [
     ParDebitDeCompteComponent,
     ServirTransfertComponent,
     ExtourneTransfertComponent,
-    DialogBeneficiaryComponent,
-    ConsultationTransfertComponent,
-    RenvoiNotificationComponent
+    DialogBeneficiaryComponent
   ],
   providers: [ConsoleAgentService, AuthService, BackOfficeService],
 })

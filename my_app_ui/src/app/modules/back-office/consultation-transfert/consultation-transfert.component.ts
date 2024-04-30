@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MulticriteriaSearchDto } from '../../../models/MulticriteriaSearchDto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConsoleAgentService } from '../console-agent.service';
+import { ConsoleAgentService } from '../../console-agent/console-agent.service';
 import * as moment from 'moment';
-import { Transfert } from '../servir-transfert/models/Transfert';
+import { Transfert } from '../../console-agent/servir-transfert/models/Transfert';
 import { NgToastService } from 'ng-angular-popup';
 
 @Component({
@@ -31,7 +31,6 @@ export class ConsultationTransfertComponent implements OnInit {
   onSubmit() {
     const searchInput = this.searchform.get('criteria')!.value;
     const criterion = this.determineSearchCriterion(searchInput);
-    
     if (!criterion) {
       this.toast.error({
         detail: 'You have entered a wrong criteria',

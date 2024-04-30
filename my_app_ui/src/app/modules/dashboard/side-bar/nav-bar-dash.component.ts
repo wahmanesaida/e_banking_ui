@@ -11,6 +11,9 @@ export class NavBarDashComponent {
   faArrowLeft = faArrowLeft;
   isSidebarOpen: boolean = false;
   isDropdownOpen: boolean = false;
+  isDropdownOpen1: boolean = false; // Separate property for the first dropdown
+  isDropdownOpen2: boolean = false; // Separate property for the second dropdown
+  isDropdownOpen3: boolean = false;
 
 
   @ViewChild('sidebar') sidebar: ElementRef<HTMLElement>;
@@ -38,10 +41,30 @@ export class NavBarDashComponent {
 
   
 
-  toggleDropdown() {
+/*   toggleDropdown() {
     // Only toggle the dropdown if the sidebar is open
     if (this.isSidebarOpen) {
       this.isDropdownOpen = !this.isDropdownOpen;
+    }
+  } */
+
+ 
+  
+  toggleDropdown(dropdownNumber: number) {
+    if (this.isSidebarOpen) {
+      if (dropdownNumber === 1) {
+        this.isDropdownOpen1 = !this.isDropdownOpen1;
+        this.isDropdownOpen3 = false;
+        this.isDropdownOpen2 = false; // Close the second dropdown
+      } else if (dropdownNumber === 2) {
+        this.isDropdownOpen2 = !this.isDropdownOpen2;
+        this.isDropdownOpen1 = false; // Close the first dropdown
+        this.isDropdownOpen3 = false;
+      } else if (dropdownNumber === 3) {
+        this.isDropdownOpen3 = !this.isDropdownOpen3;
+        this.isDropdownOpen1 = false; // Close the first dropdown
+        this.isDropdownOpen2 = false;
+      }
     }
   }
 

@@ -2,7 +2,7 @@
   <div class="logo_details">
     <i class="bx bxl-audible icon"></i>
     <div class="logo_name">Dashboard</div>
-    <i class="bx bx-menu" id="btn" #closeBtn  (click)="toggleSidebar()"></i>
+    <i class="bx bx-menu" id="btn" #closeBtn (click)="toggleSidebar()"></i>
   </div>
   <ul class="nav-list">
 
@@ -61,6 +61,26 @@
 
 
     <li class="dropdown">
+      <a (click)="toggleDropdown(3)">
+        <i class="bi bi-cash-stack"></i>
+        <span class="link_name">Gab Boa</span>
+        <i class="bx bx-chevron-down arrow" *ngIf="isDropdownOpen3"></i>
+      </a>
+      <span class="tooltip">Gab Boa</span>
+      <!-- Sub-items container -->
+      <ul class="sub-items" *ngIf="isDropdownOpen3">
+        <li>
+          <a  routerLink="gab-boa">
+            <span class="link_name">Servir un transfert</span>
+          </a>
+        </li>
+        <!-- Add more sub-items as needed -->
+      </ul>
+    </li>
+
+
+
+    <li class="dropdown">
       <a (click)="toggleDropdown()">
         <i class="bx bx-category"></i>
         <span class="link_name">Gestion des transactions</span>
@@ -68,7 +88,7 @@
       </a>
       <span class="tooltip">New transaction</span>
       <!-- Sub-items container -->
-      <ul class="sub-items" *ngIf="isDropdownOpen">
+      <ul class="sub-items" *ngIf="isDropdownOpen1">
         <li>
           <a routerLink="par-debit-compte">
             <span class="link_name">émettre un transfert</span>
@@ -90,19 +110,40 @@
             <span class="link_name">Réstitué un transfert</span>
           </a>
         </li>
+        <!-- Add more sub-items as needed -->
+      </ul>
+    </li>
+
+
+
+    <li class="dropdown">
+      <a (click)="toggleDropdown(2)">
+        <i class="bx bx-building"></i>
+       <!--  <i class="bi bi-building"></i>//B
+        <i class="bi bi-briefcase"></i>//B -->
+        <span class="link_name">BackOffice</span>
+        <i class="bx bx-chevron-down arrow" *ngIf="isDropdownOpen2"></i>
+      </a>
+      <span class="tooltip">BackOffice</span>
+      <!-- Sub-items container -->
+      <ul class="sub-items" *ngIf="isDropdownOpen2">
         <li>
-          <a  routerLink="consult-transfert">
-            <span class="link_name">Consulter un transfert</span>
+          <a routerLink="consult-transfert">
+            <span class="link_name">Consulter les transferts</span>
           </a>
         </li>
         <li>
-          <a  routerLink="renvoi-notification">
+          <a routerLink="renvoi-notification">
             <span class="link_name">Renvoi Des Notifications</span>
           </a>
         </li>
         <!-- Add more sub-items as needed -->
       </ul>
     </li>
+
+
+
+
 
 
     <li>
