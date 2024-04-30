@@ -1,0 +1,182 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-12 col-md-offset-3">
+      <form [formGroup]="personalDetails" id="msform">
+        <!-- progressbar -->
+        <ul id="progressbar">
+          <li [ngStyle]="{'color': 'black'}" [ngClass]="step >= 1 ? 'active ' : 'inactive'">
+            Réstitution du transfert
+          </li>
+          <li [ngStyle]="{'color': 'black'}" [ngClass]="step >= 2 ? 'active' : 'inactive'">
+            Reçu du transfert
+          </li>
+
+
+        </ul>
+        <!-- fieldsets -->
+
+        <fieldset *ngIf="step == 1">
+          <h2 class="fs-title" [ngStyle]="{'text-decoration': 'underline'}">les Details du transfert</h2>
+          <br>
+          <ng-toast></ng-toast>
+          <div>
+            <input type="text" formControlName="transferRefr" placeholder="Taper le référence du transfert" />
+            <div *ngIf="personal && personalDetails.controls['transferRefr'].errors">
+              <div *ngIf="personalDetails.controls['transferRefr'].errors['required']">
+                le référence du transfert est obligatoire !
+              </div>
+            </div>
+
+          </div>
+          <button #searchButton type="button" class="next action-button" (click)="searchTransfertByReference()">Search</button>
+
+
+
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
+          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Les informations de l'agent</h2>
+
+          <input
+            type="number"
+            formControlName="Id_Agent"
+            [ngClass]="{
+              'is-invalid': personal_step && personal['Id_Agent'].errors
+            }"
+            readonly
+            placeholder="Id de l'Agent"
+
+          />
+
+          <input
+            type="text"
+            formControlName="AgentName"
+            [ngClass]="{
+              'is-invalid': personal_step && personal['AgentName'].errors
+            }"
+            readonly
+            placeholder="le prénom de l'agent"
+
+          />
+
+          <input
+            type="text"
+            formControlName="AgentLastName"
+            [ngClass]="{
+              'is-invalid': personal_step && personal['AgentLastName'].errors
+            }"
+            readonly
+            [value]="tt"
+            placeholder="le nom de l'agent"
+
+          />
+
+
+          <input
+            type="text"
+            formControlName="DateEmission"
+            [ngClass]="{
+          'is-invalid': personal_step && personal['DateEmission'].errors
+        }"
+            readonly
+            placeholder="Date d'émission"
+          />
+
+          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Les information du bénéicaire</h2>
+          <input
+            type="number"
+            formControlName="Montant"
+            [ngClass]="{
+        'is-invalid': personal_step && personal['Montant'].errors
+      }"
+            readonly
+            placeholder="Le montant du transfert"
+          />
+          <input
+            type="text"
+            formControlName="NameBene"
+            [ngClass]="{
+      'is-invalid': personal_step && personal['NameBene'].errors
+    }"
+            readonly
+            placeholder="Le nom du bénéfcaire"
+          />
+          <input
+            type="text"
+            formControlName="Prénombene"
+            [ngClass]="{
+    'is-invalid': personal_step && personal['Prénombene'].errors
+  }"
+            readonly
+            placeholder="Le prénom du bénéficaire"
+          />
+
+          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Choix de notification</h2>
+          <select formControlName="notification" class="form-control">
+            <option value="" disabled selected>Notification</option>
+            <option value="true">true</option>
+            <option value="false">false</option>
+          </select>
+          <div *ngIf="personal && personalDetails.controls['notification'].errors">
+            <div *ngIf="personalDetails.controls['notification'].errors['required']">
+              Ce champ est obligatoire !
+            </div>
+          </div>
+          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Choix de motif</h2>
+
+          <select formControlName="motifName" class="form-control">
+            <option value="" disabled selected>Select Transfer Type</option>
+            <option *ngFor="let motifKey of Object.keys(motifs)" [value]="motifs[motifKey]">
+              {{ formatMotifKey(motifKey) }}
+            </option>
+          </select>
+            <div *ngIf="personal && personalDetails.controls['motifName'].errors">
+              <div *ngIf="personalDetails.controls['motifName'].errors['required']">
+                vous devez sélectionner ou ajouter un motif
+              </div>
+            </div>
+
+
+
+
+          <input
+            (click)="submit()"
+            type="button"
+            name="submit"
+            class="next action-button"
+            value="submit"
+            [disabled]="ReturnDone"
+            [style.color]="ReturnDone ? 'black' : 'white'"
+
+          />
+          <div *ngIf="ReturnDone">
+            <input
+              (click)="next()"
+              type="button"
+              name="Téléchargé le recu"
+              value="next"
+            /> </div>
+
+        </fieldset>
+      </form>
+
+      <form  id="msform">
+        <fieldset *ngIf="step == 2">
+          <h2 class="fs-title">Télecharger le recu</h2>
+
+
+          <input
+            (click)="download()"
+            type="submit"
+            name="download"
+            class="submit action-button"
+            value="download"
+          />
+        </fieldset>
+      </form>
+
+
+
+    </div>
+  </div>
+</div>

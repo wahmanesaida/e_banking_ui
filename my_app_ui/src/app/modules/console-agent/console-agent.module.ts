@@ -21,6 +21,11 @@ import {
 import {DialogBeneficiaryComponent} from "./par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
 import {AuthService} from "../../auth/auth.service";
 import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transfert.component';
+import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
+import {BackOfficeService} from "../back-office/back-office.service";
+import { ConsultationTransfertComponent } from './consultation-transfert/consultation-transfert.component';
+import { RenvoiNotificationComponent } from './renvoi-notification/renvoi-notification.component';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +60,6 @@ import { ExtourneTransfertComponent } from './extourne-transfert/extourne-transf
     ExtourneTransfertComponent,
     DialogBeneficiaryComponent
   ],
-  providers: [ConsoleAgentService, AuthService],
+  providers: [ConsoleAgentService, AuthService, BackOfficeService],
 })
 export class ConsoleAgentModule { }
