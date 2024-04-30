@@ -7,8 +7,9 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DashboardModule } from '../modules/dashboard/dashboard.module';
+
 import { ErrorModalComponent } from './error-modal/error-modal.component';
+import { RouterModule } from '@angular/router';
 import { NgToastModule } from 'ng-angular-popup';
 
 @NgModule({
@@ -23,16 +24,15 @@ import { NgToastModule } from 'ng-angular-popup';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
-    DashboardModule,
+    RouterModule,
     NgToastModule
   ],
-  exports:[
-    SignupComponent,
-    LoginComponent,
-    ErrorModalComponent
-  ],
   providers: [AuthService],
+  exports:[
+    LoginComponent,
+    SignupComponent,
+    ErrorModalComponent
+  ]
 })
 
 export class AuthModule { }

@@ -1,0 +1,8 @@
+/*** Feature ***/
+.feature-item {
+  transition: .5s;
+}
+
+.feature-item:hover {
+  margin-top: -15px;
+}
