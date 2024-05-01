@@ -9,13 +9,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsoleAgentModule } from '../console-agent/console-agent.module';
 import { MenuCanalComponent } from './menu-canal/menu-canal.component';
 import { GabBoaModule } from '../gab-boa/gab-boa.module';
+import { UsersComponent } from './users/users.component';
+import { ConsoleAgentService } from '../console-agent/console-agent.service';
+import { ModalUserComponent } from './modal-user/modal-user.component';
 
 @NgModule({
   declarations: [
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent,
-    MenuCanalComponent
+    MenuCanalComponent,
+    UsersComponent,
+    ModalUserComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +35,9 @@ import { GabBoaModule } from '../gab-boa/gab-boa.module';
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent,
-    MenuCanalComponent
-  ]
+    MenuCanalComponent,
+    UsersComponent
+  ],
+  providers:[ConsoleAgentService]
 })
 export class DashboardModule { }

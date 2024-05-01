@@ -141,6 +141,18 @@ export class ConsoleAgentService {
   renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
     return this.http.post(`${this.baseUrl}/renvoiNotification`, renvoiDto);
   }
+
+  getAllUsers():Observable<any>{
+    return this.http.get(`${this.baseUrl}/getAllUsers`);
+  }
+
+  deleteUser(id:number):Observable<any>{
+    return this.http.post(`${this.baseUrl}/deleteUser`, id);
+  }
+
+  searchUser(id:number):Observable<any>{
+    return this.http.post(`${this.baseUrl}/searchUserByID`, id);
+  }
   
   
 }

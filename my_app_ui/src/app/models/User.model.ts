@@ -1,3 +1,5 @@
+import { Role } from "./Role.enum";
+
 export class User {
   title: string;
   name:string;
@@ -15,6 +17,9 @@ export class User {
   id: number;
   username: string;
   token: string="";
+  role?:Role;
+  createTime?:Date;
+  password?:string;
 
 
   constructor(
@@ -33,7 +38,10 @@ export class User {
     account_amount: number,
     id: number,
     username: string,
-    token: string
+    token: string,
+    role:Role,
+    createTime:Date,
+    password:string
   ) {
     this.title = title;
     this.name = name;
@@ -51,7 +59,9 @@ export class User {
     this.id=id;
     this.username=username;
     this.token=token;
-
+    this.role=role;
+    this.createTime= createTime;
+    this.password= password;
   }
 
 }

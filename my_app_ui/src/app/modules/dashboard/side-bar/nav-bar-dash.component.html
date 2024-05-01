@@ -22,9 +22,9 @@
 
 
     <li>
-      <a href="#">
+      <a routerLink="users">
         <i class="bx bx-user"></i>
-        <span class="link_name">User</span>
+        <span class="link_name">Users</span>
       </a>
       <span class="tooltip">User</span>
     </li>
@@ -81,10 +81,10 @@
 
 
     <li class="dropdown">
-      <a (click)="toggleDropdown()">
+      <a (click)="toggleDropdown(1)">
         <i class="bx bx-category"></i>
         <span class="link_name">Gestion des transactions</span>
-        <i class="bx bx-chevron-down arrow" *ngIf="isDropdownOpen"></i>
+        <i class="bx bx-chevron-down arrow" *ngIf="isDropdownOpen1"></i>
       </a>
       <span class="tooltip">New transaction</span>
       <!-- Sub-items container -->
