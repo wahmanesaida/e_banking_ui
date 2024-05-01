@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { NgToastService } from 'ng-angular-popup';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -17,13 +18,13 @@ export class SignupComponent implements OnInit {
   showSuccessModal = false;
   errorMessage = '';
 
+
   
   constructor(
     private service: AuthService, 
     private fb: FormBuilder,
     private router: Router,
     private toast: NgToastService) {
-   
   }
 
 
@@ -118,7 +119,6 @@ export class SignupComponent implements OnInit {
     this.router.navigateByUrl('/Auth/home');// Navigate to the home page
   }
   
-
 
 
 

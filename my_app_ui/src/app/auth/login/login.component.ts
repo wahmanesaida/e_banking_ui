@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import {User} from "../../models/User.model";
 import {jwtDecode} from "jwt-decode";
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -90,6 +91,7 @@ export class LoginComponent implements OnInit {
   goToHome() {
     this.router.navigateByUrl('/Auth/home'); // Navigate to the home page
   }
+
 
 
 

@@ -18,6 +18,8 @@ import {
   ReturnTheTransferByClientComponent
 } from "./return-the-transfer-by-client/return-the-transfer-by-client.component";
 import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client/return-the-transfer-by-client.service";
+import { CoreRoutingModule } from '../../core/core-routing.module';
+
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client/
     CommonModule,
     HomeRoutingModule,
     CoreModule,
+    CoreRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     NgToastModule,

@@ -1,6 +1,5 @@
 import { NgModule, ɵnoSideEffects } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { NavBarDashComponent } from './side-bar/nav-bar-dash.component';
 import { HeaderDashComponent } from './header-dash/header-dash.component';
@@ -9,15 +8,19 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsoleAgentModule } from '../console-agent/console-agent.module';
 import { MenuCanalComponent } from './menu-canal/menu-canal.component';
-
+import { GabBoaModule } from '../gab-boa/gab-boa.module';
+import { UsersComponent } from './users/users.component';
+import { ConsoleAgentService } from '../console-agent/console-agent.service';
+import { ModalUserComponent } from './modal-user/modal-user.component';
 
 @NgModule({
   declarations: [
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent,
-    MenuCanalComponent
-
+    MenuCanalComponent,
+    UsersComponent,
+    ModalUserComponent
   ],
   imports: [
     CommonModule,
@@ -26,13 +29,15 @@ import { MenuCanalComponent } from './menu-canal/menu-canal.component';
     ReactiveFormsModule,
     FormsModule,
     ConsoleAgentModule,
-
+    GabBoaModule
   ],
   exports: [
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent,
-    MenuCanalComponent
-  ]
+    MenuCanalComponent,
+    UsersComponent
+  ],
+  providers:[ConsoleAgentService]
 })
 export class DashboardModule { }

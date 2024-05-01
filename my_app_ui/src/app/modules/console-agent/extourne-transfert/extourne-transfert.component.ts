@@ -19,7 +19,6 @@ export class ExtourneTransfertComponent implements OnInit {
   transferType: TypeOftransfer;
   emailBeneficiary: string;
   transferReversed: boolean = false;
-
   errorMessage: string;
 
   transferDetails!: FormGroup;
@@ -40,7 +39,10 @@ export class ExtourneTransfertComponent implements OnInit {
 
   ngOnInit() {
     this.transferDetails = this.formBuilder.group({
-      transferRef: ['',[Validators.required, Validators.pattern(/^837\d{10}$/)]],
+      transferRef: [
+        '',
+        [Validators.required, Validators.pattern(/^837\d{10}$/)],
+      ],
       idAgent: ['', Validators.required],
       name: ['', Validators.required],
       username: ['', Validators.required],
@@ -56,8 +58,7 @@ export class ExtourneTransfertComponent implements OnInit {
       otherMotif: [''],
     });
 
-    this.Validation = this.formBuilder.group({
-    });
+    this.Validation = this.formBuilder.group({});
   }
 
   get transferD() {
@@ -75,12 +76,12 @@ export class ExtourneTransfertComponent implements OnInit {
   next() {
     if (this.step === 1) {
       if (this.transferDetails.valid) {
-        this.transfer_step = true; //personal_step 
+        this.transfer_step = true; //personal_step
         this.step++;
       }
     } else if (this.step === 2) {
       if (this.motifInfo.valid) {
-        this.motif_step = true;// transfer_step
+        this.motif_step = true; // transfer_step
         this.step++;
       }
     }
@@ -89,7 +90,7 @@ export class ExtourneTransfertComponent implements OnInit {
   previous() {
     this.step--;
     if (this.step == 1) {
-      this.motif_step = false;//motif_step
+      this.motif_step = false; //motif_step
     }
     if (this.step == 2) {
       this.validation_step = false;
@@ -118,22 +119,12 @@ export class ExtourneTransfertComponent implements OnInit {
           this.emailBeneficiary = transfert.beneficiary.username;
           this.transferDetails.get('idAgent').setValue(transfert.agent.id);
           this.transferDetails.get('name').setValue(transfert.client.name);
-          this.transferDetails
-            .get('username')
-            .setValue(transfert.client.username);
+          this.transferDetails.get('username').setValue(transfert.client.username);
           this.transferDetails.get('createTime').setValue(transfert.createTime);
-          this.transferDetails
-            .get('amount_transfer')
-            .setValue(transfert.amount_transfer);
-          this.transferDetails
-            .get('amountOfFees')
-            .setValue(transfert.amountOfFees);
-          this.transferDetails
-            .get('firstName')
-            .setValue(transfert.beneficiary.firstName);
-          this.transferDetails
-            .get('lastname')
-            .setValue(transfert.beneficiary.lastname);
+          this.transferDetails.get('amount_transfer').setValue(transfert.amount_transfer);
+          this.transferDetails.get('amountOfFees').setValue(transfert.amountOfFees);
+          this.transferDetails.get('firstName').setValue(transfert.beneficiary.firstName);
+          this.transferDetails.get('lastname').setValue(transfert.beneficiary.lastname);
         },
         (error) => {
           this.toast.error({
@@ -161,7 +152,7 @@ export class ExtourneTransfertComponent implements OnInit {
         amount_transfer: this.transferDetails.get('amount_transfer').value,
         transferRef: this.transferDetails.get('transferRef').value,
         typeOftransfer: this.transferType,
-        motif: motifValue
+        motif: motifValue,
       },
       beneficiaryDto: {},
     };
