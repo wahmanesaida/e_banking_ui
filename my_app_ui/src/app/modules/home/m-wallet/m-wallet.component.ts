@@ -167,12 +167,31 @@ export class MWalletComponent implements OnInit{
       this.transfer_service.makeTransferAgent(transferAgent).subscribe(
         (response) => {
           console.log('Transfer Message:', response);
-          this.transferMessage=response.message;
-          this.toastService.info({ detail: "Transfer Message", summary: response.message, duration: 5000, position: 'topRight' });
+          this.transferMessage=response.message.message;
+          this.toastService.info({ detail: "Transfer Message", summary: response.message.message, duration: 5000, position: 'topRight' });
 
-          if(response.message == "congratulations, your transaction has been successful with a good amount"){
+          if(response.message.message == "congratulations, your transaction has been successful with a good amount"){
             this.transferDone = true;
 
+          }
+          if (response.receiptPdf != null) {
+            // Convertir la chaîne de caractères base64 en ArrayBuffer
+            const binaryString = window.atob(response.receiptPdf);
+            const binaryLen = binaryString.length;
+            const bytes = new Uint8Array(binaryLen);
+            for (let i = 0; i < binaryLen; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+
+            // Créer un Blob à partir des octets
+            const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
+
+            // Créer une URL pour le Blob PDF
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+
+            // Vous pouvez maintenant utiliser pdfUrl pour afficher ou télécharger le PDF dans votre application
+            // Par exemple, pour ouvrir le PDF dans une nouvelle fenêtre :
+            window.open(pdfUrl, '_blank');
           }
 
         },
@@ -297,6 +316,7 @@ export class MWalletComponent implements OnInit{
     this.beneficiarylDetails.controls['idbene'].setValue(beneficiary.id);
     this.beneficiarylDetails.controls['name'].setValue(beneficiary.lastname);
     this.beneficiarylDetails.controls['first_name'].setValue(beneficiary.firstName);
+    this.beneficiarylDetails.controls['email'].setValue(beneficiary.username);
     this.beneficiarylDetails.controls['email'].setValue(beneficiary.username);
     // ... other fields
   }

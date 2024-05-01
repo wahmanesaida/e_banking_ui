@@ -14,6 +14,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MWalletComponent} from "./m-wallet/m-wallet.component";
 import {NgToastModule} from "ng-angular-popup";
 import {MatButton} from "@angular/material/button";
+import {
+  ReturnTheTransferByClientComponent
+} from "./return-the-transfer-by-client/return-the-transfer-by-client.component";
+import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client/return-the-transfer-by-client.service";
 
 
 @NgModule({
@@ -23,6 +27,7 @@ import {MatButton} from "@angular/material/button";
     NewsletterComponent,
     OurServicesComponent,
     MWalletComponent,
+    ReturnTheTransferByClientComponent,
     HomeComponent],
   imports: [
     CommonModule,
@@ -39,11 +44,13 @@ import {MatButton} from "@angular/material/button";
     FeatureComponent,
     NewsletterComponent,
     OurServicesComponent,
-    HomeComponent
+    HomeComponent,
+    ReturnTheTransferByClientComponent
 
   ],
   providers: [
-    MWalletService
+    MWalletService,
+    ReturnTheTransferByClientService,
   ]
 })
 export class HomeModule { }

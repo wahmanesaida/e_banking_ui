@@ -5,6 +5,7 @@ import {User} from "../../models/User.model";
 import {Transfert} from "../console-agent/servir-transfert/models/Transfert";
 import {NgToastService} from "ng-angular-popup";
 import {ReturnTransferDTO} from "../../models/ReturnTransferDTO.model";
+import {TransferPaymentDto} from "../console-agent/servir-transfert/models/TransferPaymentDto";
 
 
 @Injectable({
@@ -23,6 +24,14 @@ export class BackOfficeService {
   ReturnTheTransfer(request: ReturnTransferDTO):Observable<any>{
     const url= `${this.baseUrl}/ReturnTheTransfer`;
     return this.http.post<any>(url, request);
+  }
+
+  generateReturnReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+    return this.http.post(
+      `${this.baseUrl}/generateReturnReceiptByAgent`,
+      transferPaymentDto,
+      { responseType: 'blob' }
+    );
   }
 
 }
