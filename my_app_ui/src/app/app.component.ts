@@ -16,7 +16,7 @@ import { AuthModule } from './auth/auth.module';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule,RouterOutlet, CoreModule, SharedModule, HomeModule,AuthModule, RouterModule],
+  imports: [CommonModule,RouterOutlet, CoreModule, SharedModule,AuthModule, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   schemas: [

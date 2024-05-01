@@ -11,6 +11,8 @@ import { ConsultationTransfertComponent } from '../back-office/consultation-tran
 import { RenvoiNotificationComponent } from '../back-office/renvoi-notification/renvoi-notification.component';
 import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
 import {ReturnTheTransferComponent} from "../back-office/return-the-transfer/return-the-transfer.component";
+import { UsersComponent } from './users/users.component';
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
@@ -43,8 +45,10 @@ const routes: Routes = [
       { path: 'consult-transfert', component: ConsultationTransfertComponent },
       { path: 'renvoi-notification', component: RenvoiNotificationComponent },
       {path: 'gab-boa', component: GabBoaComponent},
-];
-
+      {path: 'users', component: UsersComponent},
+]
+}
+]
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

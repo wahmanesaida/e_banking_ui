@@ -14,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MWalletComponent} from "./m-wallet/m-wallet.component";
 import {NgToastModule} from "ng-angular-popup";
 import {MatButton} from "@angular/material/button";
+import { CoreRoutingModule } from '../../core/core-routing.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MatButton} from "@angular/material/button";
     CommonModule,
     HomeRoutingModule,
     CoreModule,
+    CoreRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     NgToastModule,

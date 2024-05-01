@@ -125,6 +125,6 @@ export class ConsultationTransfertComponent implements OnInit {
         });
       }
     );
-
   }
+  
 }
