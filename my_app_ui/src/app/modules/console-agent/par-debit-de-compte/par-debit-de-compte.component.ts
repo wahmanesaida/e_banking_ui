@@ -10,6 +10,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {BeneficiaryDto} from "../../../models/BeneficiaryDto.model";
 import {AuthService} from "../../../auth/auth.service";
 import {TransfertDto} from "../../../models/TransfertDto.model";
+import {TransferPaymentDto} from "../servir-transfert/models/TransferPaymentDto";
+import {TypeOftransfer} from "../../../models/TypeOftransfer.enum";
+import {map, Observable} from "rxjs";
 
 @Component({
   selector: 'app-par-debit-de-compte',
@@ -26,7 +29,8 @@ export class ParDebitDeCompteComponent implements OnInit {
   errorPhone: string='';
   transferMessage: string;
 
-
+  transferId: number;
+  transferType: TypeOftransfer;
 
   title = 'angular13bestcode';
 
@@ -37,7 +41,10 @@ export class ParDebitDeCompteComponent implements OnInit {
   transfer_step = false;
   education_step = false;
   step = 1;
+  beneficiaries$: Observable<Beneficiary[]>;
+  selectedBeneficiary: Beneficiary;
   validOtp: boolean;
+  clientid:number;
 
   tt = "saida";
   private name: any;
@@ -80,7 +87,7 @@ export class ParDebitDeCompteComponent implements OnInit {
     this.transferDetails = this.formBuilder.group({
       amount: ['', Validators.required],
       //saida: ['', Validators.required],
-      id: ['', Validators.required],
+      usernameSelected: ['', Validators.required],
       name: ['', Validators.required],
       first_name: ['', Validators.required],
       email: ['', Validators.required],
@@ -96,7 +103,10 @@ export class ParDebitDeCompteComponent implements OnInit {
     });
 
 
+
+
   }
+
 
   get personal() {
     return this.personalDetails.controls;
@@ -144,7 +154,7 @@ export class ParDebitDeCompteComponent implements OnInit {
       this.transferDetails.get('first_name').setValue(beneficiary.firstName);
       this.transferDetails.get('email').setValue(beneficiary.username);
       this.transferDetails.updateValueAndValidity();
-
+      console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj "+ this.personalDetails.value.id_donor);
     }else{
       this.transferDetails.get('name').setValue('');
       this.transferDetails.get('first_name').setValue('');
@@ -153,6 +163,19 @@ export class ParDebitDeCompteComponent implements OnInit {
 
     }
 
+  }
+
+  onSelectBeneficiary(event: Event) {
+    const selectElement = event.target as HTMLSelectElement
+    console.log("id du beneficaire: "+selectElement.value)
+    this.beneficiaries$.pipe(
+      map((beneficiaries: Beneficiary[]) => beneficiaries.find(beneficiary => beneficiary.id === +selectElement.value))
+    ).subscribe((selectedBeneficiary: Beneficiary) => {
+      if (selectedBeneficiary !== undefined) {
+        this.PatchFormWithBeneData(selectedBeneficiary);
+        console.log(selectedBeneficiary);
+      }
+    });
   }
 
   // Integrate the changes for fetching user data and patching the form
@@ -169,6 +192,9 @@ export class ParDebitDeCompteComponent implements OnInit {
             this.toastService.info({ detail: "SUCCES", summary: "user found successfuly", duration: 5000, position: 'topCenter' });
 
             this.errorMessage='';
+            this.clientid=user.id;
+            this.beneficiaries$=this.transfer_service.getBenficiariesByClientId(this.clientid);
+            console.log("haaaaaaaaaa"+ this.clientid);
           } else {
             console.log(user);
             this.errorMessage= "Invalid phone number ! ";
@@ -296,12 +322,32 @@ export class ParDebitDeCompteComponent implements OnInit {
       this.transfer_service.makeTransferAgent(transferAgent).subscribe(
         (response) => {
           console.log('Transfer Message:', response);
+          console.log('Transfer Message:', response.message);
           this.transferMessage=response.message;
-          this.toastService.info({ detail: "Transfer Message", summary: response.message, duration: 5000, position: 'topRight' });
+          this.toastService.info({ detail: "Transfer Message", summary: response.message.message, duration: 6000, position: 'topRight' });
 
           if(response.message == "congratulations, your transaction has been successful with a good amount"){
             this.transferDone = true;
 
+          }
+          if (response.receiptPdf != null) {
+            // Convertir la chaîne de caractères base64 en ArrayBuffer
+            const binaryString = window.atob(response.receiptPdf);
+            const binaryLen = binaryString.length;
+            const bytes = new Uint8Array(binaryLen);
+            for (let i = 0; i < binaryLen; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+
+            // Créer un Blob à partir des octets
+            const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
+
+            // Créer une URL pour le Blob PDF
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+
+            // Vous pouvez maintenant utiliser pdfUrl pour afficher ou télécharger le PDF dans votre application
+            // Par exemple, pour ouvrir le PDF dans une nouvelle fenêtre :
+            window.open(pdfUrl, '_blank');
           }
 
         },
@@ -316,6 +362,7 @@ export class ParDebitDeCompteComponent implements OnInit {
 
 
   next() {
+    console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj "+ this.personalDetails.value.id_donor);
     if (this.step === 1) {
       console.log('Personal details form valid:', this.personalDetails.valid);
       console.log("id client: ", this.personalDetails.getRawValue()['id_donor'])
@@ -325,6 +372,7 @@ export class ParDebitDeCompteComponent implements OnInit {
       }
     } else if (this.step === 2) {
       console.log('Transfer details form valid:', this.transferDetails.valid);
+      console.log("kkkkkkkkkkkkkkkkkkkkkkkkk "+this.transferDone);
 
       if (this.transferDetails.valid) {
         this.transfer_step= true;
@@ -348,7 +396,7 @@ export class ParDebitDeCompteComponent implements OnInit {
 
   submit() {
 
-    if (this.step == 3) {
+    if (this.step == 3 && this.transferDone==false) {
       console.log("id client: ", this.personalDetails.getRawValue()['id_donor'])
       this.education_step = true;
       if(this.otpValidated == false) {
@@ -487,6 +535,42 @@ export class ParDebitDeCompteComponent implements OnInit {
       this.searchByIDNumber();
     }
   }
+
+  generate_transfert_Receipt_agent() {
+    const transferPaymentDto: TransferPaymentDto = {
+      transferRefDTO: {
+        id: this.transferId,
+        idAgent: this.personalDetails.get('id_agent').value,
+        amount_transfer: this.personalDetails.get('Montant').value,
+        transferRef: this.personalDetails.get('transferRefr').value,
+        typeOftransfer: this.transferType,
+      },
+      beneficiaryDto: {},
+    };
+    this.transfer_service.generateTransferReceiptByAgent(transferPaymentDto).subscribe(
+      (response: Blob) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.href = url;
+        a.download = 'Reçu_du_transfert.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      },
+      (error: any) => {
+        console.log(error);
+        this.toastService.error({
+          detail: 'Pay Attention',
+          summary: error.error,
+          duration: 5000,
+          position: 'topCenter',
+        });
+      }
+    );
+  }
+
 
 
 

@@ -25,6 +25,9 @@ import {
 
 
 import {ReturnTheTransferComponent} from "./return-the-transfer/return-the-transfer.component";
+import {
+  ReturnTheTransferByClientService
+} from "../home/return-the-transfer-by-client/return-the-transfer-by-client.service";
 
 
 @NgModule({

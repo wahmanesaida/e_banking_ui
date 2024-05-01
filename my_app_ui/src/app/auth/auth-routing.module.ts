@@ -4,6 +4,10 @@ import { HomeComponent } from '../modules/home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import {MWalletComponent} from "../modules/home/m-wallet/m-wallet.component";
+import {ReturnTheTransferComponent} from "../modules/back-office/return-the-transfer/return-the-transfer.component";
+import {
+  ReturnTheTransferByClientComponent
+} from "../modules/home/return-the-transfer-by-client/return-the-transfer-by-client.component";
 
 //const routes: Routes = [];
 
@@ -12,7 +16,8 @@ import {MWalletComponent} from "../modules/home/m-wallet/m-wallet.component";
   {path: 'home', component: HomeComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-   {path: 'wallet', component: MWalletComponent}
+   {path: 'wallet', component: MWalletComponent},
+   {path: 'return-the-transfer', component: ReturnTheTransferByClientComponent}
 
 
 ];

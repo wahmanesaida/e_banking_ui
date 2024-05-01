@@ -137,7 +137,19 @@ export class ConsoleAgentService {
   getAllTransfers():Observable<any>{
     return this.http.get(`${this.baseUrl}/transfers`);
   }
+  
+  generateTransferReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+    return this.http.post(
+      `${this.baseUrl}/generateTransferReceiptByAgent`,
+      transferPaymentDto,
+      { responseType: 'blob' }
+    );
+  }
 
+  getBenficiariesByClientId(ClientId: number): Observable<any>{
+    return this.http.get(`${this.baseUrl}/listOfBenfficiaries/${ClientId}`);
+  }
+  
   renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
     return this.http.post(`${this.baseUrl}/renvoiNotification`, renvoiDto);
   }
@@ -153,6 +165,6 @@ export class ConsoleAgentService {
   searchUser(id:number):Observable<any>{
     return this.http.post(`${this.baseUrl}/searchUserByID`, id);
   }
-  
-  
+
+
 }

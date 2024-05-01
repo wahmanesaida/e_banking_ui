@@ -230,19 +230,19 @@
             </div>
           </div>
           <div>
-          <input type="number" name="id" formControlName="id"  placeholder="id du bénéficaire"/>
-          <div *ngIf="transferD && transferDetails.controls['id'].errors">
-            <div *ngIf="transferD['id'].errors['required']">
-              id is required
+            <select formControlName="usernameSelected" class="form-control"  (change)="onSelectBeneficiary($event)">
+              <option value="" disabled selected>choisit votre client</option>
+              <option *ngFor="let beneficiary of beneficiaries$ | async" [value]="beneficiary.id">
+                {{ beneficiary.username }}
+              </option>
+            </select>
+            <!-- ... -->
+
+            <div *ngIf="transferD && transferDetails.controls['usernameSelected'].errors">
+              <div *ngIf="transferDetails.controls['usernameSelected'].errors['required']">
+                vous devez choisir un client
+              </div>
             </div>
-          </div>
-          <input
-            (click)="searchBeneficiaryById()"
-            type="button"
-            name="next"
-            class="next action-button"
-            value="Search"
-          />
             <button mat-raised-button (click)="openDialog()">Add beneficiay</button>
           </div>
 
@@ -330,6 +330,7 @@
         <fieldset *ngIf="step == 3">
           <h2 class="fs-title">Validation de l'otp</h2>
           <ng-toast></ng-toast>
+          <div *ngIf="!transferDone">
           <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
        <!--   <div *ngIf="transferMessage">
             {{ transferMessage }}
@@ -362,13 +363,38 @@
             class="previous action-button-previous"
             value="Previous"
           />
+          </div>
           <input
             (click)="submit()"
             [disabled]="transferDone"
+            [hidden]="transferDone"
             type="submit"
             name="submit"
             class="submit action-button"
             value="Submit"
+          />
+          <input
+            (click)="submit()"
+            [hidden]="!transferDone"
+            type="submit"
+            name="download"
+            class="submit action-button"
+            value="download"
+          />
+        </fieldset>
+      </form>
+
+      <form  id="msform">
+        <fieldset *ngIf="step == 3 && transferDone">
+          <h2 class="fs-title">Télecharger le recu</h2>
+
+
+          <input
+            (click)="generate_transfert_Receipt_agent()"
+            type="submit"
+            name="download"
+            class="submit action-button"
+            value="download"
           />
         </fieldset>
       </form>
