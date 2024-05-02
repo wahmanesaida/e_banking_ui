@@ -126,8 +126,17 @@ export class ConsoleAgentService {
     const body: { numeroPieceIdentite: string } = { numeroPieceIdentite };
     return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
   }
+  
+  generateTransferReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+    return this.http.post(
+      `${this.baseUrl}/generateTransferReceiptByAgent`,
+      transferPaymentDto,
+      { responseType: 'blob' }
+    );
+  }
 
-  
-  
+  getBenficiariesByClientId(ClientId: number): Observable<any>{
+    return this.http.get(`${this.baseUrl}/listOfBenfficiaries/${ClientId}`);
+  }
   
 }

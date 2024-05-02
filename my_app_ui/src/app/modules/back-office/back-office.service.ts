@@ -8,6 +8,9 @@ import {ReturnTransferDTO} from "../../models/ReturnTransferDTO.model";
 import { MulticriteriaSearchDto } from '../../models/MulticriteriaSearchDto';
 import { RenvoiDto } from '../../models/RenvoiDto';
 
+import {TransferPaymentDto} from "../console-agent/servir-transfert/models/TransferPaymentDto";
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +29,6 @@ export class BackOfficeService {
     const url= `${this.baseUrl}/ReturnTheTransfer`;
     return this.http.post<any>(url, request);
   }
-
   searchTransfertBackOffice(multicriteriaSearchDto:MulticriteriaSearchDto) :Observable<any>{
     return this.http.post(`${this.baseUrl}/searchCriteria`,multicriteriaSearchDto);
   }
@@ -41,6 +43,14 @@ export class BackOfficeService {
 
   renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
     return this.http.post(`${this.baseUrl}/renvoiNotification`, renvoiDto);
+  }
+
+  generateReturnReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+    return this.http.post(
+      `${this.baseUrl}/generateReturnReceiptByAgent`,
+      transferPaymentDto,
+      { responseType: 'blob' }
+    );
   }
 
 }

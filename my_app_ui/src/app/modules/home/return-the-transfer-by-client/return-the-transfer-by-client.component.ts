@@ -1,48 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {MatButton, MatButtonModule} from "@angular/material/button";
-import {CommonModule, NgIf} from "@angular/common";
-import {NgToastModule, NgToastService} from "ng-angular-popup";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TransfertDto} from "../../../models/TransfertDto.model";
-import {ConsoleAgentService} from "../../console-agent/console-agent.service";
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogModule,
-  MatDialogTitle
-} from "@angular/material/dialog";
-import {AuthService} from "../../../auth/auth.service";
-import {Beneficiary} from "../../console-agent/servir-transfert/models/Beneficiary";
-import {User} from "../../../models/User.model";
-import {TransferRequest} from "../../../models/TransferRequest.model";
-import {
-  DialogBeneficiaryComponent
-} from "../../console-agent/par-debit-de-compte/dialog-beneficiary/dialog-beneficiary.component";
-import {BeneficiaryDto} from "../../../models/BeneficiaryDto.model";
-import {ConsoleAgentRoutingModule} from "../../console-agent/console-agent-routing.module";
-import {HttpClientModule} from "@angular/common/http";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {BackOfficeRoutingModule} from "../back-office-routing.module";
-import {BackOfficeService} from "../back-office.service";
-import {Transfert} from "../../console-agent/servir-transfert/models/Transfert";
 import {Motif} from "../../../models/Motif.enum";
+import {BackOfficeService} from "../../back-office/back-office.service";
+import {NgToastService} from "ng-angular-popup";
+import {MatDialog} from "@angular/material/dialog";
+import {AuthService} from "../../../auth/auth.service";
+import {Transfert} from "../../console-agent/servir-transfert/models/Transfert";
 import {ReturnTransferDTO} from "../../../models/ReturnTransferDTO.model";
+import {ConsoleAgentService} from "../../console-agent/console-agent.service";
+import {map, Observable} from "rxjs";
+import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client.service";
 import {TransferPaymentDto} from "../../console-agent/servir-transfert/models/TransferPaymentDto";
 import {TypeOftransfer} from "../../../models/TypeOftransfer.enum";
-import {
-  ReturnTheTransferByClientService
-} from "../../home/return-the-transfer-by-client/return-the-transfer-by-client.service";
 
 @Component({
-  selector: 'app-return-the-transfer',
-  templateUrl: './return-the-transfer.component.html',
-  styleUrl: './return-the-transfer.component.css'
+  selector: 'app-return-the-transfer-by-client',
+  templateUrl: './return-the-transfer-by-client.component.html',
+  styleUrl: './return-the-transfer-by-client.component.css'
 })
-export class ReturnTheTransferComponent implements OnInit{
-
+export class ReturnTheTransferByClientComponent implements OnInit{
 
   errorMessage: string;
   ReturnDone: boolean = false;
@@ -54,26 +31,29 @@ export class ReturnTheTransferComponent implements OnInit{
 
   personalDetails!: FormGroup;
   transferDetails!: FormGroup;
+  Otp!: FormGroup;
   recu!: FormGroup;
   personal_step = false;
   transfer_step = false;
   education_step = false;
   step = 1;
-  validOtp: boolean;
-
-  tt = "saida";
-  private name: any;
-  private animal: any;
-  transferDto: TransfertDto;
-  idclient: number;
+  otpSent: boolean=false;
+  otpValidated: boolean=false;
+  referenceSelected: string;
+  transertSelected: Transfert;
+  transferts$: Observable<Transfert []>;
+  refs: boolean=false;
+  ser: boolean=false;
   transferId: number;
   transferType: TypeOftransfer;
+  clientId : number;
+
 
 
   motifForm: FormGroup;
   motifs = Motif;
 
-  constructor(private formBuilder: FormBuilder, private backOfficeService: BackOfficeService, private toastService: NgToastService, private dialog: MatDialog, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private backOfficeService: BackOfficeService, private toastService: NgToastService, private dialog: MatDialog, private authService: AuthService, private transfer_service: ConsoleAgentService, private returnTransferService : ReturnTheTransferByClientService) {
 
   }
 
@@ -83,7 +63,8 @@ export class ReturnTheTransferComponent implements OnInit{
 
 
     this.personalDetails = this.formBuilder.group({
-      transferRefr: ['', Validators.required],
+      transferRefr: [''],
+      referenceSelected: [''],
       Id_Agent: ['', Validators.required],
       AgentName: ['', Validators.required],
       AgentLastName: ['', Validators.required],
@@ -96,14 +77,19 @@ export class ReturnTheTransferComponent implements OnInit{
 
     });
 
+    this.Otp = this.formBuilder.group({
+      otp: ['', Validators.required]
+    });
+
+
 
     console.log(this.personalDetails);
 
-      this.motifForm = this.formBuilder.group({
-        motifName: ['', Validators.required] // Form control for motifName
-      });
+    this.motifForm = this.formBuilder.group({
+      motifName: ['', Validators.required] // Form control for motifName
+    });
 
-
+    this.transferts$=this.returnTransferService.getAllTransfersOfAClient(Number(localStorage.getItem("id")));
 
 
   }
@@ -115,6 +101,10 @@ export class ReturnTheTransferComponent implements OnInit{
 
   get motiff() {
     return this.motifForm.controls;
+  }
+
+  get otp() {
+    return this.Otp.controls;
   }
 
   formatMotifKey(key: string): string {
@@ -133,9 +123,11 @@ export class ReturnTheTransferComponent implements OnInit{
             console.log(transfert);
             this.patchFormWithTransferData(transfert);
             this.toastService.info({ detail: "SUCCES", summary: "le transfert est trouvé avec succée", duration: 5000, position: 'topRight' });
-            this.idclient=transfert.client.id;
-            this.errorMessage='';
+            this.ser=true;
             this.transferId=transfert.id;
+            this.errorMessage='';
+            this.clientId=transfert.client.id;
+           console.log("vérifier le référence"+this.personalDetails.value.transferRefr);
           }else{
             this.patchFormWithTransferData(transfert);
             this.errorMessage= "Identifiant invalide, il n'y a aucun transfert avec cet identifiant !! ";
@@ -151,14 +143,16 @@ export class ReturnTheTransferComponent implements OnInit{
   patchFormWithTransferData(transfert: Transfert){
     if(transfert != null){
       //this.personalDetails.get('title').setValue(user.title);
-      this.personalDetails.get('Id_Agent').setValue(transfert.agent.id);
-      this.personalDetails.get('AgentName').setValue(transfert.agent.name);
-      this.personalDetails.get('AgentLastName').setValue(transfert.agent.username);
+      this.personalDetails.get('Id_Agent').setValue(transfert.client.id);
+      this.personalDetails.get('AgentName').setValue(transfert.client.name);
+      this.personalDetails.get('AgentLastName').setValue(transfert.client.username);
       this.personalDetails.get('DateEmission').setValue(transfert.createTime);
       this.personalDetails.get('Montant').setValue(transfert.amount_transfer);
       this.personalDetails.get('NameBene').setValue(transfert.beneficiary.lastname);
       this.personalDetails.get('Prénombene').setValue(transfert.beneficiary.firstName);
       this.personalDetails.updateValueAndValidity();
+      console.log("client connecté: " + Number(localStorage.getItem('id')));
+      console.log("client associé au transfert: " + this.clientId);
     }
     else {
       this.personalDetails.get('Id_Agent').setValue('');
@@ -173,16 +167,20 @@ export class ReturnTheTransferComponent implements OnInit{
     }
   }
 
+
   submitForm(){
     if(this.personalDetails.valid){
       const ReturnTransfer : ReturnTransferDTO={
         transferRef: this.personalDetails.value.transferRefr,
         motif: this.personalDetails.value.motifName,
-        id_agent: this.personalDetails.value.Id_Agent,
+        id_agent: null,
         notification: this.personalDetails.value.notification,
-        client_id: this.idclient,
+        client_id: Number(localStorage.getItem('id')),
+
+
       }
-      this.backOfficeService.ReturnTheTransfer(ReturnTransfer).subscribe(
+
+      this.returnTransferService.ReturnTheTransferByClient(ReturnTransfer).subscribe(
         (response) => {
           this.toastService.info({ detail: "Transfer Message", summary: response.message, duration: 5000, position: 'topRight' });
           if(response.message == "transfert réstitué avec succé"){
@@ -201,7 +199,67 @@ export class ReturnTheTransferComponent implements OnInit{
   }
 
 
-  generate_return_Receipt_agent() {
+  onSelectedTransfert(event: Event){
+    const selectElement = event.target as HTMLSelectElement
+    console.log("référence du transfert: "+selectElement.value)
+    console.log("vérifier le référence"+this.personalDetails.value.transferRefr);
+    this.refs=true;
+    this.personalDetails.get('transferRefr').setValue(selectElement.value);
+    console.log("jjjjjjjjjn   "+this.personalDetails.value.transferRefr);
+    this.transferts$.pipe(
+      map((transferts: Transfert[]) => transferts.find(transfert => Number(transfert.transferRef) === +selectElement.value))
+    ).subscribe((selectedTransfert: Transfert) => {
+      if (selectedTransfert !== undefined) {
+        this.clientId=selectedTransfert.client.id;
+        this.transferId=selectedTransfert.id;
+        this.patchFormWithTransferData(selectedTransfert);
+        console.log(selectedTransfert);
+      }
+
+  })
+  }
+
+  sendOtp(){
+    console.log(this.personalDetails.value.AgentLastName);
+
+    this.transfer_service.sendOtp(this.personalDetails.value.AgentLastName).subscribe(
+      (data :string)=>{
+        this.otpSent = true;
+        this.toastService.success({
+          detail : "Success",
+          summary: "Otp send successfuly",
+          duration: 5000,
+          position: 'topRight'
+
+        })
+
+      },
+      (error)=>{
+        this.otpSent = false;
+      }
+    );
+  }
+
+
+  validateOtp() {
+    const otp = this.Otp.get('otp').value;
+    this.transfer_service.validateOtp(this.personalDetails.value.AgentLastName, otp).subscribe(
+      (response: any) => {
+        this.errorMessage = response.message;
+        if (response.message === 'OTP is valid') {
+          this.otpValidated = true;
+        }
+      },
+      (error) => {
+        this.errorMessage = error.error;
+        console.log(this.errorMessage);
+        this.otpValidated = false;
+      }
+    );
+  }
+
+
+  generateReturnReceipt() {
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
@@ -212,7 +270,7 @@ export class ReturnTheTransferComponent implements OnInit{
       },
       beneficiaryDto: {},
     };
-    this.backOfficeService.generateReturnReceiptByAgent(transferPaymentDto).subscribe(
+    this.returnTransferService.generateReturnReceipt(transferPaymentDto).subscribe(
       (response: Blob) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
@@ -249,13 +307,23 @@ export class ReturnTheTransferComponent implements OnInit{
 
       }
     } else if (this.step === 2) {
-      console.log('Transfer details form valid:', this.transferDetails.valid);
+      this.step++;
 
-      if (this.transferDetails.valid) {
+      if (this.Otp.valid) {
         this.transfer_step= true;
         this.step++;
 
       }
+    }
+  }
+
+  previous() {
+    this.step--
+    if (this.step == 1) {
+      this.transfer_step = false;
+    }
+    if (this.step == 2) {
+      this.education_step = false;
     }
   }
 
@@ -264,22 +332,51 @@ export class ReturnTheTransferComponent implements OnInit{
 
 
   submit() {
-     this.submitForm();
-     console.log(this.ReturnDone);
-     this.toastService.info({
-      detail : "Processing your request. Please wait...",
-      summary: "...",
-      duration: 5000,
-      position: 'topCenter'
+    console.log(this.step);
+    if(this.step == 2){
+      if(this.otpValidated == false) {
+        this.toastService.error({
+          detail: "Error",
+          summary: "you should validate the Otp before making the transfer !",
+          duration: 5000,
+          position: 'topRight'
 
-    });
+        })
+        return;
+      }
 
+      if(this.otpSent == false){
+        this.toastService.error({
+          detail: "Error",
+          summary: "you should send and validate the Otp before making the transfer !",
+          duration: 5000,
+          position: 'topRight'
 
+        });
+        return;
 
+      }
+
+      this.submitForm();
+      console.log(this.ReturnDone);
+      this.toastService.info({
+        detail : "Processing your request. Please wait...",
+        summary: "...",
+        duration: 5000,
+        position: 'topCenter'
+
+      });
     }
+    this.step++;
+
+
+
+
+  }
 
   download(){}
 
 
   protected readonly Object = Object;
+
 }
