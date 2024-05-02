@@ -18,6 +18,7 @@ import { MulticriteriaSearchDto } from '../../models/MulticriteriaSearchDto';
 import { Transfert } from './servir-transfert/models/Transfert';
 import { MailStructure } from '../../models/MailStructure';
 import { RenvoiDto } from '../../models/RenvoiDto';
+import { UserDto } from '../../models/UserDto';
 
 @Injectable({
   providedIn: 'root',
@@ -126,33 +127,7 @@ export class ConsoleAgentService {
     return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
   }
 
-  searchTransfertBackOffice(multicriteriaSearchDto:MulticriteriaSearchDto) :Observable<any>{
-    return this.http.post(`${this.baseUrl}/searchCriteria`,multicriteriaSearchDto);
-  }
-
-  exportTransfersToExcel(transfers: Transfert[]): Observable<Blob> {
-    return this.http.post(`${this.baseUrl}/exportFile`, transfers, { responseType: 'blob', headers: { 'Content-Type': 'application/json' } });
-  }
-
-  getAllTransfers():Observable<any>{
-    return this.http.get(`${this.baseUrl}/transfers`);
-  }
-
-  renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
-    return this.http.post(`${this.baseUrl}/renvoiNotification`, renvoiDto);
-  }
-
-  getAllUsers():Observable<any>{
-    return this.http.get(`${this.baseUrl}/getAllUsers`);
-  }
-
-  deleteUser(id:number):Observable<any>{
-    return this.http.post(`${this.baseUrl}/deleteUser`, id);
-  }
-
-  searchUser(id:number):Observable<any>{
-    return this.http.post(`${this.baseUrl}/searchUserByID`, id);
-  }
+  
   
   
 }

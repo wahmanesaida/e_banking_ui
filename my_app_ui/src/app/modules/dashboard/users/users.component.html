@@ -1,58 +1,3 @@
-<div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal-btn"  (click)="closeModal()">&times;</span>
-      <h2 class="modal-title">{{ modalState === 'add' ? 'Add User' : modalState === 'edit' ? 'Edit User' : 'View User' }}</h2>
-      
-      <form>
-        <div class="form-group">
-          <input type="text" id="name" placeholder="Id" class="form-input">
-          <input type="text" id="email" placeholder="Name"  class="form-input">
-        </div>
-        <div class="form-group">
-            <input type="text" id="name" placeholder="Title"  class="form-input">
-            <input type="text" id="email" placeholder="Ville"  class="form-input">
-          </div>
-          <div class="form-group">
-            <input type="text" id="name" placeholder="Role"  class="form-input">
-            <input type="text" id="email" placeholder="Profession"  class="form-input">
-          </div>
-          <div class="form-group">
-            <input type="text" id="name" placeholder="Piece d'identité"  class="form-input">
-            <!-- <input type="date" id="email" placeholder="Date de Naissance"  class="form-input"> -->
-            <input type="date" id="validity" class="form-input" placeholder="Date de Naissance" onchange="formatDate()">
-          </div>
-          <div class="form-group">
-            <input type="text" id="name" placeholder="Pays d'émission"  class="form-input">
-            <input type="text" id="email" placeholder="Pays nationale"  class="form-input">
-          </div>
-          <div class="form-group">
-            <input type="text" id="name" placeholder="Numero de piece d'identité"  class="form-input">
-            <input type="text" id="email" placeholder="GSM"  class="form-input">
-          </div>
-          <div class="form-group">
-            <input type="email" id="name" placeholder="Username"  class="form-input">
-            <input type="text" id="email" placeholder=""  class="form-input">
-          </div>
-          <div class="form-group">
-            <!-- <input type="date" id="name" placeholder="Create Time" class="form-input"> -->
-            <input type="date" id="validity" class="form-input" placeholder="Create Time" onchange="formatDate()">
-            <input type="date" id="validity" class="form-input" placeholder="Validité de piece d'identité" onchange="formatDate()">
-           <!--  <input type="date" id="email" placeholder="Validité de piece d'identité"  class="form-input"> -->
-          </div>
-          <div class="form-group">
-            <!-- <input type="date" id="name" placeholder="Expiration de piece d'identité" class="form-input"> -->
-            <input type="date" id="validity" class="form-input" placeholder="Expiration de piece d'identité" onchange="formatDate()">
-            <input type="text" id="email" placeholder="Account amount"  class="form-input">
-          </div>
-          
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
 
 <div class="container-xl">
     <div class="table-responsive">
@@ -73,15 +18,15 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Title<i class="fa fa-sort"></i></th>
+                        <th>Title</th>
                         <th>Ville</th>
                         <th>Role</th>
-                        <th>Profession<i class="fa fa-sort"></i></th>
+                        <th>Profession</th>
                         <th>Piece d'identité</th>
                         <th>Date de Naissance</th>
-                        <th>Pays d'émission<i class="fa fa-sort"></i></th>
+                        <th>Pays d'émission</th>
                         <th>Pays nationale</th>
-                        <th>Numero de piece d'identité<i class="fa fa-sort"></i></th>
+                        <th>Numero de piece d'identité</th>
                         <th>GSM</th>
                         <th>Username</th>
                         <th>Create Time</th>
@@ -104,7 +49,7 @@
                         <td>{{user.paysEmission}}</td>
                         <td>{{user.payeNationale}}</td>
                         <td>{{user.numeroPieceIdentite}}</td>
-                        <td>{{user.gsm}}</td>
+                        <td>{{user.GSM}}</td>
                         <td>{{user.username}}</td>
                         <td>{{user.createTime}}</td>
                         <td>{{user.validitePieceIdentite}}</td>
@@ -113,25 +58,88 @@
                         <td>
                             <a class="view" title="View" (click)="openModal('view', user)"><i class="material-icons">&#xE417;</i></a>
                             <a class="edit" title="Edit" (click)="openModal('edit', user)"><i class="material-icons">&#xE254;</i></a>
-                            <a class="add" title="Add" (click)="openModal('add',user)"><i class="material-icons">add</i></a>
+                            <a class="add" title="Add" (click)="openModal('add', null)"><i class="material-icons">add</i></a>
                           </td>                          
                     </tr>
                 </tbody>
             </table>
             <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-                </ul>
-            </div>
-        </div>
+              <div class="hint-text">Showing <b>{{users.length}}</b> out of <b>{{totalEntries}}</b> entries</div>
+              <ul class="pagination">
+                <li class="page-item btn" [class.disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">Previous</li>
+                <li class="page-item btn" *ngFor="let page of pages" [class.active]="currentPage == page" (click)="currentPage = page">{{page}}</li>
+                <li class="page-item btn" [class.disabled]="currentPage == totalPages" (click)="currentPage = currentPage + 1">Next</li>
+              </ul>            
+          </div>          
     </div>  
-</div>   
+</div>
 
+
+<div *ngIf="selectedUser">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal-btn"  (click)="closeModal()">&times;</span>
+          <h2 class="modal-title">{{ modalState === 'add' ? 'Add User' : modalState === 'edit' ? 'Edit User' : 'View User' }}</h2>
+            <div class="form-group">   
+              <label for="">Id</label>
+              <input type="number" id="id" placeholder="Id" [(ngModel)]="selectedUser && selectedUser.id"class="form-input" [readonly]="isReadOnly">
+              <label for="">Name</label>
+              <input type="text" id="name" placeholder="Name" [(ngModel)]="selectedUser && selectedUser.name"   class="form-input" [readonly]="isReadOnly">
+            </div>
+            <div class="form-group">
+                <label for="">Title</label>
+                <input type="text" id="title" placeholder="Title" [(ngModel)]="selectedUser && selectedUser.title"  class="form-input" [readonly]="isReadOnly">
+                <label for="">Ville</label>
+                <input type="text" id="ville" placeholder="Ville" [(ngModel)]="selectedUser && selectedUser.ville"  class="form-input" [readonly]="isReadOnly">
+              </div>
+              <div class="form-group">
+                <label for="">Role</label>
+                <input type="text" id="role" placeholder="Role" [(ngModel)]="selectedUser && selectedUser.role"   class="form-input" [readonly]="isReadOnly">
+                <label for="">Profession</label>
+                <input type="text" id="profession" placeholder="Profession" [(ngModel)]="selectedUser && selectedUser.profession"   class="form-input" [readonly]="isReadOnly">
+              </div>
+              <div class="form-group">
+                <label for="">Piece d'identité</label>
+                <input type="text" id="pieceIdentite" placeholder="Piece d'identité" [(ngModel)]="selectedUser && selectedUser.pieceIdentite"   class="form-input" [readonly]="isReadOnly">
+                <label for="">Date de Naissance</label>
+                <input type="date" id="datenaissance" class="form-input" placeholder="Date de Naissance" [(ngModel)]="selectedUser && selectedUser.datenaissance"  (change)="formatDate($event)" [readonly]="isReadOnly">
+              </div>
+              <div class="form-group">
+                <label for="">Pays d'émission</label>
+                <input type="text" id="paysEmission" placeholder="Pays d'émission" [(ngModel)]="selectedUser && selectedUser.paysEmission"   class="form-input" [readonly]="isReadOnly">
+                <label for="">Pays nationale</label>
+                <input type="text" id="payeNationale" placeholder="Pays nationale" [(ngModel)]="selectedUser && selectedUser.payeNationale"   class="form-input" [readonly]="isReadOnly">
+              </div>
+              <div class="form-group">
+                <label for="">Numero de piece d'identité</label>
+                <input type="text" id="numeroPieceIdentite" placeholder="Numero de piece d'identité" [(ngModel)]="selectedUser && selectedUser.numeroPieceIdentite" class="form-input" [readonly]="isReadOnly">
+                <label for="">GSM</label>
+                <input type="text" id="gsm" placeholder="GSM" [(ngModel)]="selectedUser && selectedUser.GSM"   class="form-input" [readonly]="isReadOnly">
+              </div>
+              <div class="form-group">
+                <label for="">Username</label>
+                <input type="email" id="username" placeholder="Username" [(ngModel)]="selectedUser && selectedUser.username"   class="form-input" [readonly]="isReadOnly">
+                <label for="">Create Time</label>
+                <input type="text" id="createTime" class="form-input" placeholder="Create Time" [value]="selectedUser && selectedUser.createTime | date:'yyyy-MM-ddTHH:mm:ss'" readonly>
+              </div>
+              <div class="form-group">
+                <label for="">Validité de piece d'identité</label>
+                <input type="date" id="validitePieceIdentite" class="form-input" placeholder="Validité de piece d'identité" [(ngModel)]="selectedUser && selectedUser.validitePieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly">
+                <label for="">Expiration de piece d'identité</label>
+                <input type="date" id="expirationPieceIdentite" class="form-input" placeholder="Expiration de piece d'identité" [(ngModel)]="selectedUser && selectedUser.expirationPieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly">
+              </div>
+              <div class="form-group">
+                <label for="">Account amount</label>
+                <input type="text" id="account_amount" placeholder="Account amount" [(ngModel)]="selectedUser && selectedUser.account_amount"   class="form-input" [readonly]="isReadOnly">
+                <input *ngIf="modalState === 'add'" type="text" id="password" placeholder="Password" [(ngModel)]="selectedUser && selectedUser.password" class="form-input" [readonly]="isReadOnly">
+              </div>
+              
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="saveUser()">Save</button>
+              <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            </div>
+      
+        </div>
+      </div>
+</div>
 
