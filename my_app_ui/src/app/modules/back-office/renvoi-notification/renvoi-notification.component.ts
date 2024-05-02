@@ -7,6 +7,7 @@ import { Transfert } from '../../console-agent/servir-transfert/models/Transfert
 import { TransferRefDTO } from '../../console-agent/servir-transfert/models/TransferRefDTO';
 import { MailStructure } from '../../../models/MailStructure';
 import { RenvoiDto } from '../../../models/RenvoiDto';
+import { BackOfficeService } from '../back-office.service';
 
 @Component({
   selector: 'app-renvoi-notification',
@@ -30,6 +31,7 @@ export class RenvoiNotificationComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private transfer_service: ConsoleAgentService,
+    private backOffService: BackOfficeService,
     private toast: NgToastService
   ) {}
 
@@ -68,7 +70,7 @@ export class RenvoiNotificationComponent implements OnInit {
   
   renvoyerNotification() {
     console.log("this is the renvoiDTO:", this.renvoiDto);
-    this.transfer_service.renvoyerNotification(this.renvoiDto).subscribe(
+    this.backOffService.renvoyerNotification(this.renvoiDto).subscribe(
       (res) => {
         console.log(res);
       },

@@ -11,7 +11,13 @@ import { MenuCanalComponent } from './menu-canal/menu-canal.component';
 import { GabBoaModule } from '../gab-boa/gab-boa.module';
 import { UsersComponent } from './users/users.component';
 import { ConsoleAgentService } from '../console-agent/console-agent.service';
-import { ModalUserComponent } from './modal-user/modal-user.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { enGbLocale } from 'ngx-bootstrap/locale';
+import { UsersService } from './users/users.service';
+import { BackOfficeService } from '../back-office/back-office.service';
+
+defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the appropriate locale
 
 @NgModule({
   declarations: [
@@ -19,8 +25,7 @@ import { ModalUserComponent } from './modal-user/modal-user.component';
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
-    UsersComponent,
-    ModalUserComponent
+    UsersComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +34,8 @@ import { ModalUserComponent } from './modal-user/modal-user.component';
     ReactiveFormsModule,
     FormsModule,
     ConsoleAgentModule,
-    GabBoaModule
+    GabBoaModule,
+    BsDatepickerModule.forRoot()
   ],
   exports: [
     NavBarDashComponent,
@@ -38,6 +44,6 @@ import { ModalUserComponent } from './modal-user/modal-user.component';
     MenuCanalComponent,
     UsersComponent
   ],
-  providers:[ConsoleAgentService]
+  providers:[ConsoleAgentService, UsersService, BackOfficeService]
 })
 export class DashboardModule { }
