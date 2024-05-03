@@ -39,14 +39,14 @@ export class ConsultationTransfertComponent implements OnInit {
         position: 'topCenter',
       });
     }
-  
+
     const searchDto: MulticriteriaSearchDto = {
       [criterion]: searchInput,
     };
-  
+
     this.searchTransfers(searchDto);
   }
-  
+
   determineSearchCriterion(searchInput: string): keyof MulticriteriaSearchDto | null {
     if (/^837\d{10}$/.test(searchInput)){
       return 'transferRef';
@@ -60,11 +60,11 @@ export class ConsultationTransfertComponent implements OnInit {
       return null;
     }
   }
-  
+
   isValidISO8601Date(dateString: string): boolean {
     return !isNaN(Date.parse(dateString));
   }
-  
+
   searchTransfers(searchDto: MulticriteriaSearchDto) {
     if (!searchDto) {
       this.toast.error({
@@ -75,10 +75,10 @@ export class ConsultationTransfertComponent implements OnInit {
       });
       return; // Exit the method early if searchDto is null
     }
-  
+
     this.transfer_service.searchTransfertBackOffice(searchDto).subscribe(
       (response: any) => {
-        this.transfers = response; 
+        this.transfers = response;
         console.log(this.transfers);
       },
       (error: any) => {
@@ -91,7 +91,7 @@ export class ConsultationTransfertComponent implements OnInit {
       }
     );
   }
-  
+
 
   exportTransfersToExcel(): void {
     this.transfer_service.exportTransfersToExcel(this.transfers).subscribe(
@@ -113,7 +113,7 @@ export class ConsultationTransfertComponent implements OnInit {
   getAllTransfers(){
     this.transfer_service.getAllTransfers().subscribe(
       (response) => {
-        this.transfers = response; 
+        this.transfers = response;
         console.log(response);
       },
       (error: any) => {
@@ -126,5 +126,5 @@ export class ConsultationTransfertComponent implements OnInit {
       }
     );
   }
-  
+
 }

@@ -1,5 +1,5 @@
 import { NgModule, ɵnoSideEffects } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {AsyncPipe, CommonModule, NgForOf} from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { NavBarDashComponent } from './side-bar/nav-bar-dash.component';
 import { HeaderDashComponent } from './header-dash/header-dash.component';
@@ -12,6 +12,10 @@ import { GabBoaModule } from '../gab-boa/gab-boa.module';
 import { UsersComponent } from './users/users.component';
 import { ConsoleAgentService } from '../console-agent/console-agent.service';
 import { ModalUserComponent } from './modal-user/modal-user.component';
+import {HistoryService} from "./history/history.service";
+import {NgToastModule, NgToastService} from "ng-angular-popup";
+import {HistoryComponent} from "./history/history.component";
+import {PaginationComponent} from "./history/pagination/pagination.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { ModalUserComponent } from './modal-user/modal-user.component';
     DashboardComponent,
     MenuCanalComponent,
     UsersComponent,
-    ModalUserComponent
+    ModalUserComponent,
+    HistoryComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -29,15 +35,24 @@ import { ModalUserComponent } from './modal-user/modal-user.component';
     ReactiveFormsModule,
     FormsModule,
     ConsoleAgentModule,
-    GabBoaModule
+    GabBoaModule,
+    NgForOf,
+    NgToastModule,
+    ReactiveFormsModule,
+    AsyncPipe
   ],
   exports: [
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
-    UsersComponent
+    UsersComponent,
+    HistoryComponent,
+    PaginationComponent,
   ],
-  providers:[ConsoleAgentService]
+  providers:[ConsoleAgentService,
+  HistoryService,
+    ConsoleAgentService,
+  NgToastService]
 })
 export class DashboardModule { }

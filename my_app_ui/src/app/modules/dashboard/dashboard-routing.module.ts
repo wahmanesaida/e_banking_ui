@@ -12,6 +12,7 @@ import { RenvoiNotificationComponent } from '../back-office/renvoi-notification/
 import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
 import {ReturnTheTransferComponent} from "../back-office/return-the-transfer/return-the-transfer.component";
 import { UsersComponent } from './users/users.component';
+import {HistoryComponent} from "./history/history.component";
 
 
 const routes: Routes = [
@@ -41,11 +42,12 @@ const routes: Routes = [
        path: 'return-the-transfer',
        component: ReturnTheTransferComponent
      },
-     
+
       { path: 'consult-transfert', component: ConsultationTransfertComponent },
       { path: 'renvoi-notification', component: RenvoiNotificationComponent },
       {path: 'gab-boa', component: GabBoaComponent},
       {path: 'users', component: UsersComponent},
+     {path: 'history', component: HistoryComponent}
 ]
 }
 ]

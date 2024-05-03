@@ -16,8 +16,8 @@ import {
   {path: 'home', component: HomeComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-   {path: 'wallet', component: MWalletComponent},
-   {path: 'return-the-transfer', component: ReturnTheTransferByClientComponent}
+   //{path: 'wallet', component: MWalletComponent},
+   //{path: 'return-the-transfer', component: ReturnTheTransferByClientComponent}
 
 
 ];

@@ -53,7 +53,7 @@ export class ReturnTheTransferByClientComponent implements OnInit{
   motifForm: FormGroup;
   motifs = Motif;
 
-  constructor(private formBuilder: FormBuilder, private backOfficeService: BackOfficeService, private toastService: NgToastService, private dialog: MatDialog, private authService: AuthService, private transfer_service: ConsoleAgentService, private returnTransferService : ReturnTheTransferByClientService) {
+  constructor(private formBuilder: FormBuilder, private backOfficeService: BackOfficeService, private toastService: NgToastService, private dialog: MatDialog, private transfer_service: ConsoleAgentService, private returnTransferService : ReturnTheTransferByClientService) {
 
   }
 
