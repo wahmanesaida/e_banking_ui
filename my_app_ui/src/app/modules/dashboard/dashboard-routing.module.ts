@@ -13,6 +13,7 @@ import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
 import { ReturnTheTransferComponent } from '../back-office/return-the-transfer/return-the-transfer.component';
 import { UsersComponent } from './users/users.component';
 import { ProfileAdminComponent } from './profile-admin/profile-admin.component';
+import {HistoryComponent} from "./history/history.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -47,6 +48,7 @@ const routes: Routes = [
       { path: 'profile-admin', component: ProfileAdminComponent },
       { path: 'gab-boa', component: GabBoaComponent },
       { path: 'users', component: UsersComponent },
+       {path: 'history', component: HistoryComponent}
     ],
   },
 ];

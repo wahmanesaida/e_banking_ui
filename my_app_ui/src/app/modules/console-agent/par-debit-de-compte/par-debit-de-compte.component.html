@@ -246,7 +246,16 @@
             <button mat-raised-button (click)="openDialog()">Add beneficiay</button>
           </div>
 
-          <input type="text" formControlName="name" placeholder="le nom du bénéficaire" />
+          <input type="number" formControlName="idbene" placeholder="ID du bénéficaire" />
+          <div
+            *ngIf="transferD && transferDetails.controls['idbene'].errors"
+          >
+            <div *ngIf="transferD['idbene'].errors['required']">
+              id is required
+            </div>
+          </div>
+
+          <input readonly type="text" formControlName="name" placeholder="le nom du bénéficaire" />
           <div
             *ngIf="transferD && transferDetails.controls['name'].errors"
           >
@@ -255,7 +264,7 @@
             </div>
           </div>
 
-          <input type="text" formControlName="first_name" placeholder="le prénom du bénéficaire" />
+          <input readonly type="text" formControlName="first_name" placeholder="le prénom du bénéficaire" />
           <div
             *ngIf="transferD && transferDetails.controls['first_name'].errors"
           >
@@ -265,7 +274,7 @@
           </div>
 
 
-          <input type="email" formControlName="email" placeholder="Email" />
+          <input readonly type="email" formControlName="email" placeholder="Email" />
           <div
             *ngIf="transferD && transferDetails.controls['email'].errors"
           >

@@ -12,13 +12,15 @@ import { HomeComponent } from './home.component';
 import {MWalletService} from "./m-wallet/m-wallet.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MWalletComponent} from "./m-wallet/m-wallet.component";
-import {NgToastModule} from "ng-angular-popup";
+import {NgToastModule, NgToastService} from "ng-angular-popup";
 import {MatButton} from "@angular/material/button";
 import {
   ReturnTheTransferByClientComponent
 } from "./return-the-transfer-by-client/return-the-transfer-by-client.component";
 import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client/return-the-transfer-by-client.service";
 import { CoreRoutingModule } from '../../core/core-routing.module';
+import {ConsoleAgentService} from "../console-agent/console-agent.service";
+import {BackOfficeService} from "../back-office/back-office.service";
 
 
 
@@ -48,12 +50,17 @@ import { CoreRoutingModule } from '../../core/core-routing.module';
     NewsletterComponent,
     OurServicesComponent,
     HomeComponent,
-    ReturnTheTransferByClientComponent
+    ReturnTheTransferByClientComponent,
+    MWalletComponent
 
   ],
   providers: [
     MWalletService,
     ReturnTheTransferByClientService,
+    ConsoleAgentService,
+    NgToastService,
+    BackOfficeService,
+
   ]
 })
 export class HomeModule { }
