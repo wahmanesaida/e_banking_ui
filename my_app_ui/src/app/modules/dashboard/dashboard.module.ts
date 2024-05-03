@@ -1,5 +1,5 @@
 import { NgModule, ɵnoSideEffects } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {AsyncPipe, CommonModule, NgForOf} from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { NavBarDashComponent } from './side-bar/nav-bar-dash.component';
 import { HeaderDashComponent } from './header-dash/header-dash.component';
@@ -11,6 +11,11 @@ import { MenuCanalComponent } from './menu-canal/menu-canal.component';
 import { GabBoaModule } from '../gab-boa/gab-boa.module';
 import { UsersComponent } from './users/users.component';
 import { ConsoleAgentService } from '../console-agent/console-agent.service';
+import { ModalUserComponent } from './modal-user/modal-user.component';
+import {HistoryService} from "./history/history.service";
+import {NgToastModule, NgToastService} from "ng-angular-popup";
+import {HistoryComponent} from "./history/history.component";
+import {PaginationComponent} from "./history/pagination/pagination.component";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { enGbLocale } from 'ngx-bootstrap/locale';
@@ -19,13 +24,18 @@ import { BackOfficeService } from '../back-office/back-office.service';
 
 defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the appropriate locale
 
+
 @NgModule({
   declarations: [
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
-    UsersComponent
+     UsersComponent,
+    ModalUserComponent,
+    HistoryComponent,
+    PaginationComponent,
+
   ],
   imports: [
     CommonModule,
@@ -35,15 +45,28 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     FormsModule,
     ConsoleAgentModule,
     GabBoaModule,
-    BsDatepickerModule.forRoot()
+      NgForOf,
+    NgToastModule,
+    ReactiveFormsModule,
+    AsyncPipe,
+    BsDatepickerModule.forRoot(),
+
   ],
   exports: [
     NavBarDashComponent,
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
-    UsersComponent
+    UsersComponent,
+    HistoryComponent,
+    PaginationComponent,
   ],
-  providers:[ConsoleAgentService, UsersService, BackOfficeService]
+  providers:[ConsoleAgentService,
+  HistoryService,
+  ConsoleAgentService,
+  UsersService,
+  BackOfficeService,
+  NgToastService]
+
 })
 export class DashboardModule { }

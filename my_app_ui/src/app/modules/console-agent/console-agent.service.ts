@@ -126,8 +126,19 @@ export class ConsoleAgentService {
     const body: { numeroPieceIdentite: string } = { numeroPieceIdentite };
     return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
   }
+   searchTransfertBackOffice(multicriteriaSearchDto:MulticriteriaSearchDto) :Observable<any>{
+    return this.http.post(`${this.baseUrl}/searchCriteria`,multicriteriaSearchDto);
+  }
+
+  exportTransfersToExcel(transfers: Transfert[]): Observable<Blob> {
+    return this.http.post(`${this.baseUrl}/exportFile`, transfers, { responseType: 'blob', headers: { 'Content-Type': 'application/json' } });
+  }
+
+  getAllTransfers():Observable<any>{
+    return this.http.get(`${this.baseUrl}/transfers`);
+  }
   
-  generateTransferReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+   generateTransferReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
     return this.http.post(
       `${this.baseUrl}/generateTransferReceiptByAgent`,
       transferPaymentDto,
@@ -139,4 +150,28 @@ export class ConsoleAgentService {
     return this.http.get(`${this.baseUrl}/listOfBenfficiaries/${ClientId}`);
   }
   
+   renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
+    return this.http.post(`${this.baseUrl}/renvoiNotification`, renvoiDto);
+  }
+
+  getAllUsers():Observable<any>{
+    return this.http.get(`${this.baseUrl}/getAllUsers`);
+  }
+
+  deleteUser(id:number):Observable<any>{
+    return this.http.post(`${this.baseUrl}/deleteUser`, id);
+  }
+
+  searchUser(id:number):Observable<any>{
+    return this.http.post(`${this.baseUrl}/searchUserByID`, id);
+  }
+
+  getAlltransactions():Observable<any>{
+    const url=`${this.baseUrl}/AllTransactions`;
+    return this.http.get(url);
+  }
+
+
+ 
+
 }

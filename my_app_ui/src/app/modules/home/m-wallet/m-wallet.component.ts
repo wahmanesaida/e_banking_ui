@@ -39,7 +39,7 @@ export class MWalletComponent implements OnInit{
   errorPhone: string='';
   transferMessage: string;
 
-  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService, private dialog: MatDialog, private authService: AuthService, private Mwallet_service: MWalletService) { }
+  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService, private dialog: MatDialog, private Mwallet_service: MWalletService) { }
   ngOnInit(): void {
     this.beneficiarylDetails = this.formBuilder.group({
       typetransfer: ['', Validators.required],
@@ -280,6 +280,7 @@ export class MWalletComponent implements OnInit{
               position: 'topRight'
 
             })
+            this.beneficiaries$=this.Mwallet_service.getBenficiariesByClientId(Number(localStorage.getItem("id")));
           },
           (error) => {
             console.error('Error adding beneficiary:', error);
