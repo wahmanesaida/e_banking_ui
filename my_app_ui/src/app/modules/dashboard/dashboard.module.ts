@@ -21,6 +21,7 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { enGbLocale } from 'ngx-bootstrap/locale';
 import { UsersService } from './users/users.service';
 import { BackOfficeService } from '../back-office/back-office.service';
+import { ProfileAdminComponent } from './profile-admin/profile-admin.component';
 
 defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the appropriate locale
 
@@ -31,11 +32,12 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
-     UsersComponent,
+    UsersComponent,
+    ProfileAdminComponent,
+    UsersComponent,
     ModalUserComponent,
     HistoryComponent,
-    PaginationComponent,
-
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,7 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     FormsModule,
     ConsoleAgentModule,
     GabBoaModule,
-      NgForOf,
+    NgForOf,
     NgToastModule,
     ReactiveFormsModule,
     AsyncPipe,
@@ -58,6 +60,7 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     DashboardComponent,
     MenuCanalComponent,
     UsersComponent,
+    ProfileAdminComponent,
     HistoryComponent,
     PaginationComponent,
   ],

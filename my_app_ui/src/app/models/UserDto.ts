@@ -18,7 +18,7 @@ export class UserDto{
     profession?:string;
     payeNationale?:string;
     ville?:string;
-    GSM?:string;
+    gsm: string;
     account_amount?:number;
 
 
@@ -39,7 +39,7 @@ export class UserDto{
         profession?:string,
         payeNationale?:string,
         ville?:string,
-        GSM?:string,
+        gsm?: string,
         account_amount?:number
     ) {
         this.id=id;
@@ -56,9 +56,10 @@ export class UserDto{
         this.validitePieceIdentite=validitePieceIdentite;
         this.datenaissance=datenaissance;
         this.profession=profession;
-        this.payeNationale=paysEmission;
+        this.paysEmission = paysEmission;
+        this.payeNationale=payeNationale;
         this.ville=ville;
-        this.GSM=GSM;
+        this.gsm=gsm;
         this.account_amount=account_amount;
     }
 }
