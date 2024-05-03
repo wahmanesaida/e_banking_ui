@@ -5,7 +5,11 @@ import {User} from "../../models/User.model";
 import {Transfert} from "../console-agent/servir-transfert/models/Transfert";
 import {NgToastService} from "ng-angular-popup";
 import {ReturnTransferDTO} from "../../models/ReturnTransferDTO.model";
+import { MulticriteriaSearchDto } from '../../models/MulticriteriaSearchDto';
+import { RenvoiDto } from '../../models/RenvoiDto';
+
 import {TransferPaymentDto} from "../console-agent/servir-transfert/models/TransferPaymentDto";
+
 
 
 @Injectable({
@@ -24,6 +28,21 @@ export class BackOfficeService {
   ReturnTheTransfer(request: ReturnTransferDTO):Observable<any>{
     const url= `${this.baseUrl}/ReturnTheTransfer`;
     return this.http.post<any>(url, request);
+  }
+  searchTransfertBackOffice(multicriteriaSearchDto:MulticriteriaSearchDto) :Observable<any>{
+    return this.http.post(`${this.baseUrl}/searchCriteria`,multicriteriaSearchDto);
+  }
+
+  exportTransfersToExcel(transfers: Transfert[]): Observable<Blob> {
+    return this.http.post(`${this.baseUrl}/exportFile`, transfers, { responseType: 'blob', headers: { 'Content-Type': 'application/json' } });
+  }
+
+  getAllTransfers():Observable<any>{
+    return this.http.get(`${this.baseUrl}/transfers`);
+  }
+
+  renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
+    return this.http.post(`${this.baseUrl}/renvoiNotification`, renvoiDto);
   }
 
   generateReturnReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {

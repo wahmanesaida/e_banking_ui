@@ -18,6 +18,7 @@ import { MulticriteriaSearchDto } from '../../models/MulticriteriaSearchDto';
 import { Transfert } from './servir-transfert/models/Transfert';
 import { MailStructure } from '../../models/MailStructure';
 import { RenvoiDto } from '../../models/RenvoiDto';
+import { UserDto } from '../../models/UserDto';
 
 @Injectable({
   providedIn: 'root',
@@ -125,8 +126,7 @@ export class ConsoleAgentService {
     const body: { numeroPieceIdentite: string } = { numeroPieceIdentite };
     return this.http.post(`${this.baseUrl}/showKycBynumeroPieceIdentite`, body);
   }
-
-  searchTransfertBackOffice(multicriteriaSearchDto:MulticriteriaSearchDto) :Observable<any>{
+   searchTransfertBackOffice(multicriteriaSearchDto:MulticriteriaSearchDto) :Observable<any>{
     return this.http.post(`${this.baseUrl}/searchCriteria`,multicriteriaSearchDto);
   }
 
@@ -137,8 +137,8 @@ export class ConsoleAgentService {
   getAllTransfers():Observable<any>{
     return this.http.get(`${this.baseUrl}/transfers`);
   }
-
-  generateTransferReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
+  
+   generateTransferReceiptByAgent(transferPaymentDto: TransferPaymentDto): Observable<Blob> {
     return this.http.post(
       `${this.baseUrl}/generateTransferReceiptByAgent`,
       transferPaymentDto,
@@ -149,8 +149,8 @@ export class ConsoleAgentService {
   getBenficiariesByClientId(ClientId: number): Observable<any>{
     return this.http.get(`${this.baseUrl}/listOfBenfficiaries/${ClientId}`);
   }
-
-  renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
+  
+   renvoyerNotification(renvoiDto: RenvoiDto):Observable<any>{
     return this.http.post(`${this.baseUrl}/renvoiNotification`, renvoiDto);
   }
 
@@ -171,5 +171,7 @@ export class ConsoleAgentService {
     return this.http.get(url);
   }
 
+
+ 
 
 }

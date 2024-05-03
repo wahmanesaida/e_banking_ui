@@ -5,6 +5,7 @@ import { ConsoleAgentService } from '../../console-agent/console-agent.service';
 import * as moment from 'moment';
 import { Transfert } from '../../console-agent/servir-transfert/models/Transfert';
 import { NgToastService } from 'ng-angular-popup';
+import { BackOfficeService } from '../back-office.service';
 
 @Component({
   selector: 'app-consultation-transfert',
@@ -24,7 +25,7 @@ export class ConsultationTransfertComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private transfer_service: ConsoleAgentService,
+    private backOffService: BackOfficeService,
     private toast: NgToastService
   ) {}
 
@@ -76,7 +77,9 @@ export class ConsultationTransfertComponent implements OnInit {
       return; // Exit the method early if searchDto is null
     }
 
-    this.transfer_service.searchTransfertBackOffice(searchDto).subscribe(
+  
+    this.backOffService.searchTransfertBackOffice(searchDto).subscribe(
+
       (response: any) => {
         this.transfers = response;
         console.log(this.transfers);
@@ -94,7 +97,7 @@ export class ConsultationTransfertComponent implements OnInit {
 
 
   exportTransfersToExcel(): void {
-    this.transfer_service.exportTransfersToExcel(this.transfers).subscribe(
+    this.backOffService.exportTransfersToExcel(this.transfers).subscribe(
       (response: Blob) => {
         const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const url = window.URL.createObjectURL(blob);
@@ -111,7 +114,7 @@ export class ConsultationTransfertComponent implements OnInit {
   }
 
   getAllTransfers(){
-    this.transfer_service.getAllTransfers().subscribe(
+    this.backOffService.getAllTransfers().subscribe(
       (response) => {
         this.transfers = response;
         console.log(response);

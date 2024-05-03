@@ -16,6 +16,14 @@ import {HistoryService} from "./history/history.service";
 import {NgToastModule, NgToastService} from "ng-angular-popup";
 import {HistoryComponent} from "./history/history.component";
 import {PaginationComponent} from "./history/pagination/pagination.component";
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { enGbLocale } from 'ngx-bootstrap/locale';
+import { UsersService } from './users/users.service';
+import { BackOfficeService } from '../back-office/back-office.service';
+
+defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the appropriate locale
+
 
 @NgModule({
   declarations: [
@@ -23,10 +31,11 @@ import {PaginationComponent} from "./history/pagination/pagination.component";
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
-    UsersComponent,
+     UsersComponent,
     ModalUserComponent,
     HistoryComponent,
-    PaginationComponent
+    PaginationComponent,
+
   ],
   imports: [
     CommonModule,
@@ -36,10 +45,12 @@ import {PaginationComponent} from "./history/pagination/pagination.component";
     FormsModule,
     ConsoleAgentModule,
     GabBoaModule,
-    NgForOf,
+      NgForOf,
     NgToastModule,
     ReactiveFormsModule,
-    AsyncPipe
+    AsyncPipe,
+    BsDatepickerModule.forRoot(),
+
   ],
   exports: [
     NavBarDashComponent,
@@ -52,7 +63,10 @@ import {PaginationComponent} from "./history/pagination/pagination.component";
   ],
   providers:[ConsoleAgentService,
   HistoryService,
-    ConsoleAgentService,
+  ConsoleAgentService,
+  UsersService,
+  BackOfficeService,
   NgToastService]
+
 })
 export class DashboardModule { }

@@ -1,13 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConsoleAgentService } from '../../console-agent/console-agent.service';
 import { NgToastService } from 'ng-angular-popup';
-import { User } from '../../../models/User.model';
+import { UserDto } from '../../../models/UserDto';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',
@@ -15,28 +10,42 @@ import { User } from '../../../models/User.model';
   styleUrl: './users.component.css',
 })
 export class UsersComponent implements OnInit {
-  selectedUser: User | null = null;
+  users: UserDto[] = [];
+  isReadOnly: boolean = false;
+  selectedUser: UserDto | null = null;
   modalState: 'add' | 'edit' | 'view' | null = null;
+  totalEntries: number;
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPages: number;
+  pages: number[];
 
-  openModal(action: 'add' | 'edit' | 'view', user?: User) {
-    document.getElementById('modal').style.display = 'block';
-    console.log(user);
+  constructor(
+    private userService: UsersService,
+    private toast: NgToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.getAllUsers();
+  }
+
+  openModal(action: 'add' | 'edit' | 'view', user?: UserDto) {
     this.modalState = action;
-    console.log(this.modalState);
-    this.selectedUser = user ? { ...user } : null;
+    this.selectedUser = user ? { ...user } : ({} as UserDto);
+    this.isReadOnly = action === 'view';
   }
   saveChanges() {
     this.closeModal();
   }
 
   closeModal() {
-    document.getElementById('modal').style.display = 'none';
     this.modalState = null;
     this.selectedUser = null;
+    this.isReadOnly = false;
   }
 
-  formatDate() {
-    const input = document.getElementById('validity') as HTMLInputElement;
+  formatDate(event: Event) {
+    const input = event.target as HTMLInputElement;
     const date = new Date(input.value);
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
       .toString()
@@ -44,21 +53,15 @@ export class UsersComponent implements OnInit {
     input.value = formattedDate;
   }
 
-  users: User[] = [];
-
-  ngOnInit(): void {
-    this.getAllUsers();
-  }
-
-  constructor(
-    private transfer_service: ConsoleAgentService,
-    private toast: NgToastService
-  ) {}
-
   getAllUsers() {
-    this.transfer_service.getAllUsers().subscribe(
+    this.userService.getAllUsers().subscribe(
       (response) => {
         this.users = response;
+        this.totalEntries = response.length;
+        this.totalPages = Math.ceil(this.totalEntries / this.itemsPerPage);
+        this.pages = Array(this.totalPages)
+          .fill(0)
+          .map((x, i) => i + 1);
       },
       (error: any) => {
         this.toast.error({
@@ -73,7 +76,7 @@ export class UsersComponent implements OnInit {
 
   deleteUser(id: number) {
     console.log(id);
-    this.transfer_service.deleteUser(id).subscribe(
+    this.userService.deleteUser(id).subscribe(
       (response) => {
         console.log(response);
       },
@@ -89,7 +92,7 @@ export class UsersComponent implements OnInit {
   }
 
   searchUser(id: number) {
-    this.transfer_service.searchUser(id).subscribe(
+    this.userService.searchUser(id).subscribe(
       (response) => {
         console.log(response);
         this.users = [response];
@@ -103,5 +106,46 @@ export class UsersComponent implements OnInit {
         });
       }
     );
+  }
+
+  updateUserProperty(): void {
+    this.userService.updateUserProperty(this.selectedUser).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  addUser(): void {
+    this.userService.addUser(this.selectedUser).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  saveUser() {
+    if (this.modalState === 'edit') {
+      this.updateUserProperty();
+      this.closeModal();
+    } else if (this.modalState === 'add') {
+      this.addUser();
+      this.closeModal();
+    }
+  }
+
+  getDisplayedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = Math.min(
+      startIndex + this.itemsPerPage,
+      this.totalEntries
+    );
+    return this.users.slice(startIndex, endIndex);
   }
 }
