@@ -8,6 +8,9 @@
             Réstitution du transfert
           </li>
           <li [ngStyle]="{'color': 'black'}" [ngClass]="step >= 2 ? 'active' : 'inactive'">
+           Vérification d'otp
+          </li>
+          <li [ngStyle]="{'color': 'black'}" [ngClass]="step >= 3 ? 'active' : 'inactive'">
             Reçu du transfert
           </li>
 
@@ -18,32 +21,39 @@
         <fieldset *ngIf="step == 1">
           <h2 class="fs-title" [ngStyle]="{'text-decoration': 'underline'}">les Details du transfert</h2>
           <br>
-          <input
-            (click)="generate_return_Receipt_agent()"
-            type="submit"
-            name="download"
-            class="submit action-button"
-            value="download"
-          />
           <ng-toast></ng-toast>
-          <div>
+          <div *ngIf="!refs" class="mydiv">
+            <label>Réference du transfert:</label>
             <input type="text" formControlName="transferRefr" placeholder="Taper le référence du transfert" />
-            <div *ngIf="personal && personalDetails.controls['transferRefr'].errors">
+          </div>
+          <div *ngIf="!refs">
+            <div  class="champerr" *ngIf="personal && personalDetails.controls['transferRefr'].errors">
               <div *ngIf="personalDetails.controls['transferRefr'].errors['required']">
                 le référence du transfert est obligatoire !
               </div>
             </div>
-
           </div>
+          <div *ngIf="!refs">
           <button #searchButton type="button" class="next action-button" (click)="searchTransfertByReference()">Search</button>
-
-
-
-          <div *ngIf="errorMessage" class="error-message">
-            {{ errorMessage }}
           </div>
-          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Les informations de l'agent</h2>
+          <div *ngIf="!ser" class="mydiv">
+            <label>Choisir un transfert</label>
+            <select formControlName="referenceSelected" class="form-control"  (change)="onSelectedTransfert($event)">
+              <option value="" disabled selected>choisit votre client</option>
+              <option *ngFor="let transfert of transferts$ | async" [value]="transfert.transferRef">
+                {{ transfert.transferRef }}
+              </option>
+            </select>
+            <!-- ... -->
+          </div>
 
+
+
+
+
+
+<div class="mydiv">
+          <label>Id du client</label>
           <input
             type="number"
             formControlName="Id_Agent"
@@ -54,7 +64,9 @@
             placeholder="Id de l'Agent"
 
           />
-
+</div>
+ <div class="mydiv">
+          <label>le nom complet</label>
           <input
             type="text"
             formControlName="AgentName"
@@ -65,7 +77,9 @@
             placeholder="le prénom de l'agent"
 
           />
-
+ </div>
+  <div class="mydiv">
+    <label>Email</label>
           <input
             type="text"
             formControlName="AgentLastName"
@@ -73,12 +87,13 @@
               'is-invalid': personal_step && personal['AgentLastName'].errors
             }"
             readonly
-            [value]="tt"
             placeholder="le nom de l'agent"
 
           />
 
-
+  </div>
+<div class="mydiv">
+          <label>Date d'émission</label>
           <input
             type="text"
             formControlName="DateEmission"
@@ -88,8 +103,9 @@
             readonly
             placeholder="Date d'émission"
           />
-
-          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Les information du bénéicaire</h2>
+</div>
+ <div class="mydiv">
+          <label>Montant du transfert</label>
           <input
             type="number"
             formControlName="Montant"
@@ -99,6 +115,9 @@
             readonly
             placeholder="Le montant du transfert"
           />
+ </div>
+        <div class="mydiv">
+          <label>Nom du bénéficaire</label>
           <input
             type="text"
             formControlName="NameBene"
@@ -108,6 +127,9 @@
             readonly
             placeholder="Le nom du bénéfcaire"
           />
+        </div>
+          <div class="mydiv">
+          <label>Prénom du bénéficaire</label>
           <input
             type="text"
             formControlName="Prénombene"
@@ -117,19 +139,23 @@
             readonly
             placeholder="Le prénom du bénéficaire"
           />
+          </div>
 
-          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Choix de notification</h2>
+          <div class="mydiv">
+          <label>Choix de notification</label>
           <select formControlName="notification" class="form-control">
             <option value="" disabled selected>Notification</option>
             <option value="true">true</option>
             <option value="false">false</option>
           </select>
-          <div *ngIf="personal && personalDetails.controls['notification'].errors">
+          </div>
+          <div class="champerr" *ngIf="personal && personalDetails.controls['notification'].errors">
             <div *ngIf="personalDetails.controls['notification'].errors['required']">
               Ce champ est obligatoire !
             </div>
           </div>
-          <h2 class="fs-title" [ngStyle]="{ 'color': '#40128B' }">Choix de motif</h2>
+          <div class="mydiv">
+          <label>Choix de motif</label>
 
           <select formControlName="motifName" class="form-control">
             <option value="" disabled selected>Select Transfer Type</option>
@@ -137,14 +163,61 @@
               {{ formatMotifKey(motifKey) }}
             </option>
           </select>
-            <div *ngIf="personal && personalDetails.controls['motifName'].errors">
-              <div *ngIf="personalDetails.controls['motifName'].errors['required']">
-                vous devez sélectionner ou ajouter un motif
-              </div>
+          </div>
+          <div class="champerr" *ngIf="personal && personalDetails.controls['motifName'].errors">
+            <div *ngIf="personalDetails.controls['motifName'].errors['required']">
+              vous devez sélectionner ou ajouter un motif
             </div>
+          </div>
 
 
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Next"
+          />
 
+        </fieldset>
+      </form>
+
+      <form [formGroup]="Otp" id="msform">
+        <fieldset *ngIf="step == 2">
+          <h2 class="fs-title">Validation de l'otp</h2>
+          <ng-toast></ng-toast>
+          <button [disabled]="otpSent" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="sendOtp()">Send Otp</button>
+          <!--   <div *ngIf="transferMessage">
+               {{ transferMessage }}
+             </div> -->
+
+          <input
+            type="text"
+            formControlName="otp"
+            placeholder="enter the otp"
+          />
+
+          <div
+            *ngIf="otp && Otp.controls['otp'].errors"
+          >
+            <div *ngIf="Otp.controls['otp'].errors['required']">
+              Otp is required
+            </div>
+          </div>
+
+          <button [disabled]="otpValidated" class="btn btn-primary" style="display: block; align-items: start; padding: 6px; margin: 10px;" (click)="validateOtp()">Validate Otp</button>
+
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
+
+          <input
+            (click)="previous()"
+            type="button"
+            name="previous"
+            class="previous action-button-previous"
+            value="Previous"
+          />
 
           <input
             (click)="submit()"
@@ -163,17 +236,16 @@
               name="Téléchargé le recu"
               value="next"
             /> </div>
-
         </fieldset>
       </form>
 
       <form  id="msform">
-        <fieldset *ngIf="step == 2">
+        <fieldset *ngIf="step == 3">
           <h2 class="fs-title">Télecharger le recu</h2>
 
 
           <input
-            (click)="generate_return_Receipt_agent()"
+            (click)="generateReturnReceipt()"
             type="submit"
             name="download"
             class="submit action-button"
