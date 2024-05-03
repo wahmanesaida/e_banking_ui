@@ -34,9 +34,6 @@ export class UsersComponent implements OnInit {
     this.selectedUser = user ? { ...user } : ({} as UserDto);
     this.isReadOnly = action === 'view';
   }
-  saveChanges() {
-    this.closeModal();
-  }
 
   closeModal() {
     this.modalState = null;
@@ -57,11 +54,7 @@ export class UsersComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       (response) => {
         this.users = response;
-        this.totalEntries = response.length;
-        this.totalPages = Math.ceil(this.totalEntries / this.itemsPerPage);
-        this.pages = Array(this.totalPages)
-          .fill(0)
-          .map((x, i) => i + 1);
+        this.calculateTotalPages();
       },
       (error: any) => {
         this.toast.error({
@@ -142,10 +135,20 @@ export class UsersComponent implements OnInit {
 
   getDisplayedItems() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = Math.min(
-      startIndex + this.itemsPerPage,
-      this.totalEntries
-    );
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalEntries);
     return this.users.slice(startIndex, endIndex);
+  }
+  
+
+  changePage(page: number) {
+    this.currentPage = page;
+  }
+
+  calculateTotalPages() {
+    this.totalEntries = this.users.length;
+    this.totalPages = Math.ceil(this.totalEntries / this.itemsPerPage);
+    this.pages = Array(this.totalPages)
+      .fill(0)
+      .map((x, i) => i + 1);
   }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MulticriteriaSearchDto } from '../../../models/MulticriteriaSearchDto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConsoleAgentService } from '../../console-agent/console-agent.service';
-import * as moment from 'moment';
+
 import { Transfert } from '../../console-agent/servir-transfert/models/Transfert';
 import { NgToastService } from 'ng-angular-popup';
 import { BackOfficeService } from '../back-office.service';
@@ -15,6 +14,8 @@ import { BackOfficeService } from '../back-office.service';
 export class ConsultationTransfertComponent implements OnInit {
   searchform: FormGroup;
   transfers: Transfert[] = [];
+  selectedTransfert: Transfert | null = null;
+  modalState: 'view' | null = null;
 
   ngOnInit(): void {
     this.searchform = this.formBuilder.group({
@@ -126,6 +127,16 @@ export class ConsultationTransfertComponent implements OnInit {
         });
       }
     );
+  }
+
+  openModal(action: 'view', transfert?: Transfert) {
+    this.modalState = action;
+    this.selectedTransfert = transfert ? { ...transfert } : ({} as Transfert);
+  }
+
+  closeModal() {
+    this.modalState = null;
+    this.selectedTransfert = null;
   }
   
 }
