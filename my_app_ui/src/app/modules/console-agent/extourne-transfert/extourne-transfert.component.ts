@@ -54,8 +54,7 @@ export class ExtourneTransfertComponent implements OnInit {
     });
 
     this.motifInfo = this.formBuilder.group({
-      motif: ['', Validators.required],
-      otherMotif: [''],
+      motif: ['', Validators.required]
     });
 
     this.Validation = this.formBuilder.group({});
@@ -142,9 +141,6 @@ export class ExtourneTransfertComponent implements OnInit {
 
   reverseTransfer() {
     let motifValue = this.motifInfo.get('motif').value;
-    if (motifValue === 'Autres') {
-      motifValue = this.motifInfo.get('otherMotif').value;
-    }
     const transferPaymentDto: TransferPaymentDto = {
       transferRefDTO: {
         id: this.transferId,
