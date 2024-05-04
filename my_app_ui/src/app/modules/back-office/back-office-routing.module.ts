@@ -5,11 +5,14 @@ import { ConsultationTransfertComponent } from './consultation-transfert/consult
 import { RenvoiNotificationComponent } from './renvoi-notification/renvoi-notification.component';
 import {ReturnTheTransferComponent} from "./return-the-transfer/return-the-transfer.component";
 import {ParDebitDeCompteComponent} from "../console-agent/par-debit-de-compte/par-debit-de-compte.component";
+import {BlockingProcessComponent} from "./blocking-process/blocking-process.component";
+
 
 const routes: Routes = [
   {path: 'consult-transfert', component: ConsultationTransfertComponent},
   {path: 'renvoi-notification', component: RenvoiNotificationComponent},
   {path: 'return-the-transfer', component: ReturnTheTransferComponent},
+  {path: 'block-the-transfer', component: BlockingProcessComponent},
 ];
 
 @NgModule({

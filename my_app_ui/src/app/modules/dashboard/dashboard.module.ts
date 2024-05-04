@@ -31,9 +31,11 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
+
     UsersComponent,
     ProfileAdminComponent,
-    UsersComponent,
+   
+
     HistoryComponent,
     PaginationComponent
   ],

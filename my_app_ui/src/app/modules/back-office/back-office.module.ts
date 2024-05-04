@@ -11,7 +11,7 @@ import {BackOfficeService} from "./back-office.service";
 import {MatButton, MatButtonModule} from "@angular/material/button";
 import {ConsoleAgentRoutingModule} from "../console-agent/console-agent-routing.module";
 import {HttpClientModule} from "@angular/common/http";
-import {NgToastModule} from "ng-angular-popup";
+import {NgToastModule, NgToastService} from "ng-angular-popup";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {
@@ -28,14 +28,17 @@ import {ReturnTheTransferComponent} from "./return-the-transfer/return-the-trans
 import {
   ReturnTheTransferByClientService
 } from "../home/return-the-transfer-by-client/return-the-transfer-by-client.service";
+import {BlockingProcessComponent} from "./blocking-process/blocking-process.component";
+
 
 
 @NgModule({
   declarations: [
     ConsultationTransfertComponent,
     RenvoiNotificationComponent,
-    ReturnTheTransferComponent
-    
+    ReturnTheTransferComponent,
+    BlockingProcessComponent,
+
   ],
   imports: [
     CommonModule,
@@ -63,8 +66,9 @@ import {
   exports: [
     ConsultationTransfertComponent,
     RenvoiNotificationComponent,
-    ReturnTheTransferComponent
+    ReturnTheTransferComponent,
+    BlockingProcessComponent,
   ],
-  providers: [ConsoleAgentService,BackOfficeService],
+  providers: [ConsoleAgentService,BackOfficeService, NgToastService],
 })
 export class BackOfficeModule { }
