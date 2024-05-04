@@ -88,6 +88,7 @@ export class ParDebitDeCompteComponent implements OnInit {
       amount: ['', Validators.required],
       //saida: ['', Validators.required],
       usernameSelected: ['', Validators.required],
+      idbene: ['', Validators.required],
       name: ['', Validators.required],
       first_name: ['', Validators.required],
       email: ['', Validators.required],
@@ -153,12 +154,14 @@ export class ParDebitDeCompteComponent implements OnInit {
       this.transferDetails.get('name').setValue(beneficiary.lastname);
       this.transferDetails.get('first_name').setValue(beneficiary.firstName);
       this.transferDetails.get('email').setValue(beneficiary.username);
+      this.transferDetails.get('idbene').setValue(beneficiary.id)
       this.transferDetails.updateValueAndValidity();
       console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj "+ this.personalDetails.value.id_donor);
     }else{
       this.transferDetails.get('name').setValue('');
       this.transferDetails.get('first_name').setValue('');
       this.transferDetails.get('email').setValue('');
+      this.transferDetails.get('idbene').setValue('')
       this.transferDetails.updateValueAndValidity();
 
     }
@@ -305,7 +308,7 @@ export class ParDebitDeCompteComponent implements OnInit {
           id_agent: Number(localStorage.getItem('id'))
 
         },
-        id_beneficiary: this.transferDetails.value.id,
+        id_beneficiary: this.transferDetails.value.idbene,
         bene: {
           firstName: this.transferDetails.value.first_name,
           lastname: this.transferDetails.value.name,
@@ -511,6 +514,8 @@ export class ParDebitDeCompteComponent implements OnInit {
               position: 'topRight'
 
             })
+            this.beneficiaries$=this.transfer_service.getBenficiariesByClientId(this.clientid);
+
           },
           (error) => {
             console.error('Error adding beneficiary:', error);

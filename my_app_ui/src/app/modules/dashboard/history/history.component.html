@@ -1,0 +1,69 @@
+
+<br>
+<br>
+<br>
+<br>
+<div>
+  <div class="title">Historique de tous les transferts effectué</div>
+  <ng-toast></ng-toast>
+  <form [formGroup]="searchform" (ngSubmit)="onSubmit()" class="search-form">
+    <header class="header-of-search">
+      <div class="search-bar">
+        <input formControlName="criteria" type="text" class="search-input" placeholder="Chercher par le référence du transfert" style="outline: none;">
+      </div>
+      <button class="custom-btn" type="submit">Search</button>
+    </header>
+  </form>
+
+
+  <div class="table-responsive tableau">
+    <table class="table table-bordered table-hover">
+      <caption>La liste des Transferts</caption>
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Transfer ID</th>
+        <th scope="col">Amount of transfer</th>
+        <th scope="col">Type of transfer</th>
+        <th scope="col">Agent Name</th>
+        <th scope="col">Client Name</th>
+        <th scope="col">Transfer reference</th>
+        <th scope="col">Amount of fees</th>
+        <th scope="col">Type of fees</th>
+        <th scope="col">Status</th>
+        <th scope="col">CreateTime</th>
+        <th scope="col">Beneficiary Name</th>
+        <th scope="col">Motif</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let transfer of transferts.slice(StartIndex, EndIndex + 1)">
+        <th scope="row">{{ transfer.id }}</th>
+        <td>{{ transfer.amount_transfer }}</td>
+        <td>{{ transfer.typeOftransfer}}</td>
+        <td>{{ transfer.client.name }}</td>
+        <td>{{ transfer.client.name }}</td>
+        <td>{{ transfer.transferRef }}</td>
+        <td>{{ transfer.amountOfFees }}</td>
+        <td>{{ transfer.typeOfFees }}</td>
+        <td>{{ transfer.status }}</td>
+        <td>{{ transfer.createTime }}</td>
+        <td>{{ transfer.beneficiary.firstName }}</td>
+        <td>{{ transfer.motif }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <app-pagination
+    [page]="page"
+    [totalPages]="Math.ceil(transferts.length / pageSize)"
+    (nextPage)="onNextPage(page)"
+    (prevPage)="onPrevPage(page)">
+  </app-pagination>
+
+
+
+
+
+</div>
