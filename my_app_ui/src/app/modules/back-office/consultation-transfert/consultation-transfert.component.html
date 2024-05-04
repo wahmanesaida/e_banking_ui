@@ -26,6 +26,7 @@
           <th scope="col">Status</th>
           <th scope="col">CreateTime</th>
           <th scope="col">Beneficiary Name</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -42,6 +43,9 @@
             <td>{{ transfer.status }}</td>
             <td>{{ transfer.createTime }}</td>
             <td>{{ transfer.beneficiary.firstName }}</td>
+            <td>
+              <a class="view" title="View" (click)="openModal('view', transfer)"><i class="material-icons">&#xE417;</i></a>
+            </td>      
           </tr>
         </tbody>
     </table>
@@ -50,3 +54,54 @@
       <i class="fas fa-download"></i> export result
     </button>
 </div>
+
+
+<div *ngIf="selectedTransfert">
+  <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal-btn"  (click)="closeModal()">&times;</span>
+        <h2 class="modal-title">View Transfert</h2>
+          <div class="form-group">   
+            <label>Transfer ID</label>
+            <input type="number" id="id" placeholder="Transfer ID" [(ngModel)]="selectedTransfert && selectedTransfert.id"class="form-input" readonly>
+            <label for="">Amount of transfer</label>
+            <input type="text" id="amount_transfer" placeholder="Amount of transfer" [(ngModel)]="selectedTransfert && selectedTransfert.amount_transfer"   class="form-input" readonly>
+          </div>
+          <div class="form-group">
+              <label for="">Type of transfer</label>
+              <input type="text" id="typeOftransfer" placeholder="Type of transfer" [(ngModel)]="selectedTransfert && selectedTransfert.typeOftransfer"  class="form-input" readonly>
+              <label for="">Agent Name</label>
+              <input type="text" id="agent" placeholder="Agent Name" [(ngModel)]="selectedTransfert && selectedTransfert.agent.name"  class="form-input" readonly>
+            </div>
+            <div class="form-group">
+              <label for="">Client Name</label>
+              <input type="text" id="client" placeholder="Client Name" [(ngModel)]="selectedTransfert && selectedTransfert.client.name"   class="form-input" readonly>
+              <label for="">Motif</label>
+              <input type="text" id="motif" placeholder="Motif" [(ngModel)]="selectedTransfert && selectedTransfert.motif"   class="form-input" readonly>
+            </div>
+            <div class="form-group">
+              <label for="">Transfer reference</label>
+              <input type="text" id="transferRef" placeholder="Transfer reference" [(ngModel)]="selectedTransfert && selectedTransfert.transferRef"   class="form-input" readonly>
+              <label for="">Amount of fees</label>
+              <input type="text" id="amountOfFees" class="form-input" placeholder="Amount of fees" [(ngModel)]="selectedTransfert && selectedTransfert.amountOfFees"  readonly>
+            </div>
+            <div class="form-group">
+              <label for="">Type of fees</label>
+              <input type="text" id="typeOfFees" placeholder="Type of fees" [(ngModel)]="selectedTransfert && selectedTransfert.typeOfFees"   class="form-input" readonly>
+              <label for="">Status</label>
+              <input type="text" id="status" placeholder="Status" [(ngModel)]="selectedTransfert && selectedTransfert.status"   class="form-input" readonly>
+            </div>
+            <div class="form-group">
+              <label for="">CreateTime</label>
+              <input type="text" id="createTime" placeholder="CreateTime" [(ngModel)]="selectedTransfert && selectedTransfert.createTime" class="form-input" readonly>
+              <label for="">Beneficiary Name</label>
+              <input type="text" id="firstName" placeholder="Beneficiary Name" [(ngModel)]="selectedTransfert && selectedTransfert.beneficiary.firstName"   class="form-input" readonly>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          </div>
+    
+      </div>
+    </div>
+</div>
+

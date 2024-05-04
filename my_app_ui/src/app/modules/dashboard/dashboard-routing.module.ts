@@ -10,51 +10,54 @@ import { MenuCanalComponent } from './menu-canal/menu-canal.component';
 import { ConsultationTransfertComponent } from '../back-office/consultation-transfert/consultation-transfert.component';
 import { RenvoiNotificationComponent } from '../back-office/renvoi-notification/renvoi-notification.component';
 import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
-import {ReturnTheTransferComponent} from "../back-office/return-the-transfer/return-the-transfer.component";
+import { ReturnTheTransferComponent } from '../back-office/return-the-transfer/return-the-transfer.component';
 import { UsersComponent } from './users/users.component';
+import { ProfileAdminComponent } from './profile-admin/profile-admin.component';
 import {HistoryComponent} from "./history/history.component";
 import {BlockingProcessComponent} from "../back-office/blocking-process/blocking-process.component";
 
 
-
 const routes: Routes = [
-  {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-  {path: 'header-dash', component: HeaderDashComponent},
-  {path: 'menu-canal', component: MenuCanalComponent},
-  {path: 'dashboard',
-   component: DashboardComponent,
-   children: [
-    {
-      path: 'header-dash',
-      component: HeaderDashComponent,
-    },
-    {
-      path: 'par-debit-compte',
-      component: ParDebitDeCompteComponent,
-    },
-    {
-      path: 'servir-transfert',
-      component: ServirTransfertComponent,
-    },
-    {
-      path: 'extourne-transfert',
-      component: ExtourneTransfertComponent,
-    },
-     {
-       path: 'return-the-transfer',
-       component: ReturnTheTransferComponent
-     },
-
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'header-dash', component: HeaderDashComponent },
+  { path: 'menu-canal', component: MenuCanalComponent },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
+      {
+        path: 'header-dash',
+        component: HeaderDashComponent,
+      },
+      {
+        path: 'par-debit-compte',
+        component: ParDebitDeCompteComponent,
+      },
+      {
+        path: 'servir-transfert',
+        component: ServirTransfertComponent,
+      },
+      {
+        path: 'extourne-transfert',
+        component: ExtourneTransfertComponent,
+      },
+      {
+        path: 'return-the-transfer',
+        component: ReturnTheTransferComponent,
+      },
       { path: 'consult-transfert', component: ConsultationTransfertComponent },
       { path: 'renvoi-notification', component: RenvoiNotificationComponent },
+
       {path: 'gab-boa', component: GabBoaComponent},
       {path: 'users', component: UsersComponent},
      {path: 'history', component: HistoryComponent},
      {path: 'block-the-transfer', component: BlockingProcessComponent},
+   { path: 'profile-admin', component: ProfileAdminComponent },
 
 ]
 }
 ]
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
