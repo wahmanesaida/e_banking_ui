@@ -1,0 +1,66 @@
+
+<br>
+
+<div>
+<form class="steps" [formGroup]="BlockageDetails" accept-charset="UTF-8" enctype="multipart/form-data" novalidate="">
+
+  <!-- transfert INFORMATION FIELD SET -->
+  <fieldset >
+    <h2 class="fs-title">Blockage du transfert</h2>
+    <h3 class="fs-subtitle">We just need some basic information to begin your scoring</h3>
+    <ng-toast></ng-toast>
+    <div>
+      <input type="text" formControlName="transferRefr" placeholder="Taper le référence du transfert" />
+      <div class="error1" *ngIf="Blockage && BlockageDetails.controls['transferRefr'].errors">
+        <div *ngIf="BlockageDetails.controls['transferRefr'].errors['required']">
+          le référence du transfert est obligatoire !
+        </div>
+      </div>
+      <input
+        (click)="searchTransfertByReference()"
+        type="button"
+        name="Chercher"
+        class="next action-button"
+        value="Chercher"
+      />
+
+      <select formControlName="status" class="form-control">
+        <option value="" disabled selected>Séléctionner une statue pour votre transfert</option>
+        <option value="Bloqué">Bloqué</option>
+        <option value="Débloqué_a_servir">Débloqué_a_servir</option>
+      </select>
+      <div class="error1" *ngIf="Blockage && BlockageDetails.controls['status'].errors">
+        <div *ngIf="BlockageDetails.controls['status'].errors['required']">
+          Ce champ est obligatoire !
+        </div>
+      </div>
+
+      <select formControlName="motif" class="form-control">
+        <option value="" disabled selected>Séléctionner le motif</option>
+        <option value="Bloqué_après_expiration_du_délai">Bloqué_après_expiration_du_délai</option>
+        <option value="Bloqué_client_donneur_dordre_soupçons">Bloqué_client_donneur_dordre_soupçons</option>
+        <option value="Bloqué_client_bénéficiaire_soupçons">Bloqué_client_bénéficiaire_soupçons</option>
+      </select>
+      <div class="error1" *ngIf="Blockage && BlockageDetails.controls['motif'].errors">
+        <div *ngIf="BlockageDetails.controls['motif'].errors['required']">
+          Ce champ est obligatoire !
+        </div>
+      </div>
+
+    </div>
+    <input
+      (click)="submit()"
+      type="button"
+      name="submit"
+      class="next action-button"
+      value="submit"
+    />
+  </fieldset>
+
+</form>
+</div>
+
+
+
+
+

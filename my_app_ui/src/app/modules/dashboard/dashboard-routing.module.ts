@@ -13,6 +13,8 @@ import { GabBoaComponent } from '../gab-boa/gab-boa/gab-boa.component';
 import {ReturnTheTransferComponent} from "../back-office/return-the-transfer/return-the-transfer.component";
 import { UsersComponent } from './users/users.component';
 import {HistoryComponent} from "./history/history.component";
+import {BlockingProcessComponent} from "../back-office/blocking-process/blocking-process.component";
+
 
 
 const routes: Routes = [
@@ -47,7 +49,9 @@ const routes: Routes = [
       { path: 'renvoi-notification', component: RenvoiNotificationComponent },
       {path: 'gab-boa', component: GabBoaComponent},
       {path: 'users', component: UsersComponent},
-     {path: 'history', component: HistoryComponent}
+     {path: 'history', component: HistoryComponent},
+     {path: 'block-the-transfer', component: BlockingProcessComponent},
+
 ]
 }
 ]

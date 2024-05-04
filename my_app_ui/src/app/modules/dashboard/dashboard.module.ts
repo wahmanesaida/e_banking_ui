@@ -11,7 +11,7 @@ import { MenuCanalComponent } from './menu-canal/menu-canal.component';
 import { GabBoaModule } from '../gab-boa/gab-boa.module';
 import { UsersComponent } from './users/users.component';
 import { ConsoleAgentService } from '../console-agent/console-agent.service';
-import { ModalUserComponent } from './modal-user/modal-user.component';
+
 import {HistoryService} from "./history/history.service";
 import {NgToastModule, NgToastService} from "ng-angular-popup";
 import {HistoryComponent} from "./history/history.component";
@@ -32,7 +32,6 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     DashboardComponent,
     MenuCanalComponent,
      UsersComponent,
-    ModalUserComponent,
     HistoryComponent,
     PaginationComponent,
 

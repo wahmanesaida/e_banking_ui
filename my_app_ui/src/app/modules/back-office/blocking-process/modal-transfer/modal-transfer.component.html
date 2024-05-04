@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Les détails du transfert</h2>
+<mat-dialog-content>
+  <form [formGroup]="TransferFormGroup">
+
+    <mat-form-field>
+      <mat-label>Référence du transfert</mat-label>
+      <input matInput formControlName="transferReference" [value]="data.transfert.transferRef"readonly >
+      <p>{{data.transfert.transferRef}}</p>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Status du transfert</mat-label>
+      <input matInput formControlName="status" [value]="data.transfert.status" readonly>
+      <p>{{data.transfert.status}}</p>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Montant</mat-label>
+      <input matInput formControlName="montant" [value]="data.transfert.amount_transfer" readonly>
+      <p>{{data.transfert.amount_transfer}}</p>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Type de référence</mat-label>
+      <input matInput formControlName="TransferType" [value]="data.transfert.typeOftransfer" readonly>
+      <p>{{data.transfert.typeOftransfer}}</p>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Nom du client</mat-label>
+      <input matInput formControlName="clientName" [value]="data.transfert.client.name" readonly>
+      <p>{{data.transfert.client.name}}</p>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Nom du bénéficiaire</mat-label>
+      <input matInput formControlName="beneficiaryName" [value]="data.transfert.beneficiary.username" readonly>
+      <p>{{data.transfert.beneficiary.username}}</p>
+    </mat-form-field>
+    <br>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</mat-dialog-actions>
