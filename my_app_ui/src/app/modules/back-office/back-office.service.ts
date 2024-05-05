@@ -9,6 +9,7 @@ import { MulticriteriaSearchDto } from '../../models/MulticriteriaSearchDto';
 import { RenvoiDto } from '../../models/RenvoiDto';
 
 import {TransferPaymentDto} from "../console-agent/servir-transfert/models/TransferPaymentDto";
+import {bloqueRequest} from "../../models/bloqueRequest.model";
 
 
 
@@ -52,5 +53,12 @@ export class BackOfficeService {
       { responseType: 'blob' }
     );
   }
+
+  blockTransfer(request: bloqueRequest): Observable<any>{
+    const url=`${this.baseUrl}/blocking-process`;
+    return this.http.post(url, request);
+  }
+
+
 
 }

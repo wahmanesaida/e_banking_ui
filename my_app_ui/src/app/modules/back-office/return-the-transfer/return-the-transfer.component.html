@@ -18,13 +18,6 @@
         <fieldset *ngIf="step == 1">
           <h2 class="fs-title" [ngStyle]="{'text-decoration': 'underline'}">les Details du transfert</h2>
           <br>
-          <input
-            (click)="generate_return_Receipt_agent()"
-            type="submit"
-            name="download"
-            class="submit action-button"
-            value="download"
-          />
           <ng-toast></ng-toast>
           <div>
             <input type="text" formControlName="transferRefr" placeholder="Taper le référence du transfert" />
