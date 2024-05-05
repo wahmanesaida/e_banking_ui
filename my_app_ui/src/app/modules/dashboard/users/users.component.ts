@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ConsoleAgentService } from '../../console-agent/console-agent.service';
 import { NgToastService } from 'ng-angular-popup';
 import { UserDto } from '../../../models/UserDto';
@@ -19,10 +19,12 @@ export class UsersComponent implements OnInit {
   itemsPerPage: number = 5;
   totalPages: number;
   pages: number[];
+  showSave:boolean=false;
 
   constructor(
     private userService: UsersService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,12 @@ export class UsersComponent implements OnInit {
     this.modalState = action;
     this.selectedUser = user ? { ...user } : ({} as UserDto);
     this.isReadOnly = action === 'view';
+    if (action ===  'view') {
+      this.showSave = false;
+    }
+    else{
+      this.showSave = true;
+    }
   }
 
   closeModal() {
@@ -93,7 +101,7 @@ export class UsersComponent implements OnInit {
       (error: any) => {
         this.toast.error({
           detail: 'Pay Attention',
-          summary: error.error,
+          summary: "this id not found",
           duration: 5000,
           position: 'topCenter',
         });
@@ -105,6 +113,7 @@ export class UsersComponent implements OnInit {
     this.userService.updateUserProperty(this.selectedUser).subscribe(
       (response) => {
         console.log(response);
+       
       },
       (error) => {
         console.log(error);
@@ -116,6 +125,7 @@ export class UsersComponent implements OnInit {
     this.userService.addUser(this.selectedUser).subscribe(
       (response) => {
         console.log(response);
+       
       },
       (error) => {
         console.log(error);
@@ -151,4 +161,31 @@ export class UsersComponent implements OnInit {
       .fill(0)
       .map((x, i) => i + 1);
   }
+
+  isAnyFieldEmpty(): boolean {
+    if (!this.selectedUser ||
+        !this.selectedUser.name ||
+        !this.selectedUser.title ||
+        !this.selectedUser.ville ||
+        !this.selectedUser.role ||
+        !this.selectedUser.profession ||
+        !this.selectedUser.pieceIdentite ||
+        !this.selectedUser.datenaissance ||
+        !this.selectedUser.paysEmission ||
+        !this.selectedUser.payeNationale ||
+        !this.selectedUser.numeroPieceIdentite ||
+        !this.selectedUser.gsm ||
+        !this.selectedUser.username ||
+        !this.selectedUser.createTime ||
+        !this.selectedUser.validitePieceIdentite ||
+        !this.selectedUser.expirationPieceIdentite ||
+        !this.selectedUser.account_amount ||
+        !this.selectedUser.password) {
+      return true;
+    }
+  
+    return false;
+  }
+
+
 }

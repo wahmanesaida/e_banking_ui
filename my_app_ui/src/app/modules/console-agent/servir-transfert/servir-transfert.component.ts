@@ -9,6 +9,7 @@ import { TypeOftransfer } from '../../../models/TypeOftransfer.enum';
 import { NgToastService } from 'ng-angular-popup';
 import { BeneficiaryDto } from './models/BeneficiaryDto';
 
+
 @Component({
   selector: 'app-servir-transfert',
   templateUrl: './servir-transfert.component.html',
@@ -21,6 +22,7 @@ export class ServirTransfertComponent implements OnInit {
   walletSelected: boolean = false;
   emailBeneficiary: string;
   transferPaid:boolean = false;
+  TypeOftransfer = TypeOftransfer;
 
 
   errorMessage:string;
@@ -37,6 +39,7 @@ export class ServirTransfertComponent implements OnInit {
   step = 1;
 
   transfer: TransferRequest;
+  Object: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,6 +90,7 @@ export class ServirTransfertComponent implements OnInit {
     return this.Otp.controls;
   }
 
+
   next() {
     if (this.step === 1) {
       if (this.transferDetails.valid) {
@@ -108,7 +112,16 @@ export class ServirTransfertComponent implements OnInit {
     }
     if (this.step == 2) {
       this.education_step = false;
-    }
+    } 
+  }
+
+  formatDate(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const date = new Date(input.value);
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    input.value = formattedDate;
   }
 
  
