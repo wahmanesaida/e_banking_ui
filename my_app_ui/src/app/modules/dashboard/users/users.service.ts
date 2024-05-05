@@ -31,4 +31,9 @@ export class UsersService {
   addUser(userDto: UserDto): Observable<any> {
     return this.http.post(`${this.baseUrl}/addUserIntoDb`, userDto);
   }
+
+  getAdminProfile(id:number): Observable<any>{
+    return this.http.post(`${this.baseUrl}/adminProfile`,id);
+  }
+
 }
