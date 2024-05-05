@@ -47,11 +47,9 @@ export class RenvoiNotificationComponent implements OnInit {
       this.transfer_service.searchTransfer(transferDto).subscribe(
         (transfert: Transfert) => {
           this.transfers = transfert;
-          //console.log(transfert);
           this.renvoiDto ={
             transferRef:  this.searchform.get('transferRef')?.value
           }
-          //console.log(this.renvoiDto);
         },
         (error) => {
           this.toast.error({
@@ -69,7 +67,6 @@ export class RenvoiNotificationComponent implements OnInit {
   }
   
   renvoyerNotification() {
-    console.log("this is the renvoiDTO:", this.renvoiDto);
     this.backOffService.renvoyerNotification(this.renvoiDto).subscribe(
       (res) => {
         console.log(res);

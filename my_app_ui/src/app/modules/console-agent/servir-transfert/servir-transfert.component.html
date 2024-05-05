@@ -27,7 +27,7 @@
             >
               <option value="" disabled selected>Sélectionner le type de transfert</option>
               <option value="SPECIES">En ESPÈCES</option>
-              <option value="WALLET">En PORTEFEUILLE</option>
+              <option value="WALLET">WALLET</option>
             </select>
             <div
              *ngIf="personal_step && transferDetails.controls['typetransfer'].errors">
@@ -144,7 +144,6 @@
         <form [formGroup]="beneficiaryDetails" id="msform">
           <fieldset *ngIf="step == 2">
             <h2 class="fs-title">La saisie des informations du bénéficiaire</h2>
-
             <select
             formControlName="title"
             class="form-control"
@@ -173,8 +172,7 @@
             </div>
           </div>
 
-
-            <input type="text" name="paysEmission" formControlName="paysEmission"  placeholder="Pays d’émission" />
+            <input type="text" name="paysEmission" formControlName="paysEmission" placeholder="Pays d’émission" />
             <div *ngIf="transfer_step && beneficiaryDetails.controls['paysEmission'].errors">
               <div *ngIf="transferD['paysEmission'].errors['required']">
                 paysEmission is required
@@ -190,14 +188,14 @@
             </div>
 
 
-            <input type="text" name="expirationPieceIdentite" formControlName="expirationPieceIdentite"  placeholder="expirationPieceIdentite"/>
+            <input type="date" name="expirationPieceIdentite" formControlName="expirationPieceIdentite" (change)="formatDate($event)"  placeholder="expirationPieceIdentite"/>
             <div *ngIf="transfer_step && beneficiaryDetails.controls['expirationPieceIdentite'].errors">
               <div *ngIf="transferD['expirationPieceIdentite'].errors['required']">
                 expirationPieceIdentite is required
               </div>
             </div>
   
-            <input type="text" formControlName="validitePieceIdentite" placeholder="Validité de pièce d’identité" />
+            <input type="date" formControlName="validitePieceIdentite" (change)="formatDate($event)" placeholder="Validité de pièce d’identité" />
             <div
               *ngIf="transfer_step && beneficiaryDetails.controls['validitePieceIdentite'].errors"
             >
@@ -206,7 +204,7 @@
               </div>
             </div>
   
-            <input type="text" formControlName="datenaissance" placeholder="Date de naissance" />
+            <input type="date" formControlName="datenaissance" (change)="formatDate($event)" placeholder="Date de naissance" />
             <div
               *ngIf="transfer_step && beneficiaryDetails.controls['datenaissance'].errors"
             >
