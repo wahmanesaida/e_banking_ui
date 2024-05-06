@@ -15,6 +15,9 @@ import { UsersComponent } from './users/users.component';
 import { ProfileAdminComponent } from './profile-admin/profile-admin.component';
 import {HistoryComponent} from "./history/history.component";
 import {BlockingProcessComponent} from "../back-office/blocking-process/blocking-process.component";
+import {BarChartComponent} from "./bar-chart/bar-chart.component";
+import {PieChartComponent} from "./pie-chart/pie-chart.component";
+import {LineChartComponent} from "./line-chart/line-chart.component";
 
 
 const routes: Routes = [
@@ -52,7 +55,11 @@ const routes: Routes = [
       {path: 'users', component: UsersComponent},
      {path: 'history', component: HistoryComponent},
      {path: 'block-the-transfer', component: BlockingProcessComponent},
-   { path: 'profile-admin', component: ProfileAdminComponent },
+     {path: 'profile-admin', component: ProfileAdminComponent },
+      {path: 'bar-chart', component: BarChartComponent},
+     // {path: 'pie-chart', component: PieChartComponent},
+     // {path: 'line-chart', component: LineChartComponent},
+
 
 ]
 }

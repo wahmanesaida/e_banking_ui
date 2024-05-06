@@ -1,0 +1,29 @@
+.tt{
+  border-radius: 51px;
+  background: #ffffff;
+  box-shadow:  -28px 28px 56px #8f8f8f,
+  28px -28px 56px #ffffff;
+}
+
+
+
+.chart-container {
+  display: flex; /* Utilisation de Flexbox pour la mise en page */
+}
+
+.chart-wrapper {
+  flex: 1; /* Les graphiques occuperont le même espace */
+  padding: 10px; /* Espacement entre les graphiques */
+}
+
+/* Define a media query for smaller screen sizes */
+@media only screen and (max-width: 768px) {
+  .chart-container {
+    flex-direction: column; /* Change the flex direction to stack charts vertically */
+  }
+
+  .chart-wrapper {
+    flex: 1; /* Ensure each chart takes up the full width of the container */
+    padding: 10px; /* Keep the padding for spacing */
+  }
+}

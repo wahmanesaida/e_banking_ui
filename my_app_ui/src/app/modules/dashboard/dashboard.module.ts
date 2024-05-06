@@ -21,7 +21,10 @@ import { enGbLocale } from 'ngx-bootstrap/locale';
 import { UsersService } from './users/users.service';
 import { BackOfficeService } from '../back-office/back-office.service';
 import { ProfileAdminComponent } from './profile-admin/profile-admin.component';
-
+import {BarChartComponent} from "./bar-chart/bar-chart.component";
+import {PieChartComponent} from "./pie-chart/pie-chart.component";
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import {LineChartComponent} from "./line-chart/line-chart.component";
 defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the appropriate locale
 
 
@@ -31,13 +34,13 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     HeaderDashComponent,
     DashboardComponent,
     MenuCanalComponent,
-
     UsersComponent,
     ProfileAdminComponent,
-   
-
+    BarChartComponent,
+    PieChartComponent,
     HistoryComponent,
-    PaginationComponent
+    PaginationComponent,
+    LineChartComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +55,7 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     ReactiveFormsModule,
     AsyncPipe,
     BsDatepickerModule.forRoot(),
+    CanvasJSAngularChartsModule,
 
   ],
   exports: [
@@ -63,6 +67,11 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     ProfileAdminComponent,
     HistoryComponent,
     PaginationComponent,
+    BarChartComponent,
+    PieChartComponent,
+    LineChartComponent,
+
+
   ],
   providers:[ConsoleAgentService,
   HistoryService,
