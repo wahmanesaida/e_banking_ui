@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'side-bar',
@@ -14,6 +15,8 @@ export class NavBarDashComponent {
   isDropdownOpen1: boolean = false; // Separate property for the first dropdown
   isDropdownOpen2: boolean = false; // Separate property for the second dropdown
   isDropdownOpen3: boolean = false;
+  id:number;
+  constructor(private router: Router) {}
 
 
   @ViewChild('sidebar') sidebar: ElementRef<HTMLElement>;
@@ -39,7 +42,15 @@ export class NavBarDashComponent {
     }
   }
 
-  
+  logout() {
+    // Supprimer l'ID de l'utilisateur du stockage local
+    localStorage.removeItem('id');
+
+    // Rediriger l'utilisateur vers la page d'accueil avec un message
+    this.router.navigate(['/Home/home'], { queryParams: { logout: 'true' } });
+  }
+
+
 
 /*   toggleDropdown() {
     // Only toggle the dropdown if the sidebar is open
@@ -48,8 +59,8 @@ export class NavBarDashComponent {
     }
   } */
 
- 
-  
+
+
   toggleDropdown(dropdownNumber: number) {
     if (this.isSidebarOpen) {
       if (dropdownNumber === 1) {

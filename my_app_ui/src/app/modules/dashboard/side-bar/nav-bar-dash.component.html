@@ -30,13 +30,13 @@
       </a>
     </li>
     <li>
-      <a href="#">
+      <a routerLink="block-the-transfer">
         <i class="bx bx-block"></i>
         <span class="link_name">Bloquage du transfert</span>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a routerLink="block-the-transfer">
         <i class="bx bx-check"></i>
         <span class="link_name">Débloquage du transfert</span>
       </a>
@@ -146,7 +146,7 @@
           <div class="designation">Admin</div>
         </div>
       </div>
-      <i class="bx bx-log-out" id="log_out"></i>
+      <i class="bx bx-log-out" id="log_out" (click)="logout()"></i>
     </li>
 
   </ul>

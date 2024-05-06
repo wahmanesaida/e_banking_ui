@@ -15,4 +15,13 @@ export class HistoryService {
     const url=`${this.baseUrl}/AllTransactions`;
     return this.http.get(url);
   }
+
+  getAllBeneficiaries():Observable<any>{
+    const url=`${this.baseUrl}/AllBeneficiaries`
+    return this.http.get(url);
+  }
+
+  getAllUsers():Observable<any>{
+    return this.http.get(`${this.baseUrl}/getAllUsers`);
+  }
 }
