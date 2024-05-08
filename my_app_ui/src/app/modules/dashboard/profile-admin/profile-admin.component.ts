@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../users/users.service';
 import { NgToastService } from 'ng-angular-popup';
+import { UserDto } from '../../../models/UserDto';
 
 @Component({
   selector: 'app-profile-admin',
@@ -8,17 +9,22 @@ import { NgToastService } from 'ng-angular-popup';
   styleUrl: './profile-admin.component.css'
 })
 export class ProfileAdminComponent implements OnInit {
+  id: number;
+  userInfo:UserDto;
 
   constructor(private userService:UsersService, private toast: NgToastService) {
+    this.id = +localStorage.getItem('id');
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {   
+    this.getAdminProfile(); 
   }
 
-  getAdminProfile(id:number){
-    this.userService.getAdminProfile(id).subscribe(
+  getAdminProfile(){
+
+    this.userService.getAdminProfile(this.id).subscribe(
       (response) => {
-        console.log(response);
+          this.userInfo = response;
       },
       (error: any) => {
         this.toast.error({

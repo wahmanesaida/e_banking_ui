@@ -45,7 +45,8 @@ export class NavBarDashComponent {
   logout() {
     // Supprimer l'ID de l'utilisateur du stockage local
     localStorage.removeItem('id');
-
+    localStorage.removeItem('JWT');
+    localStorage.removeItem('role');
     // Rediriger l'utilisateur vers la page d'accueil avec un message
     this.router.navigate(['/Home/home'], { queryParams: { logout: 'true' } });
   }
