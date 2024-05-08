@@ -219,7 +219,21 @@
               class="form-control"
             >
               <option value="" disabled selected>Profession</option>
-              <option value="ingénieur">ingénieur</option>
+              <option value="INGENIEUR">INGENIEUR</option>
+              <option value="MEDECIN">MEDECIN</option>
+              <option value="AVOCAT">AVOCAT</option>
+              <option value="PROFESSEUR">PROFESSEUR</option>
+              <option value="ARTISTE">ARTISTE</option>
+              <option value="POLICIER">POLICIER</option>
+              <option value="POMPIER">POMPIER</option>
+              <option value="INFIRMIER">INFIRMIER</option>
+              <option value="AGRICULTEUR">AGRICULTEUR</option>
+              <option value="CHEF">CHEF</option>
+              <option value="ARCHITECTE">ARCHITECTE</option>
+              <option value="VETERINAIRE">VETERINAIRE</option>
+              <option value="PHARMACIEN">PHARMACIEN</option>
+              <option value="JOURNALISTE">JOURNALISTE</option>
+              <option value="PROGRAMMEUR">PROGRAMMEUR</option>
             </select>
             <div *ngIf="transfer_step && beneficiaryDetails.controls['profession'].errors">
               <div *ngIf="transferD['profession'].errors['required']">

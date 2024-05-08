@@ -114,12 +114,29 @@
                 <option value="" disabled selected>Role</option>
                 <option value="USER">USER</option>
                 <option value="AGENT">AGENT</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="SYSTEM_MANAGER">SYSTEM_MANAGER</option>
               </select>
                 <label >Profession</label>
                 <select
                 type="text" id="profession" placeholder="Profession" [(ngModel)]="selectedUser && selectedUser.profession"   class="form-input" [disabled]="isReadOnly" required>
                 <option value="" disabled selected>Profession</option>
-                <option value="ingénieur">ingénieur</option>
+                <option value="INGENIEUR">INGENIEUR</option>
+                <option value="MEDECIN">MEDECIN</option>
+                <option value="AVOCAT">AVOCAT</option>
+                <option value="PROFESSEUR">PROFESSEUR</option>
+                <option value="ARTISTE">ARTISTE</option>
+                <option value="POLICIER">POLICIER</option>
+                <option value="POMPIER">POMPIER</option>
+                <option value="INFIRMIER">INFIRMIER</option>
+                <option value="AGRICULTEUR">AGRICULTEUR</option>
+                <option value="CHEF">CHEF</option>
+                <option value="ARCHITECTE">ARCHITECTE</option>
+                <option value="VETERINAIRE">VETERINAIRE</option>
+                <option value="PHARMACIEN">PHARMACIEN</option>
+                <option value="JOURNALISTE">JOURNALISTE</option>
+                <option value="PROGRAMMEUR">PROGRAMMEUR</option>
+                <option value="AUTRES">AUTRES</option>
               </select>
               </div>
               <div class="form-group">
