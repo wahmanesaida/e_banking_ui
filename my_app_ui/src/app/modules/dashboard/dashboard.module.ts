@@ -56,7 +56,6 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     AsyncPipe,
     BsDatepickerModule.forRoot(),
     CanvasJSAngularChartsModule,
-
   ],
   exports: [
     NavBarDashComponent,
@@ -69,9 +68,7 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     PaginationComponent,
     BarChartComponent,
     PieChartComponent,
-    LineChartComponent,
-
-
+    LineChartComponent
   ],
   providers:[ConsoleAgentService,
   HistoryService,
