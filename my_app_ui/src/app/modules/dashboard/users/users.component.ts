@@ -95,7 +95,6 @@ export class UsersComponent implements OnInit {
   searchUser(id: number) {
     this.userService.searchUser(id).subscribe(
       (response) => {
-        console.log(response);
         this.users = [response];
       },
       (error: any) => {
