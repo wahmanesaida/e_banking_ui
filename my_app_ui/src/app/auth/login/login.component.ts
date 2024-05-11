@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       })
   }
 
-  
+
 
   login(){
     //console.log(this.loginForm.value);
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
   }
 
   goToHome() {
-    this.router.navigateByUrl('/Auth/home'); // Navigate to the home page
+    this.router.navigateByUrl('/Home/home'); // Navigate to the home page
   }
 
 
