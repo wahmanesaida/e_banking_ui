@@ -1,4 +1,4 @@
-
+<ng-toast></ng-toast>
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -80,69 +80,114 @@
         <div class="modal-content">
           <span class="close-modal-btn"  (click)="closeModal()">&times;</span>
           <h2 class="modal-title">{{ modalState === 'add' ? 'Add User' : modalState === 'edit' ? 'Edit User' : 'View User' }}</h2>
-
+          <ng-toast></ng-toast>
             <div class="form-group">   
               <label *ngIf="modalState === 'view'">Id</label>
-              <input *ngIf="modalState === 'view'" type="number" id="id" placeholder="Id" [(ngModel)]="selectedUser && selectedUser.id"class="form-input" [readonly]="isReadOnly">
+              <input *ngIf="modalState === 'view'" type="number" id="id" placeholder="Id" [(ngModel)]="selectedUser && selectedUser.id"class="form-input" [readonly]="isReadOnly" required>
               <label for="">Name</label>
 
-              <input type="text" id="name" placeholder="Name" [(ngModel)]="selectedUser && selectedUser.name"   class="form-input" [readonly]="isReadOnly">
+              <input type="text" id="name" placeholder="Name" [(ngModel)]="selectedUser && selectedUser.name"   class="form-input" [readonly]="isReadOnly" required>
             </div>
             <div class="form-group">
                 <label >Title</label>
-                <input type="text" id="title" placeholder="Title" [(ngModel)]="selectedUser && selectedUser.title"  class="form-input" [readonly]="isReadOnly">
+                <select
+                type="text" id="title" placeholder="Title" [(ngModel)]="selectedUser && selectedUser.title"  class="form-input" [disabled]="isReadOnly" required
+              >
+                <option value="" disabled selected>Titre</option>
+                <option value="Mme">Mme</option>
+                <option value="M">M</option>
+              </select>
                 <label >Ville</label>
-                <input type="text" id="ville" placeholder="Ville" [(ngModel)]="selectedUser && selectedUser.ville"  class="form-input" [readonly]="isReadOnly">
+                <select
+                type="text" id="ville" placeholder="Ville" [(ngModel)]="selectedUser && selectedUser.ville"  class="form-input" [disabled]="isReadOnly" required>
+                   <option value="" disabled selected>Ville</option>
+                   <option value="safi">safi</option>
+                   <option value="Casablanca">Casablanca</option>
+                   <option value="Tanger">Tanger</option>
+               </select>
               </div>
               <div class="form-group">
                 <label >Role</label>
-                <input type="text" id="role" placeholder="Role" [(ngModel)]="selectedUser && selectedUser.role"   class="form-input" [readonly]="isReadOnly">
+                <select
+                type="text" id="role" placeholder="Role" [(ngModel)]="selectedUser && selectedUser.role"   class="form-input" required [disabled]="isReadOnly"
+              >
+                <option value="" disabled selected>Role</option>
+                <option value="USER">USER</option>
+                <option value="AGENT">AGENT</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="SYSTEM_MANAGER">SYSTEM_MANAGER</option>
+              </select>
                 <label >Profession</label>
-                <input type="text" id="profession" placeholder="Profession" [(ngModel)]="selectedUser && selectedUser.profession"   class="form-input" [readonly]="isReadOnly">
+                <select
+                type="text" id="profession" placeholder="Profession" [(ngModel)]="selectedUser && selectedUser.profession"   class="form-input" [disabled]="isReadOnly" required>
+                <option value="" disabled selected>Profession</option>
+                <option value="INGENIEUR">INGENIEUR</option>
+                <option value="MEDECIN">MEDECIN</option>
+                <option value="AVOCAT">AVOCAT</option>
+                <option value="PROFESSEUR">PROFESSEUR</option>
+                <option value="ARTISTE">ARTISTE</option>
+                <option value="POLICIER">POLICIER</option>
+                <option value="POMPIER">POMPIER</option>
+                <option value="INFIRMIER">INFIRMIER</option>
+                <option value="AGRICULTEUR">AGRICULTEUR</option>
+                <option value="CHEF">CHEF</option>
+                <option value="ARCHITECTE">ARCHITECTE</option>
+                <option value="VETERINAIRE">VETERINAIRE</option>
+                <option value="PHARMACIEN">PHARMACIEN</option>
+                <option value="JOURNALISTE">JOURNALISTE</option>
+                <option value="PROGRAMMEUR">PROGRAMMEUR</option>
+                <option value="AUTRES">AUTRES</option>
+              </select>
               </div>
               <div class="form-group">
                 <label >Piece d'identité</label>
-                <input type="text" id="pieceIdentite" placeholder="Piece d'identité" [(ngModel)]="selectedUser && selectedUser.pieceIdentite"   class="form-input" [readonly]="isReadOnly">
+                <select
+                type="text" id="pieceIdentite" placeholder="Piece d'identité" [(ngModel)]="selectedUser && selectedUser.pieceIdentite"   class="form-input" [disabled]="isReadOnly" required
+              >
+                <option value="" disabled selected>Type de pièce d'identité</option>
+                <option value="carteNational">carteNational</option>
+                <option value="passport">passport</option>
+              </select>
                 <label >Date de Naissance</label>
-                <input type="date" id="datenaissance" class="form-input" placeholder="Date de Naissance" [(ngModel)]="selectedUser && selectedUser.datenaissance"  (change)="formatDate($event)" [readonly]="isReadOnly">
+                <input type="date" id="datenaissance" class="form-input" placeholder="Date de Naissance" [(ngModel)]="selectedUser && selectedUser.datenaissance"  (change)="formatDate($event)" [readonly]="isReadOnly" required>
               </div>
               <div class="form-group">
                 <label >Pays d'émission</label>
-                <input type="text" id="paysEmission" placeholder="Pays d'émission" [(ngModel)]="selectedUser && selectedUser.paysEmission"   class="form-input" [readonly]="isReadOnly">
+                <input type="text" id="paysEmission" placeholder="Pays d'émission" [(ngModel)]="selectedUser && selectedUser.paysEmission"   class="form-input" [readonly]="isReadOnly" required>
                 <label >Pays nationale</label>
-                <input type="text" id="payeNationale" placeholder="Pays nationale" [(ngModel)]="selectedUser && selectedUser.payeNationale"   class="form-input" [readonly]="isReadOnly">
+                <input type="text" id="payeNationale" placeholder="Pays nationale" [(ngModel)]="selectedUser && selectedUser.payeNationale"   class="form-input" [readonly]="isReadOnly" required>
               </div>
               <div class="form-group">
                 <label >Numero de piece d'identité</label>
-                <input type="text" id="numeroPieceIdentite" placeholder="Numero de piece d'identité" [(ngModel)]="selectedUser && selectedUser.numeroPieceIdentite" class="form-input" [readonly]="isReadOnly">
+                <input type="text" id="numeroPieceIdentite" placeholder="Numero de piece d'identité" [(ngModel)]="selectedUser && selectedUser.numeroPieceIdentite" class="form-input" [readonly]="isReadOnly" required>
 
                 <label for="">GSM</label>
-                <input type="text" id="gsm" placeholder="GSM" [(ngModel)]="selectedUser && selectedUser.gsm"   class="form-input" [readonly]="isReadOnly">
+                <input type="text" id="gsm" placeholder="GSM" [(ngModel)]="selectedUser && selectedUser.gsm"   class="form-input" [readonly]="isReadOnly" required>
 
               </div>
               <div class="form-group">
                 <label >Username</label>
-                <input type="email" id="username" placeholder="Username" [(ngModel)]="selectedUser && selectedUser.username"   class="form-input" [readonly]="isReadOnly">
+                <input type="email" id="username" placeholder="Username" [(ngModel)]="selectedUser && selectedUser.username"   class="form-input" [readonly]="isReadOnly" required>
 
                 <label *ngIf="modalState === 'view' || modalState === 'edit'">Create Time</label>
-                <input *ngIf="modalState === 'view' || modalState === 'edit'" type="text" id="createTime" class="form-input" placeholder="Create Time" [value]="selectedUser && selectedUser.createTime | date:'yyyy-MM-ddTHH:mm:ss'" readonly>
+                <input *ngIf="modalState === 'view' || modalState === 'edit'" type="text" id="createTime" class="form-input" placeholder="Create Time" [value]="selectedUser && selectedUser.createTime | date:'yyyy-MM-ddTHH:mm:ss'" readonly required>
 
               </div>
               <div class="form-group">
                 <label >Validité de piece d'identité</label>
-                <input type="date" id="validitePieceIdentite" class="form-input" placeholder="Validité de piece d'identité" [(ngModel)]="selectedUser && selectedUser.validitePieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly">
+                <input type="date" id="validitePieceIdentite" class="form-input" placeholder="Validité de piece d'identité" [(ngModel)]="selectedUser && selectedUser.validitePieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly" required>
                 <label >Expiration de piece d'identité</label>
-                <input type="date" id="expirationPieceIdentite" class="form-input" placeholder="Expiration de piece d'identité" [(ngModel)]="selectedUser && selectedUser.expirationPieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly">
+                <input type="date" id="expirationPieceIdentite" class="form-input" placeholder="Expiration de piece d'identité" [(ngModel)]="selectedUser && selectedUser.expirationPieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly" required>
               </div>
               <div class="form-group">
                 <label >Account amount</label>
-                <input type="text" id="account_amount" placeholder="Account amount" [(ngModel)]="selectedUser && selectedUser.account_amount"   class="form-input" [readonly]="isReadOnly">
+                <input type="text" id="account_amount" placeholder="Account amount" [(ngModel)]="selectedUser && selectedUser.account_amount"   class="form-input" [readonly]="isReadOnly" required>
                 <label *ngIf="modalState === 'add'" type="text" for="">Password</label>
-                <input *ngIf="modalState === 'add'" type="text" id="password" placeholder="Password" [(ngModel)]="selectedUser && selectedUser.password" class="form-input" [readonly]="isReadOnly">
+                <input *ngIf="modalState === 'add'" type="text" id="password" placeholder="Password" [(ngModel)]="selectedUser && selectedUser.password" class="form-input" [readonly]="isReadOnly" required>
               </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" (click)="saveUser()">Save</button>
+              <button *ngIf="showSave" type="button" class="btn btn-primary" (click)="saveUser()">Save</button>
               <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
             </div>
 

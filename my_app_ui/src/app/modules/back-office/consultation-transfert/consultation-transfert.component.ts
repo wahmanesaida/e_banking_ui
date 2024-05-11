@@ -70,25 +70,29 @@ export class ConsultationTransfertComponent implements OnInit {
   searchTransfers(searchDto: MulticriteriaSearchDto) {
     if (!searchDto) {
       this.toast.error({
-        detail: 'You have entered a wrong criteria',
-        summary: 'Error',
+        detail: 'Error',
+        summary: 'You have entered a wrong criteria',
         duration: 5000,
         position: 'topCenter',
       });
       return; // Exit the method early if searchDto is null
     }
-
-  
     this.backOffService.searchTransfertBackOffice(searchDto).subscribe(
-
       (response: any) => {
+        if (response.length === 0) {
+          this.toast.error({
+            detail: 'Error',
+            summary: 'no result found',
+            duration: 5000,
+            position: 'topCenter',
+          });
+        }
         this.transfers = response;
-        console.log(this.transfers);
       },
       (error: any) => {
         this.toast.error({
-          detail: 'You have entered a wrong criteria',
-          summary: error.error,
+          detail: 'Error',
+          summary: 'You have entered a wrong criteria',
           duration: 5000,
           position: 'topCenter',
         });

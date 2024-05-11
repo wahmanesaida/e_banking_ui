@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import {User} from "../../models/User.model";
 import {jwtDecode} from "jwt-decode";
+import { AuthGuard } from '../../auth.guard';
 
 
 @Component({
@@ -35,20 +36,28 @@ export class LoginComponent implements OnInit {
       })
   }
 
-  login(){
+  
 
+  login(){
     //console.log(this.loginForm.value);
     this.service.login(this.loginForm.value).subscribe(
       (response) => {
       //console.log(response);
       if (response.token) {
-        alert(response.token);
+       /*  alert(response.token); */
         const jwtToken = response.token;
         const idd=response.id;
+        const role=response.role;
         localStorage.setItem('JWT', jwtToken);
-        localStorage.setItem('id', idd)
+        localStorage.setItem('id', idd);
+        localStorage.setItem('role', role)
         console.log("iddddddddd  " + localStorage.getItem('id'));
-        this.router.navigateByUrl('/Auth/home');
+        const roleUser =  localStorage.getItem('role');
+        if (roleUser && (roleUser === 'AGENT' || roleUser === 'ADMIN' || roleUser === 'SYSTEM_MANAGER')) {
+          this.router.navigateByUrl('/Dashboard'); // Redirect to dashboard if role is AGENT, ADMIN, or SYSTEM_MANAGER
+        } else {
+          this.router.navigate(['/Home']);
+        }
       }
     },
     (error) => {

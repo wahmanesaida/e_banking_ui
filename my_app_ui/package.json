@@ -22,6 +22,9 @@
     "@canvasjs/angular-charts": "^1.2.0",
     "@fortawesome/angular-fontawesome": "^0.14.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+
+    "@types/chart.js": "^2.9.41",
+
     "chart.js": "^4.4.2",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",

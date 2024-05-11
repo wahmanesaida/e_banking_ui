@@ -20,7 +20,6 @@ export class GabBoaComponent implements OnInit {
   transferType: TypeOftransfer;
   emailBeneficiary: string;
   transferPaid: boolean = false;
-
   errorMessage: string;
 
   transferDetails!: FormGroup;
@@ -214,7 +213,7 @@ export class GabBoaComponent implements OnInit {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.href = url;
-        a.download = 'recu_extourne.pdf';
+        a.download = 'recu_payé.pdf';
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
