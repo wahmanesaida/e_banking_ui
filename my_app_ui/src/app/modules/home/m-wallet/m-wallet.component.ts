@@ -13,6 +13,7 @@ import {map, Observable} from "rxjs";
 import {MWalletService} from "./m-wallet.service";
 import { pipe } from 'rxjs';
 import {TransferRequest} from "../../../models/TransferRequest.model";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -39,7 +40,7 @@ export class MWalletComponent implements OnInit{
   errorPhone: string='';
   transferMessage: string;
 
-  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService, private dialog: MatDialog, private Mwallet_service: MWalletService) { }
+  constructor(private formBuilder: FormBuilder, private transfer_service: ConsoleAgentService, private toastService: NgToastService, private dialog: MatDialog, private Mwallet_service: MWalletService, private router: Router) { }
   ngOnInit(): void {
     this.beneficiarylDetails = this.formBuilder.group({
       typetransfer: ['', Validators.required],
@@ -407,6 +408,11 @@ export class MWalletComponent implements OnInit{
         this.otpValidated = false;
       }
     );
+  }
+
+
+  goToHome() {
+    this.router.navigateByUrl('/Home/home');// Navigate to the home page
   }
 
 

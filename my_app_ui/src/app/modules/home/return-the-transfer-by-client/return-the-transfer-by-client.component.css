@@ -230,3 +230,15 @@ select {
   padding: 10px; /* Add padding */
   font-size: 16px; /* Change font size */
 }
+
+.back-home-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.back-home-icon svg {
+  fill: #333; /* Icon color */
+}
