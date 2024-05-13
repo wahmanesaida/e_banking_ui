@@ -19,9 +19,9 @@ export class SignupComponent implements OnInit {
   errorMessage = '';
 
 
-  
+
   constructor(
-    private service: AuthService, 
+    private service: AuthService,
     private fb: FormBuilder,
     private router: Router,
     private toast: NgToastService) {
@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
     this.service.checkCredentialsExist(this.signupForm.value).subscribe(
       (response) => {
         this.signup();
-        //make a toast here 
+        //make a toast here
       },
       (error) => {
         // User credentials already exist, show error modal
@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit {
       }
     );
   }
-  
+
   signup() {
     this.service.checkCredentialsExist(this.signupForm.value).subscribe(
       () => {
@@ -92,7 +92,7 @@ export class SignupComponent implements OnInit {
       }
     );
   }
-  
+
 
   togglePasswordVisibility() {
     this.showPassword1 = !this.showPassword1;
@@ -116,9 +116,9 @@ export class SignupComponent implements OnInit {
 
 
   goToHome() {
-    this.router.navigateByUrl('/Auth/home');// Navigate to the home page
+    this.router.navigateByUrl('/Home/home');// Navigate to the home page
   }
-  
+
 
 
 

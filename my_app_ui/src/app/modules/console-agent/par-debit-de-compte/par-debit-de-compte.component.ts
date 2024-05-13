@@ -87,7 +87,7 @@ export class ParDebitDeCompteComponent implements OnInit {
     this.transferDetails = this.formBuilder.group({
       amount: ['', Validators.required],
       //saida: ['', Validators.required],
-      usernameSelected: ['', Validators.required],
+      usernameSelected: [''],
       idbene: ['', Validators.required],
       name: ['', Validators.required],
       first_name: ['', Validators.required],
@@ -228,6 +228,9 @@ export class ParDebitDeCompteComponent implements OnInit {
         (agent: User)=> {
           if(agent != null) {
             this.patchFormWithUserData(agent)
+            //last modification
+            this.clientid=agent.id;
+            this.beneficiaries$=this.transfer_service.getBenficiariesByClientId(this.clientid);
             this.toastService.info({
               detail: "SUCCES",
               summary: "client found successfuly",
@@ -507,6 +510,7 @@ export class ParDebitDeCompteComponent implements OnInit {
           (response: any) => {
 
             console.log('Beneficiary added successfully');
+            this.PatchFormWithBeneData(response)
             this.toastService.success({
               detail : "Beneficiary added successfully with id : " + response.id,
               summary: "",

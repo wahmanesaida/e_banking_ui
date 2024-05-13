@@ -13,6 +13,7 @@ import {map, Observable} from "rxjs";
 import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client.service";
 import {TransferPaymentDto} from "../../console-agent/servir-transfert/models/TransferPaymentDto";
 import {TypeOftransfer} from "../../../models/TypeOftransfer.enum";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-return-the-transfer-by-client',
@@ -53,7 +54,7 @@ export class ReturnTheTransferByClientComponent implements OnInit{
   motifForm: FormGroup;
   motifs = Motif;
 
-  constructor(private formBuilder: FormBuilder, private backOfficeService: BackOfficeService, private toastService: NgToastService, private dialog: MatDialog, private transfer_service: ConsoleAgentService, private returnTransferService : ReturnTheTransferByClientService) {
+  constructor(private formBuilder: FormBuilder, private backOfficeService: BackOfficeService, private toastService: NgToastService, private dialog: MatDialog, private transfer_service: ConsoleAgentService, private returnTransferService : ReturnTheTransferByClientService, private router: Router) {
 
   }
 
@@ -378,5 +379,9 @@ export class ReturnTheTransferByClientComponent implements OnInit{
 
 
   protected readonly Object = Object;
+
+  goToHome() {
+    this.router.navigateByUrl('/Home/home');// Navigate to the home page
+  }
 
 }
