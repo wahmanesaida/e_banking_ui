@@ -1,9 +1,23 @@
 .back {
-  background-color: #F0F3FF;
+  background-color: #fff;
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 16px;
   font-weight: 600;
   font-family: 'IBM Plex Sans', sans-serif;
   color: #3C0753;
@@ -57,7 +71,7 @@ h1 {
   width: 240px;
   height: 56px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   color: var(--line_color);
   letter-spacing: 2px;
@@ -284,9 +298,7 @@ h1 {
 
 .containeras {
   width: 100%;
-  height: 100px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -311,7 +323,7 @@ h1 {
   border: 0;
   border-bottom: 2px solid #AD88C6;
   outline: 0;
-  font-size: 1.3rem;
+  font-size: 11px;
   color: black;
   padding: 7px 0;
   background: transparent;
@@ -322,7 +334,7 @@ h1 {
   }
 
   &:placeholder-shown ~ .form__label {
-    font-size: 1.3rem;
+    font-size: 11px;
     cursor: text;
     top: 20px;
   }
@@ -333,7 +345,7 @@ h1 {
   top: 0;
   display: block;
   transition: 0.2s;
-  font-size: 1rem;
+  font-size: 10px;
   color: #AD88C6;
 }
 
@@ -343,7 +355,7 @@ h1 {
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 11px;
     color: #7469B6;
     font-weight: 700;
   }
@@ -370,4 +382,51 @@ body {
   min-height: 100vh;
   font-size: 1.5rem;
   background-color: #222222;
+}
+
+
+.container {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+
+
+
+/* CSS */
+.button-1 {
+  background-color: #7469B6;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #AD88C6;
 }
