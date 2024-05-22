@@ -21,6 +21,8 @@ import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client/
 import { CoreRoutingModule } from '../../core/core-routing.module';
 import {ConsoleAgentService} from "../console-agent/console-agent.service";
 import {BackOfficeService} from "../back-office/back-office.service";
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UsersService } from '../dashboard/users/users.service';
 
 
 
@@ -32,7 +34,8 @@ import {BackOfficeService} from "../back-office/back-office.service";
     OurServicesComponent,
     MWalletComponent,
     ReturnTheTransferByClientComponent,
-    HomeComponent],
+    HomeComponent,
+    UserProfileComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
@@ -51,7 +54,8 @@ import {BackOfficeService} from "../back-office/back-office.service";
     OurServicesComponent,
     HomeComponent,
     ReturnTheTransferByClientComponent,
-    MWalletComponent
+    MWalletComponent,
+    UserProfileComponent
 
   ],
   providers: [
@@ -60,6 +64,7 @@ import {BackOfficeService} from "../back-office/back-office.service";
     ConsoleAgentService,
     NgToastService,
     BackOfficeService,
+    UsersService
 
   ]
 })

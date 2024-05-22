@@ -1,0 +1,38 @@
+<div class="container rounded bg-white mt-5 mb-5">
+    <div *ngIf="userInfo" class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">{{userInfo.title}}</span><span class="text-black-50" >{{userInfo.name}}</span><span></span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 style="text-transform: uppercase;" class="text-right">Profile Details</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" [(ngModel)]="userInfo.name" readonly></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Id</label><input type="text" class="form-control" placeholder="Id"  [(ngModel)]="userInfo.id" readonly></div>
+                    <div class="col-md-12"><label class="labels">Title</label><input type="text" class="form-control" placeholder="Title" [(ngModel)]="userInfo.title" readonly></div>
+                    <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="Username" [(ngModel)]="userInfo.username" readonly></div>
+                    <div class="col-md-12"><label class="labels">Password</label><input type="text" class="form-control" placeholder="Password"  [(ngModel)]="userInfo.password" readonly></div>
+                    <div class="col-md-12"><label class="labels">Create Time</label><input type="text" class="form-control" placeholder="Create Time"  [(ngModel)]="userInfo.createTime" readonly></div>
+                    <div class="col-md-12"><label class="labels">Role</label><input type="text" class="form-control" placeholder="Role" [(ngModel)]="userInfo.role" readonly></div>
+                    <div class="col-md-12"><label class="labels">Piece d'identité</label><input type="text" class="form-control" placeholder="Piece d'identité" [(ngModel)]="userInfo.pieceIdentite" readonly></div>
+                    <div class="col-md-12"><label class="labels">Pays d'émission</label><input type="text" class="form-control" placeholder="Pays d'émission"  [(ngModel)]="userInfo.paysEmission" readonly></div>
+                    <div class="col-md-12"><label class="labels">Numero de piece d'identité</label><input type="text" class="form-control" placeholder="Numero de piece d'identité" [(ngModel)]="userInfo.numeroPieceIdentite" readonly></div>
+                    <div class="col-md-12"><label class="labels">Expiration de piece d'identité</label><input type="text" class="form-control" placeholder="Expiration de piece d'identité" [(ngModel)]="userInfo.expirationPieceIdentite" readonly></div>
+                    <div class="col-md-12"><label class="labels">Validité de piece d'identité</label><input type="text" class="form-control" placeholder="Validité de piece d'identité" [(ngModel)]="userInfo.validitePieceIdentite" readonly></div>
+                    <div class="col-md-12"><label class="labels">Date de Naissance</label><input type="text" class="form-control" placeholder="Date de Naissance" [(ngModel)]="userInfo.datenaissance" readonly></div>
+                    <div class="col-md-12"><label class="labels">Profession</label><input type="text" class="form-control" placeholder="Profession" [(ngModel)]="userInfo.profession" readonly></div>
+                    <div class="col-md-12"><label class="labels">Pays Nationale</label><input type="text" class="form-control" placeholder="Pays Nationale" [(ngModel)]="userInfo.payeNationale" readonly></div>
+                    <div class="col-md-12"><label class="labels">Ville</label><input type="text" class="form-control" placeholder="Ville" [(ngModel)]="userInfo.ville" readonly></div>
+                    <div class="col-md-12"><label class="labels">GSM</label><input type="text" class="form-control" placeholder="GSM" [(ngModel)]="userInfo.gsm" readonly></div>
+                    <div class="col-md-12"><label class="labels">Account amount</label><input type="text" class="form-control" placeholder="Account amount" [(ngModel)]="userInfo.account_amount" readonly></div>
+                </div>
+               <!--  <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Edit Profile</button></div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
