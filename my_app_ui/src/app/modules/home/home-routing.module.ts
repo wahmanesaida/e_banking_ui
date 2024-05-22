@@ -7,6 +7,7 @@ import {MWalletComponent} from "./m-wallet/m-wallet.component";
 import {
   ReturnTheTransferByClientComponent
 } from "./return-the-transfer-by-client/return-the-transfer-by-client.component";
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 
@@ -17,8 +18,7 @@ const routes: Routes = [
   {path: 'services', component: OurServicesComponent},
   {path: 'wallet', component: MWalletComponent},
   {path: 'return-the-transfer', component: ReturnTheTransferByClientComponent},
-
-
+  {path: 'user-profile', component: UserProfileComponent},
 ];
 
 @NgModule({
