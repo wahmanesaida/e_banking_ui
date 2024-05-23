@@ -9,8 +9,8 @@
 
 .not-found-image {
     max-width: 100%;
-    height: auto; 
-    max-height: 90vh; 
+    height: auto;
+    max-height: 90vh;
 }
 
 .not-found-text {
@@ -20,5 +20,18 @@
     -moz-osx-font-smoothing: auto;
     font-weight: 700;
     color: #555;
-    max-width: 90%; 
+    max-width: 90%;
 }
+
+.back-home-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.back-home-icon svg {
+  fill: #333; /* Icon color */
+}
+

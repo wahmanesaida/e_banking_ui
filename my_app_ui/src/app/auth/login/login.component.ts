@@ -51,13 +51,17 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('JWT', jwtToken);
         localStorage.setItem('id', idd);
         localStorage.setItem('role', role)
+        localStorage.setItem('isLoggedIn', 'true');
+
         console.log("iddddddddd  " + localStorage.getItem('id'));
         const roleUser =  localStorage.getItem('role');
-        if (roleUser && (roleUser === 'AGENT' || roleUser === 'ADMIN' || roleUser === 'SYSTEM_MANAGER')) {
-          this.router.navigateByUrl('/Dashboard'); // Redirect to dashboard if role is AGENT, ADMIN, or SYSTEM_MANAGER
+        if (roleUser && (roleUser === 'AGENT' || roleUser === 'ADMIN' || roleUser === 'SYSTEM_MANAGER' || roleUser === 'BACKOffice' || roleUser === 'GAB')) {
+          this.router.navigateByUrl('/Dashboard/dashboard/profile-admin'); // Redirect to dashboard if role is AGENT, ADMIN, or SYSTEM_MANAGER
         } else {
           this.router.navigate(['/Home']);
         }
+        //this.service.isLoggedInVar = true;
+        console.log("vérifier la connexion: doit etre true" + this.service.isLoggedInVar)
       }
     },
     (error) => {

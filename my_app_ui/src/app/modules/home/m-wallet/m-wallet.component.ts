@@ -62,7 +62,7 @@ export class MWalletComponent implements OnInit{
     this.Otp = this.formBuilder.group({
       otp: ['', Validators.required]
     });
-    console.log(Number(localStorage.getItem("id")));
+    //console.log(Number(localStorage.getItem("id")));
 
 
     this.beneficiaries$=this.Mwallet_service.getBenficiariesByClientId(Number(localStorage.getItem("id")));

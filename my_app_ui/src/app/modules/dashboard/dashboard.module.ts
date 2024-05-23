@@ -25,6 +25,7 @@ import {BarChartComponent} from "./bar-chart/bar-chart.component";
 import {PieChartComponent} from "./pie-chart/pie-chart.component";
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import {LineChartComponent} from "./line-chart/line-chart.component";
+import {AuthenticationGuard} from "../../authentication.guard";
 defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the appropriate locale
 
 
@@ -75,6 +76,7 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
   ConsoleAgentService,
   UsersService,
   BackOfficeService,
+    AuthenticationGuard,
   NgToastService]
 
 })
