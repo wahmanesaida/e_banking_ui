@@ -69,7 +69,7 @@ import { UsersService } from '../dashboard/users/users.service';
     NgToastService,
     BackOfficeService,
 
-    AuthenticationGuard
+    AuthenticationGuard,
 
     UsersService
 
