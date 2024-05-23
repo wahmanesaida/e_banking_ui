@@ -71,9 +71,12 @@ import { BeneficiairesService } from './gestion-beneficiaires/beneficiaires.serv
     ConsoleAgentService,
     NgToastService,
     BackOfficeService,
+
+
     AuthenticationGuard,
     UsersService,
     BeneficiairesService
+
 
 
   ]
