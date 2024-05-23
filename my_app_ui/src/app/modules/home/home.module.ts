@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
-import { AuthModule } from '../../auth/auth.module';
 import { CoreModule } from '../../core/core.module';
 import { AboutComponent } from './pages/about/about.component';
 import { FeatureComponent } from './pages/feature/feature.component';
@@ -26,6 +25,8 @@ import {AuthenticationGuard} from "../../authentication.guard";
 
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UsersService } from '../dashboard/users/users.service';
+import { GestionBeneficiairesComponent } from './gestion-beneficiaires/gestion-beneficiaires.component';
+import { BeneficiairesService } from './gestion-beneficiaires/beneficiaires.service';
 
 
 
@@ -39,6 +40,7 @@ import { UsersService } from '../dashboard/users/users.service';
     MWalletComponent,
     ReturnTheTransferByClientComponent,
     HomeComponent,
+    GestionBeneficiairesComponent,
     UserProfileComponent],
   imports: [
     CommonModule,
@@ -59,7 +61,8 @@ import { UsersService } from '../dashboard/users/users.service';
     HomeComponent,
     ReturnTheTransferByClientComponent,
     MWalletComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    GestionBeneficiairesComponent
 
   ],
   providers: [
@@ -69,9 +72,11 @@ import { UsersService } from '../dashboard/users/users.service';
     NgToastService,
     BackOfficeService,
 
-    AuthenticationGuard,
 
-    UsersService
+    AuthenticationGuard,
+    UsersService,
+    BeneficiairesService
+
 
 
   ]

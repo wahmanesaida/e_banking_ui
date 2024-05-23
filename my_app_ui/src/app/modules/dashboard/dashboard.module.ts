@@ -71,12 +71,13 @@ defineLocale('en-gb', enGbLocale); // Set the locale to 'en-gb' or choose the ap
     PieChartComponent,
     LineChartComponent
   ],
-  providers:[ConsoleAgentService,
+  providers:[
+  ConsoleAgentService,
   HistoryService,
   ConsoleAgentService,
   UsersService,
   BackOfficeService,
-    AuthenticationGuard,
+  AuthenticationGuard,
   NgToastService]
 
 })

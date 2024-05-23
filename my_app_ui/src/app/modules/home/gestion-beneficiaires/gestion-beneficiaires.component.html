@@ -1,0 +1,183 @@
+<ng-toast></ng-toast>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2><b>Liste De Bénéficiaires</b></h2></div>
+                    <div class="col-sm-4">
+                      <button (click)="openModal('add', null)" class="custom-btn">Ajouter</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>FirstName</th>
+                        <th>Lastname</th>
+                        <th>Account amount</th>
+                        <th>GSM</th>
+                        <th>Profession</th>
+                        <th>Ville</th>
+                        <th>Username</th>
+                        <th>Date de Naissance</th>
+                        <th>Pays d'émission</th>
+                        <th>Pays nationale</th>
+                        <th>Numero de piece d'identité</th>
+                        <th>Piece d'identité</th>
+                        <th>Validité de piece d'identité</th>
+                        <th>Expiration de piece d'identité</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of getDisplayedItems()">
+                        <td>{{user.id}}</td>
+                        <td>{{user.title}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastname}}</td>
+                        <td>{{user.account_amount}}</td>
+                        <td>{{user.gsm}}</td>
+                        <td>{{user.profession}}</td>
+                        <td>{{user.ville}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.datenaissance}}</td>
+                        <td>{{user.paysEmission}}</td>
+                        <td>{{user.payeNationale}}</td>
+                        <td>{{user.numeroPieceIdentite}}</td>
+                        <td>{{user.pieceIdentite}}</td>
+                        <td>{{user.validitePieceIdentite}}</td>
+                        <td>{{user.expirationPieceIdentite}}</td>
+                        <td>
+                            <a class="view" title="View" (click)="openModal('view', user)"><i class="material-icons">&#xE417;</i></a>
+                            <a class="edit" title="Edit" (click)="openModal('edit', user)"><i class="material-icons">&#xE254;</i></a>
+                        
+                          </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clearfix">
+              <div class="hint-text">Showing <b>{{users.length}}</b> out of <b>{{totalEntries}}</b> entries</div>
+              <ul class="pagination">
+                <li class="page-item btn" [class.disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">Previous</li>
+                <li class="page-item btn" *ngFor="let page of pages" [class.active]="currentPage == page" (click)="currentPage = page">{{page}}</li>
+                <li class="page-item btn" [class.disabled]="currentPage == totalPages" (click)="currentPage = currentPage + 1">Next</li>
+              </ul>
+          </div>
+    </div>
+</div>
+
+
+<div *ngIf="selectedUser">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal-btn"  (click)="closeModal()">&times;</span>
+          <h2 class="modal-title">{{ modalState === 'add' ? 'Add Beneficiary' : modalState === 'edit' ? 'Edit Beneficiary' : 'View Beneficiary' }}</h2>
+          <ng-toast></ng-toast>
+            <div class="form-group">   
+              <label *ngIf="modalState === 'view'">Id</label>
+              <input *ngIf="modalState === 'view'" type="number" id="id" placeholder="Id" [(ngModel)]="selectedUser && selectedUser.id"class="form-input" [readonly]="isReadOnly" required>
+              <label for="">Firstname</label>
+              <input type="text" id="Firstname" placeholder="Firstname" [(ngModel)]="selectedUser && selectedUser.firstName"   class="form-input" [readonly]="isReadOnly" required>
+            </div>
+            <div class="form-group">   
+                <label>Lastname</label>
+                <input type="text" id="Lastname" placeholder="Lastname" [(ngModel)]="selectedUser && selectedUser.lastname"class="form-input" [readonly]="isReadOnly" required>
+              </div>
+            <div class="form-group">
+                <label >Title</label>
+                <select
+                type="text" id="title" placeholder="Title" [(ngModel)]="selectedUser && selectedUser.title"  class="form-input" [disabled]="isReadOnly" required
+              >
+                <option value="" disabled selected>Titre</option>
+                <option value="Mme">Mme</option>
+                <option value="M">M</option>
+              </select>
+                <label >Ville</label>
+                <select
+                type="text" id="ville" placeholder="Ville" [(ngModel)]="selectedUser && selectedUser.ville"  class="form-input" [disabled]="isReadOnly" required>
+                   <option value="" disabled selected>Ville</option>
+                   <option value="safi">safi</option>
+                   <option value="Casablanca">Casablanca</option>
+                   <option value="Tanger">Tanger</option>
+               </select>
+              </div>
+              <div class="form-group">
+                <label >Username</label>
+                <input type="email" id="username" placeholder="Username" [(ngModel)]="selectedUser && selectedUser.username"class="form-input" [readonly]="isReadOnly" required>
+                <label >Profession</label>
+                <select
+                type="text" id="profession" placeholder="Profession" [(ngModel)]="selectedUser && selectedUser.profession"   class="form-input" [disabled]="isReadOnly" required>
+                <option value="" disabled selected>Profession</option>
+                <option value="INGENIEUR">INGENIEUR</option>
+                <option value="MEDECIN">MEDECIN</option>
+                <option value="AVOCAT">AVOCAT</option>
+                <option value="PROFESSEUR">PROFESSEUR</option>
+                <option value="ARTISTE">ARTISTE</option>
+                <option value="POLICIER">POLICIER</option>
+                <option value="POMPIER">POMPIER</option>
+                <option value="INFIRMIER">INFIRMIER</option>
+                <option value="AGRICULTEUR">AGRICULTEUR</option>
+                <option value="CHEF">CHEF</option>
+                <option value="ARCHITECTE">ARCHITECTE</option>
+                <option value="VETERINAIRE">VETERINAIRE</option>
+                <option value="PHARMACIEN">PHARMACIEN</option>
+                <option value="JOURNALISTE">JOURNALISTE</option>
+                <option value="PROGRAMMEUR">PROGRAMMEUR</option>
+                <option value="AUTRES">AUTRES</option>
+              </select>
+              </div>
+              <div class="form-group">
+                <label >Piece d'identité</label>
+                <select
+                type="text" id="pieceIdentite" placeholder="Piece d'identité" [(ngModel)]="selectedUser && selectedUser.pieceIdentite"   class="form-input" [disabled]="isReadOnly" required
+              >
+                <option value="" disabled selected>Type de pièce d'identité</option>
+                <option value="carteNational">carteNational</option>
+                <option value="passport">passport</option>
+              </select>
+                <label >Date de Naissance</label>
+                <input type="date" id="datenaissance" class="form-input" placeholder="Date de Naissance" [(ngModel)]="selectedUser && selectedUser.datenaissance"  (change)="formatDate($event)" [readonly]="isReadOnly" required>
+              </div>
+              <div class="form-group">
+                <label >Pays d'émission</label>
+                <input type="text" id="paysEmission" placeholder="Pays d'émission" [(ngModel)]="selectedUser && selectedUser.paysEmission"   class="form-input" [readonly]="isReadOnly" required>
+                <label >Pays nationale</label>
+                <input type="text" id="payeNationale" placeholder="Pays nationale" [(ngModel)]="selectedUser && selectedUser.payeNationale"   class="form-input" [readonly]="isReadOnly" required>
+              </div>
+              <div class="form-group">
+                <label >Numero de piece d'identité</label>
+                <input type="text" id="numeroPieceIdentite" placeholder="Numero de piece d'identité" [(ngModel)]="selectedUser && selectedUser.numeroPieceIdentite" class="form-input" [readonly]="isReadOnly" required>
+
+                <label for="">GSM</label>
+                <input type="text" id="gsm" placeholder="GSM" [(ngModel)]="selectedUser && selectedUser.gsm"   class="form-input" [readonly]="isReadOnly" required>
+
+              </div>
+              <div class="form-group">
+                <label >Validité de piece d'identité</label>
+                <input type="date" id="validitePieceIdentite" class="form-input" placeholder="Validité de piece d'identité" [(ngModel)]="selectedUser && selectedUser.validitePieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly" required>
+                <label >Expiration de piece d'identité</label>
+                <input type="date" id="expirationPieceIdentite" class="form-input" placeholder="Expiration de piece d'identité" [(ngModel)]="selectedUser && selectedUser.expirationPieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly" required>
+              </div>
+              <div class="form-group">
+                <label >Account amount</label>
+                <input type="text" id="account_amount" placeholder="Account amount" [(ngModel)]="selectedUser && selectedUser.account_amount"   class="form-input" [readonly]="isReadOnly" required>
+              </div>
+
+            <div class="modal-footer">
+              <button *ngIf="showSave" type="button" class="btn btn-primary" (click)="saveUser()">Save</button>
+              <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            </div>
+
+        </div>
+      </div>
+</div>
+</div>
+
+
+
+
+
+
