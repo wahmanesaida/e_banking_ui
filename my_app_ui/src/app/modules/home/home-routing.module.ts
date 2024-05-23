@@ -7,6 +7,7 @@ import {MWalletComponent} from "./m-wallet/m-wallet.component";
 import {
   ReturnTheTransferByClientComponent
 } from "./return-the-transfer-by-client/return-the-transfer-by-client.component";
+import {AuthenticationGuard} from "../../authentication.guard";
 
 
 
@@ -15,8 +16,15 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'services', component: OurServicesComponent},
-  {path: 'wallet', component: MWalletComponent},
-  {path: 'return-the-transfer', component: ReturnTheTransferByClientComponent},
+  {path: 'wallet', component: MWalletComponent, canActivate: [AuthenticationGuard], data: {
+      roles: ['USER']
+    }},
+  {path: 'return-the-transfer', component: ReturnTheTransferByClientComponent, canActivate: [AuthenticationGuard],
+    data: {
+      roles: ['USER']
+    }
+  },
+
 
 
 ];

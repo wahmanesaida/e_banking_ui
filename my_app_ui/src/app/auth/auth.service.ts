@@ -15,6 +15,8 @@ export class AuthService {
   public currentUser: Observable<User>;
   private currentUserSubject: BehaviorSubject<User>;
 
+  public isLoggedInVar: boolean = false;
+
   constructor(private http: HttpClient) {
     let storageUser;
     const storageUserAsStr = localStorage.getItem('currentUser');
@@ -23,6 +25,11 @@ export class AuthService {
     }
     this.currentUserSubject = new BehaviorSubject<User>(storageUser);
     this.currentUser = this.currentUserSubject.asObservable();
+    this.isLoggedInVar = localStorage.getItem('isLoggedIn') === 'true';
+  }
+
+  public isLoggedIn(): boolean {
+    return this.isLoggedInVar;
   }
 
   public get currentUserValue(): User {
@@ -33,8 +40,14 @@ export class AuthService {
     return this.http.post(BASE_URL + 'api/v1/auth/register', signupRequest);
   }
 
+
   login(loginRequest: any): Observable<any> {
-    return this.http.post(BASE_URL + 'api/v1/auth/authenticate', loginRequest);
+    return this.http.post(BASE_URL + 'api/v1/auth/authenticate', loginRequest).pipe(
+      tap(() => {
+        this.isLoggedInVar = true;
+        localStorage.setItem('isLoggedIn', 'true');
+      })
+    );
   }
 
   isAuthenticatedUser(): boolean {
@@ -68,5 +81,5 @@ export class AuthService {
     return null;
   }
 
-  
+
 }

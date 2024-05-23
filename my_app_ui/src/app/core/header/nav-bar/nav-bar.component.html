@@ -7,13 +7,22 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav mx-auto py-0">
-          <a routerLin="/home" routerLinkActive="active" class="nav-item nav-link active">Home</a>
-          <a routerLink="/about" routerLinkActive="active" class="nav-item nav-link">About</a>
-          <a routerLink="/services" routerLinkActive="active" class="nav-item nav-link">Service</a>
+          <a  routerLinkActive="active" class="nav-item nav-link active">Accueil</a>
+          <a (click)="scrollToSection('about')"  class="nav-item nav-link">A propos</a>
+          <a  (click)="scrollToSection('services')"  class="nav-item nav-link">Services</a>
           <a routerLink="/Home/wallet" routerLinkActive="active" class="nav-item nav-link">Transfert</a>
           <a routerLink="/Home/return-the-transfer" routerLinkActive="active" class="nav-item nav-link">Réstitution</a>
 
-        <a routerLink="/Auth/signup"  routerLinkActive="active" class="nav-item nav-link">Sign Up</a>
+        <div class="nav-item dropdown">
+          <a routerLink="/Auth/signup"  routerLinkActive="active" class="nav-item nav-link" *ngIf="localStorage.getItem('id') == null">Sign Up</a>
+          <a routerLink="/Auth/signup"  routerLinkActive="active" class="nav-item nav-link" *ngIf="localStorage.getItem('id') != null">Profile</a>
+          <div class="dropdown-menu m-0">
+            <a  class="dropdown-item" (click)="logout()">logout</a>
+            <a routerLink=""  class="dropdown-item">Profile</a>
+            <a routerLink=""  class="dropdown-item">Bénéficaires</a>
+          </div>
+        </div>
+
 
       </div>
       <a routerLink="/Auth/login" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Get Started</a>

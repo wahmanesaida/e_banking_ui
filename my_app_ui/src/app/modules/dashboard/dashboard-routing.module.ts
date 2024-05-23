@@ -18,6 +18,7 @@ import {BlockingProcessComponent} from "../back-office/blocking-process/blocking
 import {BarChartComponent} from "./bar-chart/bar-chart.component";
 import {PieChartComponent} from "./pie-chart/pie-chart.component";
 import {LineChartComponent} from "./line-chart/line-chart.component";
+import {AuthenticationGuard} from "../../authentication.guard";
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+
     children: [
       {
         path: 'header-dash',
@@ -35,28 +37,80 @@ const routes: Routes = [
       {
         path: 'par-debit-compte',
         component: ParDebitDeCompteComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['AGENT', 'BACKOffice', 'ADMIN']
+        }
+
       },
       {
         path: 'servir-transfert',
         component: ServirTransfertComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['AGENT', 'ADMIN']
+        }
       },
       {
         path: 'extourne-transfert',
         component: ExtourneTransfertComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['AGENT', 'ADMIN']
+        }
       },
       {
         path: 'return-the-transfer',
         component: ReturnTheTransferComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['BACKOffice', 'ADMIN']
+        }
       },
-      { path: 'consult-transfert', component: ConsultationTransfertComponent },
-      { path: 'renvoi-notification', component: RenvoiNotificationComponent },
+      { path: 'consult-transfert', component: ConsultationTransfertComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['AGENT', 'BACKOffice', 'ADMIN']
+        }
+      },
+      { path: 'renvoi-notification', component: RenvoiNotificationComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['BACKOffice', 'ADMIN']
+        }
+      },
 
-      {path: 'gab-boa', component: GabBoaComponent},
-      {path: 'users', component: UsersComponent},
-     {path: 'history', component: HistoryComponent},
-     {path: 'block-the-transfer', component: BlockingProcessComponent},
+      {path: 'gab-boa', component: GabBoaComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['GAB', 'ADMIN']
+        }
+      },
+      {path: 'users', component: UsersComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['AGENT', 'ADMIN']
+        }
+      },
+     {path: 'history', component: HistoryComponent,
+       canActivate: [AuthenticationGuard],
+       data: {
+         roles: ['ADMIN']
+       }
+     },
+     {path: 'block-the-transfer', component: BlockingProcessComponent,
+       canActivate: [AuthenticationGuard],
+       data: {
+         roles: ['BACKOffice', 'ADMIN']
+       }
+     },
      {path: 'profile-admin', component: ProfileAdminComponent },
-      {path: 'bar-chart', component: BarChartComponent},
+      {path: 'bar-chart', component: BarChartComponent,
+        canActivate: [AuthenticationGuard],
+        data: {
+          roles: ['ADMIN']
+        }
+      },
      // {path: 'pie-chart', component: PieChartComponent},
      // {path: 'line-chart', component: LineChartComponent},
 

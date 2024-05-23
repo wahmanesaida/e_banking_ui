@@ -21,6 +21,7 @@ import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client/
 import { CoreRoutingModule } from '../../core/core-routing.module';
 import {ConsoleAgentService} from "../console-agent/console-agent.service";
 import {BackOfficeService} from "../back-office/back-office.service";
+import {AuthenticationGuard} from "../../authentication.guard";
 
 
 
@@ -60,6 +61,7 @@ import {BackOfficeService} from "../back-office/back-office.service";
     ConsoleAgentService,
     NgToastService,
     BackOfficeService,
+    AuthenticationGuard
 
   ]
 })
