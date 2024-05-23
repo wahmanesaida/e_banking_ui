@@ -1,8 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UserDto } from '../../../models/UserDto';
-import { UsersService } from '../../dashboard/users/users.service';
 import { NgToastService } from 'ng-angular-popup';
 import { BeneficiairesService } from './beneficiaires.service';
+import { Beneficiary } from '../../console-agent/servir-transfert/models/Beneficiary';
 
 @Component({
   selector: 'app-gestion-beneficiaires',
@@ -11,12 +10,13 @@ import { BeneficiairesService } from './beneficiaires.service';
 })
 export class GestionBeneficiairesComponent implements OnInit {
 
-  users: UserDto[] = [];
+  users: Beneficiary[] = [];
   isReadOnly: boolean = false;
-  selectedUser: UserDto | null = null;
+  selectedUser: Beneficiary | null = null;
   modalState: 'add' | 'edit' | 'view' | null = null;
   totalEntries: number;
   id:number;
+  idBene:number;
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number;
@@ -35,9 +35,9 @@ export class GestionBeneficiairesComponent implements OnInit {
     this.getAllBeneficiaries(this.id);
   }
 
-  openModal(action: 'add' | 'edit' | 'view', user?: UserDto) {
+  openModal(action: 'add' | 'edit' | 'view' , user?: Beneficiary) {
     this.modalState = action;
-    this.selectedUser = user ? { ...user } : ({} as UserDto);
+    this.selectedUser = user ? { ...user } : ({} as Beneficiary);
     this.isReadOnly = action === 'view';
     if (action ===  'view') {
       this.showSave = false;
@@ -79,8 +79,7 @@ export class GestionBeneficiairesComponent implements OnInit {
     );
   }
 
-  deleteBene(id: number) {
-    console.log(id);
+  deleteBene(id:number) {
     this.beneService.deleteBeneficiary(id).subscribe(
       (response) => {
         console.log(response);
@@ -149,30 +148,7 @@ export class GestionBeneficiairesComponent implements OnInit {
       .map((x, i) => i + 1);
   }
 
-  isAnyFieldEmpty(): boolean {
-    if (!this.selectedUser ||
-        !this.selectedUser.name ||
-        !this.selectedUser.title ||
-        !this.selectedUser.ville ||
-        !this.selectedUser.role ||
-        !this.selectedUser.profession ||
-        !this.selectedUser.pieceIdentite ||
-        !this.selectedUser.datenaissance ||
-        !this.selectedUser.paysEmission ||
-        !this.selectedUser.payeNationale ||
-        !this.selectedUser.numeroPieceIdentite ||
-        !this.selectedUser.gsm ||
-        !this.selectedUser.username ||
-        !this.selectedUser.createTime ||
-        !this.selectedUser.validitePieceIdentite ||
-        !this.selectedUser.expirationPieceIdentite ||
-        !this.selectedUser.account_amount ||
-        !this.selectedUser.password) {
-      return true;
-    }
-  
-    return false;
-  }
+ 
 
 
 

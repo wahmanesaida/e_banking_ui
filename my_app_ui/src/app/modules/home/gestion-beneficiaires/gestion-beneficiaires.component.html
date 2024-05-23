@@ -4,7 +4,7 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>User <b>Details</b></h2></div>
+                    <div class="col-sm-8"><h2><b>Liste De Bénéficiaires</b></h2></div>
                     <div class="col-sm-4">
                       <button (click)="openModal('add', null)" class="custom-btn">Ajouter</button>
                         <div class="search-box">
@@ -31,7 +31,6 @@
                         <th>Pays nationale</th>
                         <th>Numero de piece d'identité</th>
                         <th>Piece d'identité</th>
-                        <th>Create Time</th>
                         <th>Validité de piece d'identité</th>
                         <th>Expiration de piece d'identité</th>
                         <th>Actions</th>
@@ -40,26 +39,25 @@
                 <tbody>
                     <tr *ngFor="let user of getDisplayedItems()">
                         <td>{{user.id}}</td>
-                        <td>{{user.name}}</td>
                         <td>{{user.title}}</td>
-                        <td>{{user.ville}}</td>
-                        <td>{{user.role}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastname}}</td>
+                        <td>{{user.account_amount}}</td>
+                        <td>{{user.gsm}}</td>
                         <td>{{user.profession}}</td>
-                        <td>{{user.pieceIdentite}}</td>
+                        <td>{{user.ville}}</td>
+                        <td>{{user.username}}</td>
                         <td>{{user.datenaissance}}</td>
                         <td>{{user.paysEmission}}</td>
                         <td>{{user.payeNationale}}</td>
                         <td>{{user.numeroPieceIdentite}}</td>
-                        <td>{{user.gsm}}</td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.createTime}}</td>
+                        <td>{{user.pieceIdentite}}</td>
                         <td>{{user.validitePieceIdentite}}</td>
                         <td>{{user.expirationPieceIdentite}}</td>
-                        <td>{{user.account_amount}}</td>
                         <td>
                             <a class="view" title="View" (click)="openModal('view', user)"><i class="material-icons">&#xE417;</i></a>
                             <a class="edit" title="Edit" (click)="openModal('edit', user)"><i class="material-icons">&#xE254;</i></a>
-                            
+                        
                           </td>
                     </tr>
                 </tbody>
@@ -80,15 +78,18 @@
     <div id="modal" class="modal">
         <div class="modal-content">
           <span class="close-modal-btn"  (click)="closeModal()">&times;</span>
-          <h2 class="modal-title">{{ modalState === 'add' ? 'Add User' : modalState === 'edit' ? 'Edit User' : 'View User' }}</h2>
+          <h2 class="modal-title">{{ modalState === 'add' ? 'Add Beneficiary' : modalState === 'edit' ? 'Edit Beneficiary' : 'View Beneficiary' }}</h2>
           <ng-toast></ng-toast>
             <div class="form-group">   
               <label *ngIf="modalState === 'view'">Id</label>
               <input *ngIf="modalState === 'view'" type="number" id="id" placeholder="Id" [(ngModel)]="selectedUser && selectedUser.id"class="form-input" [readonly]="isReadOnly" required>
-              <label for="">Name</label>
-
-              <input type="text" id="name" placeholder="Name" [(ngModel)]="selectedUser && selectedUser.name"   class="form-input" [readonly]="isReadOnly" required>
+              <label for="">Firstname</label>
+              <input type="text" id="Firstname" placeholder="Firstname" [(ngModel)]="selectedUser && selectedUser.firstName"   class="form-input" [readonly]="isReadOnly" required>
             </div>
+            <div class="form-group">   
+                <label>Lastname</label>
+                <input type="text" id="Lastname" placeholder="Lastname" [(ngModel)]="selectedUser && selectedUser.lastname"class="form-input" [readonly]="isReadOnly" required>
+              </div>
             <div class="form-group">
                 <label >Title</label>
                 <select
@@ -108,16 +109,8 @@
                </select>
               </div>
               <div class="form-group">
-                <label >Role</label>
-                <select
-                type="text" id="role" placeholder="Role" [(ngModel)]="selectedUser && selectedUser.role"   class="form-input" required [disabled]="isReadOnly"
-              >
-                <option value="" disabled selected>Role</option>
-                <option value="USER">USER</option>
-                <option value="AGENT">AGENT</option>
-                <option value="ADMIN">ADMIN</option>
-                <option value="SYSTEM_MANAGER">SYSTEM_MANAGER</option>
-              </select>
+                <label >Username</label>
+                <input type="email" id="username" placeholder="Username" [(ngModel)]="selectedUser && selectedUser.username"class="form-input" [readonly]="isReadOnly" required>
                 <label >Profession</label>
                 <select
                 type="text" id="profession" placeholder="Profession" [(ngModel)]="selectedUser && selectedUser.profession"   class="form-input" [disabled]="isReadOnly" required>
@@ -167,14 +160,6 @@
 
               </div>
               <div class="form-group">
-                <label >Username</label>
-                <input type="email" id="username" placeholder="Username" [(ngModel)]="selectedUser && selectedUser.username"   class="form-input" [readonly]="isReadOnly" required>
-
-                <label *ngIf="modalState === 'view' || modalState === 'edit'">Create Time</label>
-                <input *ngIf="modalState === 'view' || modalState === 'edit'" type="text" id="createTime" class="form-input" placeholder="Create Time" [value]="selectedUser && selectedUser.createTime | date:'yyyy-MM-ddTHH:mm:ss'" readonly required>
-
-              </div>
-              <div class="form-group">
                 <label >Validité de piece d'identité</label>
                 <input type="date" id="validitePieceIdentite" class="form-input" placeholder="Validité de piece d'identité" [(ngModel)]="selectedUser && selectedUser.validitePieceIdentite"  (change)="formatDate($event)" [readonly]="isReadOnly" required>
                 <label >Expiration de piece d'identité</label>
@@ -183,8 +168,6 @@
               <div class="form-group">
                 <label >Account amount</label>
                 <input type="text" id="account_amount" placeholder="Account amount" [(ngModel)]="selectedUser && selectedUser.account_amount"   class="form-input" [readonly]="isReadOnly" required>
-                <label *ngIf="modalState === 'add'" type="text" for="">Password</label>
-                <input *ngIf="modalState === 'add'" type="text" id="password" placeholder="Password" [(ngModel)]="selectedUser && selectedUser.password" class="form-input" [readonly]="isReadOnly" required>
               </div>
 
             <div class="modal-footer">
