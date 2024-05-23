@@ -18,8 +18,8 @@
           <a routerLink="/Auth/signup"  routerLinkActive="active" class="nav-item nav-link" *ngIf="localStorage.getItem('id') != null">Profile</a>
           <div class="dropdown-menu m-0">
             <a  class="dropdown-item" (click)="logout()">logout</a>
-            <a routerLink=""  class="dropdown-item">Profile</a>
-            <a routerLink=""  class="dropdown-item">Bénéficaires</a>
+            <a routerLink="/Home/user-profile"  class="dropdown-item">Profile</a>
+            <a routerLink="/Home/manage-beneficiaires"  class="dropdown-item">Bénéficaires</a>
           </div>
         </div>
 

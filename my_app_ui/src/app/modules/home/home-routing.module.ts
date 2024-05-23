@@ -11,6 +11,7 @@ import {
 import {AuthenticationGuard} from "../../authentication.guard";
 
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { GestionBeneficiairesComponent } from './gestion-beneficiaires/gestion-beneficiaires.component';
 
 
 
@@ -36,6 +37,7 @@ const routes: Routes = [
  
  
   {path: 'user-profile', component: UserProfileComponent},
+  {path: 'manage-beneficiaires', component: GestionBeneficiairesComponent},
 
 ];
 

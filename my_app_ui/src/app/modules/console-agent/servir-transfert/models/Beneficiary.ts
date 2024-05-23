@@ -8,7 +8,7 @@ export class Beneficiary{
     firstName?:string;
     lastname?:string;
     account_amount?:number;
-    GSM?:string;
+    gsm?: string;
     username?:string;
     title?:string;
     pieceIdentite?:string;
@@ -27,7 +27,7 @@ export class Beneficiary{
     firstName?:string,
     lastname?:string,
     account_amount?:number,
-    GSM?:string,
+    gsm?:string,
     username?:string,
     title?:string,
     pieceIdentite?:string,
@@ -45,7 +45,7 @@ export class Beneficiary{
         this.firstName = firstName;
         this.lastname = lastname;
         this.account_amount = account_amount;
-        this.GSM = GSM;
+        this.gsm = gsm;
         this.username = username;
         this.title = title;
         this.pieceIdentite = pieceIdentite;
@@ -58,7 +58,6 @@ export class Beneficiary{
         this.payeNationale = payeNationale;
         this.ville= ville;
         this.client = client;
-        
     }
 
 }
