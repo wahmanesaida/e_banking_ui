@@ -42,13 +42,20 @@ export class NavBarDashComponent {
     }
   }
 
+
+
   logout() {
-    // Supprimer l'ID de l'utilisateur du stockage local
+    // Autres opérations de déconnexion si nécessaire
+
+    // Réinitialiser les variables d'authentification
+
+    localStorage.setItem('isLoggedIn', 'false');
+    localStorage.removeItem('currentUser');
     localStorage.removeItem('id');
-    localStorage.removeItem('JWT');
     localStorage.removeItem('role');
-    // Rediriger l'utilisateur vers la page d'accueil avec un message
-    this.router.navigate(['/Home/home'], { queryParams: { logout: 'true' } });
+
+    // Rediriger vers la page de connexion ou une autre page appropriée
+    this.router.navigateByUrl('Auth/signup');
   }
 
 
