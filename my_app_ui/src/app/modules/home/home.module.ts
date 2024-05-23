@@ -68,9 +68,7 @@ import { UsersService } from '../dashboard/users/users.service';
     ConsoleAgentService,
     NgToastService,
     BackOfficeService,
-
-    AuthenticationGuard
-
+    AuthenticationGuard,
     UsersService
 
 
