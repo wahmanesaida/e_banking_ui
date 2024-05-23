@@ -92,15 +92,15 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  searchUser(id: number) {
-    this.userService.searchUser(id).subscribe(
+  searchUser(name: string) {
+    this.userService.searchUser(name).subscribe(
       (response) => {
         this.users = [response];
       },
       (error: any) => {
         this.toast.error({
           detail: 'Pay Attention',
-          summary: "this id not found",
+          summary: "this name not found",
           duration: 5000,
           position: 'topCenter',
         });

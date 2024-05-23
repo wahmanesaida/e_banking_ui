@@ -6,9 +6,10 @@
                 <div class="row">
                     <div class="col-sm-8"><h2>User <b>Details</b></h2></div>
                     <div class="col-sm-4">
+                      <button (click)="openModal('add', null)" class="custom-btn">Ajouter</button>
                         <div class="search-box">
                             <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" placeholder="Search by id" #searchInput (keydown.enter)="searchUser(+searchInput.value)">
+                            <input type="text" class="form-control" placeholder="Search by Name" #searchInput (keydown.enter)="searchUser(searchInput.value)">
                          </div>
                     </div>
                 </div>
@@ -58,7 +59,7 @@
                         <td>
                             <a class="view" title="View" (click)="openModal('view', user)"><i class="material-icons">&#xE417;</i></a>
                             <a class="edit" title="Edit" (click)="openModal('edit', user)"><i class="material-icons">&#xE254;</i></a>
-                            <a class="add" title="Add" (click)="openModal('add', null)"><i class="material-icons">add</i></a>
+                            
                           </td>
                     </tr>
                 </tbody>

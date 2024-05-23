@@ -21,7 +21,12 @@ import {ReturnTheTransferByClientService} from "./return-the-transfer-by-client/
 import { CoreRoutingModule } from '../../core/core-routing.module';
 import {ConsoleAgentService} from "../console-agent/console-agent.service";
 import {BackOfficeService} from "../back-office/back-office.service";
+
 import {AuthenticationGuard} from "../../authentication.guard";
+
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UsersService } from '../dashboard/users/users.service';
+
 
 
 
@@ -33,7 +38,8 @@ import {AuthenticationGuard} from "../../authentication.guard";
     OurServicesComponent,
     MWalletComponent,
     ReturnTheTransferByClientComponent,
-    HomeComponent],
+    HomeComponent,
+    UserProfileComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
@@ -52,7 +58,8 @@ import {AuthenticationGuard} from "../../authentication.guard";
     OurServicesComponent,
     HomeComponent,
     ReturnTheTransferByClientComponent,
-    MWalletComponent
+    MWalletComponent,
+    UserProfileComponent
 
   ],
   providers: [
@@ -61,7 +68,11 @@ import {AuthenticationGuard} from "../../authentication.guard";
     ConsoleAgentService,
     NgToastService,
     BackOfficeService,
+
     AuthenticationGuard
+
+    UsersService
+
 
   ]
 })

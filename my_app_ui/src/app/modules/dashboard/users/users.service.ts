@@ -20,8 +20,8 @@ export class UsersService {
     return this.http.post(`${this.baseUrl}/deleteUser`, id);
   }
 
-  searchUser(id:number):Observable<any>{
-    return this.http.post(`${this.baseUrl}/searchUserByID`, id);
+  searchUser(name:string):Observable<any>{
+    return this.http.post(`${this.baseUrl}/searchUserByName`, name);
   }
 
   updateUserProperty(userDto: UserDto): Observable<any> {
